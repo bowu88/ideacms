@@ -18,6 +18,7 @@
 		<a href="<?php echo url('admin/theme/index')?>" class="on"><em>{lang('a-men-47')}</em></a><span>|</span>
 		{if admin_auth($userinfo['roleid'], 'theme-add')}<a href="<?php echo url('admin/theme/add', array('cpath'=>$cpath))?>"><em>{lang('a-add')}</em></a><span>|</span>{/if}
 		<a href="<?php echo url('admin/theme/cache')?>"><em>{lang('a-cache')}</em></a><span>|</span>
+        <a href="tencent://message/?uin=976510651" target="_blank"><em>模板开发</em></a>
 	</div>
 	<div class="bk10"></div>
 	<div class="table-list">
@@ -35,7 +36,14 @@
 			<img src="{$t['ico']}"> &nbsp;<a href="{$t['url']}">{$t['name']}</a></td>
 			<td width="70%">
 			{if admin_auth($userinfo['roleid'], 'theme-del')}
-			&nbsp;<a href="javascript:;" onClick="if(confirm('{lang('a-confirm')}')){ window.location.href='{url('admin/theme/del',array('name'=>$t['dir']))}'; }" title="{lang('a-del')}">×</a>
+			&nbsp;<a href="javascript:;" onClick="if(confirm('{lang('a-confirm')}')){ window.location.href='{url('admin/theme/del',array('name'=>$t['dir']))}'; }" title="{lang('a-del')}">×</a>{/if}
+			{if !$istop}
+				&nbsp;
+				{if $SITE_THEME == $t['tdir']}
+				<span class="label label-important">{lang('a-now-install')}</span>
+				{else}
+				<a href="javascript:;" onClick="if(confirm('{lang('a-confirm-install')}')){ window.location.href='{url('admin/theme/install',array('name'=>$t['tdir']))}'; }" class="label label-success" title="{lang('a-install')}">{lang('a-install')}</a>
+				{/if}
 			{/if}
 			</td>
 		</tr>

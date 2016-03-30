@@ -33,6 +33,10 @@
         <td><input type="text" class="input-text" style="width:200px;" value="<?php echo $data['name']?>" name="data[name]"></td>
     </tr>
     <tr>
+        <th width="200">广告描述：</th>
+        <td><textarea class="input-text" style="width:200px;" name="data[description]"><?php echo $data['description']?></textarea></td>
+    </tr>
+    <tr>
         <th>广告类型：</th>
         <td>
         <select name="data[typeid]" id="typeid" onChange="getField(this)">

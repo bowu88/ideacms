@@ -1,7 +1,7 @@
 /*
  * IdeaCMS
  */
-if (undefined == ideacms_admin_document) var ideacms_admin_document="";
+if (undefined == idea_admin_document) var idea_admin_document="";
 function preview(obj) {
 	var filepath = $('#'+obj).val();
 	if (filepath) {
@@ -25,7 +25,7 @@ function file_info(obj) {
 }
 
 function uploadImage(obj, w, h, size) {
-	var url = sitepath+'?c=attachment&a=image&w='+w+'&h='+h+'&size='+size+'&file='+$("#"+obj).val()+'&document='+ideacms_admin_document;
+	var url = sitepath+'?c=attachment&a=image&w='+w+'&h='+h+'&size='+size+'&file='+$("#"+obj).val()+'&document='+idea_admin_document;
 	var winid = 'win_'+obj;
 	window.top.art.dialog(
 	    {id:winid, okVal:idec_lang[6], cancelVal:idec_lang[7], iframe:url, title:idec_lang[3], width:'470', height:'150', lock:true}, 
@@ -47,7 +47,7 @@ function uploadImage(obj, w, h, size) {
 }
 
 function uploadFile(obj, type, size) {
-	var url = sitepath+'?c=attachment&a=file&type='+type+'&size='+size+'&file='+$("#"+obj).val()+'&document='+ideacms_admin_document;
+	var url = sitepath+'?c=attachment&a=file&type='+type+'&size='+size+'&file='+$("#"+obj).val()+'&document='+idea_admin_document;
 	var winid = 'win_'+obj;
 	window.top.art.dialog(
 	    {id:winid, okVal:idec_lang[6], cancelVal:idec_lang[7], iframe:url, title:idec_lang[3], width:'470', height:'150', lock:true}, 
@@ -69,7 +69,7 @@ function uploadFile(obj, type, size) {
 }
 
 function uploadFiles(obj, setting) {
-	var url = sitepath+'?c=attachment&a=files&setting='+setting+'&document='+ideacms_admin_document;
+	var url = sitepath+'?c=attachment&a=files&setting='+setting+'&document='+idea_admin_document;
 	var winid = 'win_'+obj;
 	window.top.art.dialog(
 	    {id:winid, okVal:idec_lang[6], cancelVal:idec_lang[7], iframe:url, title:idec_lang[3], width:'500', height:'420', lock:true}, 

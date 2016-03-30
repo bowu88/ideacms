@@ -9,7 +9,7 @@ return array(
 	'host'     => 'localhost', 
 	'username' => 'root', 
 	'password' => '', 
-	'dbname'   => 'test5', 
+	'dbname'   => 'test', 
 	'prefix'   => 'idea_', 
 	'charset'  => 'utf8', 
 	'port'     => '3306', 

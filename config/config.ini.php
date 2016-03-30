@@ -12,7 +12,7 @@ return array(
 	'SYS_DOMAIN'              => '',  //域名目录，针对虚拟主机用户
 	'SYS_DEBUG'               => true,  //调试模式开关，网站正式上线时建议关闭
 	'SYS_LOG'                 => false,  //程序运行日志开关,日志目录（项目目录/logs/）
-	'SYS_VAR_PREX'            => 'IDEAS_b1bf4_',  //Sessoin、Cookie变量前缀
+	'SYS_VAR_PREX'            => 'idea_b1bf4_',  //Sessoin、Cookie变量前缀
 	'SYS_GZIP'                => false,  //是否Gzip压缩后输出
 	'SITE_MEMBER_COOKIE'      => '2967e68d382902a',  //Cookie随机字符串
 	'SESSION_COOKIE_DOMAIN'   => '',  //多站点会员登录状态跨域保存域名，格式如.lygphp.com（只针对多站点域名全是二级域名否则请留空）
@@ -21,7 +21,7 @@ return array(
 
 	/* 网站相关配置 */
 
-	'SITE_COMMENT'            => false,  //
+	'SITE_COMMENT'            => true,  //
 	'SYS_MODE'                => '0',  //版本模式
 	'SITE_ADMINLOG'           => true,  //后台操作日志开关
 	'SITE_BDPING'             => false,  //百度Ping推送
@@ -29,9 +29,11 @@ return array(
 	'SYS_MEMBER'              => false,  //禁止使用会员功能
 	'SYS_ATTACK_LOG'          => true,  //系统攻击日志开关
 	'SYS_ATTACK_MAIL'         => false,  //是否发送邮件通知管理员
-	'SITE_ADMIN_CODE'         => true,  //后台登录验证码开关
+	'SITE_ADMIN_CODE'         => false,  //后台登录验证码开关
 	'SITE_ADMIN_PAGESIZE'     => '8',  //后台数据分页条数
 	'SITE_SYSMAIL'            => '',  //用来接收网站的一些系统邮件
+	'SYS_GEE_CAPTCHA_ID'      => '053960849a89ff17c0e0858a821f3686',  //极验验证ID
+	'SYS_GEE_PRIVATE_KEY'     => '54140d3df408cef8be1904c2aa7fed8c',  //极验验证KEY
 	'SITE_MAIL_TYPE'          => '1',  //邮件发送模式
 	'SITE_MAIL_SERVER'        => '',  //邮件服务器
 	'SITE_MAIL_PORT'          => '25',  //邮件端口号

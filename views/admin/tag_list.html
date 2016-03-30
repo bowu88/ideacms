@@ -28,7 +28,6 @@
 		<input type="submit" class="button" value="{lang('a-search')}" name="submit" />&nbsp;&nbsp;
 		</form>
 	</div>
-
 	<div class="bk10"></div>
 	<div class="table-list">
 		<form action="" method="post" name="myform">
@@ -65,7 +64,7 @@
 			<td align="left"><input class="input-text" type="text" name="data[{$t['id']}][listorder]" value="{$t['listorder']}" size="5"/></td>
 			<td align="left">
 			<?php $del = url('admin/tag/del/',array('id'=>$t['id']));?>
-			<a href="{$site_url}{tag_url($t['name'])}" target="_blank">{lang('a-cat-23')}</a> |
+			<a href="{$site_url}{tag_url($t['name'])}" target="_blank">{lang('a-cat-23')}</a> | 
 			{if admin_auth($userinfo['roleid'], 'tag-edit')}<a href="{url('admin/tag/edit',array('id'=>$t['id']))}">{lang('a-edit')}</a> | {/if}
 			{if admin_auth($userinfo['roleid'], 'tag-del')}<a href="javascript:;" onClick="if(confirm('{lang('a-confirm')}')){ window.location.href='{$del}'; }">{lang('a-del')}</a>{/if}
 			</td>
@@ -86,8 +85,8 @@
 </div>
 <script type="text/javascript">
 function confirm_del() {
-    if (confirm('{lang('a-confirm')}')) {
-		return true;
+    if (confirm('{lang('a-confirm')}')) { 
+		return true; 
 	} else {
 	    return false;
 	}

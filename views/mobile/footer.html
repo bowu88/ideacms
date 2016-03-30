@@ -4,7 +4,7 @@
     <section>
     	<p class="user">
         	<strong><a href="{url('member')}">{$memberinfo['username']}{if $memberinfo['nickname']}({$memberinfo['nickname']}){/if}</a></strong>
-            <a href="{url('member/login/out')}" id="logout"><span class="fa fa-logout"><i></i></span>退出</a>
+            <a href="{url('member/login/out')}" id="logout"><span class="icon-logout"><i></i></span>退出</a>
         </p>
     </section>
     {else}
@@ -26,7 +26,7 @@
 	<div class="copyright"><span class="copyright">{$SITE_NAME}触屏版</span><p></p></div>
 </footer>
 <!--<div class="x-sheet" id="fc_load">
-	<div class="x-sheet-box"><img src="{MOBILE_THEME}images/load.gif" class="x-img-loading"><span class="x-sheet-text">数据加载中...</span></div>
+	<div class="x-sheet-box"><img src="{SITE_THEME}images/load.gif" class="x-img-loading"><span class="x-sheet-text">数据加载中...</span></div>
 </div>-->
 </body>
 </html>

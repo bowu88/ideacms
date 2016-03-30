@@ -4,7 +4,6 @@ class RegisterController extends Member {
     
     public function __construct() {
 		parent::__construct();
-
 	}
 	
 	/**
@@ -55,7 +54,7 @@ class RegisterController extends Member {
 				'username'	=> $oauth_name.time().rand(0, 999),
 				'password'	=> $pwd,
 				'password2'	=> $pwd,
-				'email'		=> $oauth_name.$oauth_data['oauth_openid'].'@lygphp.com',
+				'email'		=> $oauth_name.$oauth_data['oauth_openid'].'@qq.com',
 				'nickname'	=> (string)$memberinfo['name'],
 				'avatar'	=> $memberinfo['avatar']
 			);

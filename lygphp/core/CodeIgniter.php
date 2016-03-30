@@ -228,9 +228,9 @@
 	}
 
 
-	if (file_exists(FCPATH.'controllers/Common.php'))
+	if (file_exists(ICPATH.'controllers/Common.php'))
 	{
-        require FCPATH.'controllers/Common.php';
+        require ICPATH.'controllers/Common.php';
 	}
 
     if (!defined('APP_DIR')) {
@@ -240,20 +240,20 @@
 	// Load the local application controller
 	// Note: The Router class automatically validates the controller path using the router->_validate_request().
 	// If this include fails it means that the default controller in the Routes.php file is not resolving to something valid.
-	$file1 = FCPATH.'controllers/'.ltrim($RTR->fetch_directory(), '/').ucfirst($RTR->fetch_class()).'.php';
-	$file2 = FCPATH.'controllers/'.ltrim($RTR->fetch_directory(), '/').ucfirst($RTR->fetch_class()).'Controller.php';
+	$file1 = ICPATH.'controllers/'.ltrim($RTR->fetch_directory(), '/').ucfirst($RTR->fetch_class()).'.php';
+	$file2 = ICPATH.'controllers/'.ltrim($RTR->fetch_directory(), '/').ucfirst($RTR->fetch_class()).'Controller.php';
     if ( ! file_exists($file1) && ! file_exists($file2)) {
         if (APP_DIR) {
-            require FCPATH.'plugins/'.APP_DIR.'/controllers/Common.php';
-            $file1 = FCPATH.'plugins/'.APP_DIR.'/controllers/'.ucfirst($RTR->fetch_class()).'Controller.php';
-            $file2 = FCPATH.'plugins/'.APP_DIR.'/controllers/'.ucfirst($RTR->fetch_class()).'.php';
+            require ICPATH.'plugins/'.APP_DIR.'/controllers/Common.php';
+            $file1 = ICPATH.'plugins/'.APP_DIR.'/controllers/'.ucfirst($RTR->fetch_class()).'Controller.php';
+            $file2 = ICPATH.'plugins/'.APP_DIR.'/controllers/'.ucfirst($RTR->fetch_class()).'.php';
             $file = is_file($file2) ? $file2 : $file1;
         } else {
             show_error('控制器'.ucfirst($RTR->fetch_class()).'或者'.ucfirst($RTR->fetch_class()).'Controller不存在');
         }
 	} else {
         if ($RTR->fetch_directory() == 'member/' || $RTR->fetch_directory() == 'admin/') {
-            require FCPATH.'controllers/'.$RTR->fetch_directory().'Common.php';
+            require ICPATH.'controllers/'.$RTR->fetch_directory().'Common.php';
         }
         $file = is_file($file2) ? $file2 : $file1;
     }

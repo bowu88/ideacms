@@ -80,6 +80,9 @@ class IndexController extends Admin {
 			'SITE_COMMENT_SWITCH'     => lang('a-cfg-75'),
             'SYS_MEMBER'              => lang('t-002'),
             'SYS_MODE'                => lang('t-003'),
+
+            'SYS_GEE_CAPTCHA_ID' => '极验验证ID',
+            'SYS_GEE_PRIVATE_KEY' => '极验验证KEY',
 			'SITE_BDPING'              => '百度Ping推送',
 
         );
@@ -194,8 +197,8 @@ class IndexController extends Admin {
             $this->cache->set('version', str_replace('.', '', $version));
             // 删除全部缓存文件
             $this->load->helper('file');
-            delete_files(FCPATH.'cache/models/');
-            delete_files(FCPATH.'cache/views/');
+            delete_files(ICPATH.'cache/models/');
+            delete_files(ICPATH.'cache/views/');
 	    } else {
             $this->view->assign('caches', $caches);
 	        $this->view->display('admin/cache');
@@ -252,7 +255,7 @@ class IndexController extends Admin {
 	 * 修改版权
 	 */
 	public function bqAction() {
-        $file = FCPATH.'config/version.ini.php';
+        $file = ICPATH.'config/version.ini.php';
         $data = require $file;
         if (IS_POST) {
             $post = $this->input->post('data', true);

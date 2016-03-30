@@ -57,7 +57,7 @@ class Member extends Common {
 		$update	 = 0;
 		$credit  = $this->memberinfo['credits'];
 		$groupid = $this->memberinfo['groupid'];
-		if (plugin('vip')) {	//会员组付费应用
+		if (plugin('vip')) {	//会员组付费插件
 			$vip = $this->plugin_model('vip', 'vip');
 			$row = $vip->find($this->memberinfo['id']);	//查询数据
 			if ($row) {	//存在付费组中，判断是否到期

@@ -69,8 +69,8 @@ return array (
 
 
 					'a-men-74' => array(
-            204 => array('name' => 'a-men-35', 'url' => url('admin/content/updateurl/'), 'option' => 'content-updateurl'),
-            289 => array('name' => 'a-men-30', 'url' => url('admin/block/index'),        'option' => 'block-index'),
+						204 => array('name' => 'a-men-35', 'url' => url('admin/content/updateurl/'), 'option' => 'content-updateurl'),
+						289 => array('name' => 'a-men-30', 'url' => url('admin/block/index'),        'option' => 'block-index'),
 						288 => array('name' => 'a-men-31', 'url' => url('admin/position/index'),     'option' => 'position-index'),
 						287 => array('name' => 'a-men-32', 'url' => url('admin/tag/index'),          'option' => 'tag-index'),
 						286 => array('name' => 'a-men-33', 'url' => url('admin/relatedlink/index'),  'option' => 'relatedlink-index'),

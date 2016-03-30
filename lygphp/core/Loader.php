@@ -308,7 +308,7 @@ class CI_Loader {
 		}
 
 		// couldn't find the model
-        require FCPATH.'models/'.$model.'Model.php';
+        require ICPATH.'models/'.$model.'Model.php';
 
         $model = ucfirst($model).'Model';
 

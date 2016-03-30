@@ -67,13 +67,14 @@ class Common extends CI_Controller {
         define('CMS_VERSION', $system_cms['version']);
         define('CMS_UPDATE', $system_cms['update']);
         define('SITE_THEME', $this->get_theme_url());
-		define('PUBLIC_THEME', SITE_PATH . 'statics/public/');//共用样式
-		define('WEB_THEME', SITE_PATH . 'statics/web/');//网页样式
-		define('MOBILE_THEME', SITE_PATH . 'statics/mobile/');//移动样式
-		//define('ADMIN_THEME', SITE_PATH . basename(VIEW_DIR) . '/admin/');
-		define('ADMIN_THEME', SITE_PATH . 'statics/admin/');
 		define('EXT_PATH', SITE_PATH . EXTENSION_PATH . '/');
 		define('LANG_PATH', SITE_PATH . EXTENSION_PATH . '/language/' . SYS_LANGUAGE . '/');
+		define('PUBLIC_THEME', SITE_PATH . 'statics/public/');//共用样式
+		define('WEB_THEME', SITE_PATH . 'statics/web/');//网页样式
+		define('MOBILE_THEME', SITE_PATH . 'statics/phone/');//移动样式
+		//define('ADMIN_THEME', SITE_PATH . basename(VIEW_DIR) . '/admin/');
+		define('ADMIN_THEME', SITE_PATH . 'statics/admin/');
+		define('WEIXIN_THEME', SITE_PATH . 'statics/weixin/');
 
 		//禁止访问
 		$ips = $this->cache->get('ip');
@@ -1012,6 +1013,8 @@ class Common extends CI_Controller {
         $this->language = $language;
         $this->site_info = $info;
 
+        define('SYS_GEE_CAPTCHA_ID', $config['SYS_GEE_CAPTCHA_ID']);
+        define('SYS_GEE_PRIVATE_KEY', $config['SYS_GEE_PRIVATE_KEY']);
         define('SITE_BDPING', $config['SITE_BDPING']);
 
 
@@ -1162,7 +1165,7 @@ class Common extends CI_Controller {
     }
 
     /**
-     * 单例模式实例化一个应用Model对象
+     * 单例模式实例化一个插件Model对象
      */
     public function plugin_model($plugin, $table_name) {
         return Controller::plugin_model($plugin, $table_name);
@@ -1197,14 +1200,14 @@ class Common extends CI_Controller {
     }
 
     /**
-     * 加载应用配置信息
+     * 加载插件配置信息
      */
     protected function load_plugin_setting($dir) {
         return Controller::load_plugin_setting($dir);
     }
 
     /**
-     * 设置应用视图变量
+     * 设置插件视图变量
      */
     public function assign($key, $value = null) {
         if (!$key) return false;
@@ -1219,7 +1222,7 @@ class Common extends CI_Controller {
     }
 
     /**
-     * 应用调用模板文件（文件为PHP文件）
+     * 插件调用模板文件（文件为PHP文件）
      */
     public function display($file) {
         $filename = PLUGIN_DIR . App::get_plugin_id() . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . $file . '.php';

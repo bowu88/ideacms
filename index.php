@@ -12,18 +12,18 @@ define('IN_IDEACMS', true);
 define('APP_ROOT', dirname(__FILE__) . DIRECTORY_SEPARATOR);
 define('EXT', '.php');
 define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
-define('FCPATH', str_replace(SELF, '', __FILE__));
-define('APPPATH', FCPATH.'extensions/');
-define('BASEPATH', FCPATH.'lygphp/');
+define('ICPATH', str_replace(SELF, '', __FILE__));
+define('APPPATH', ICPATH.'extensions/');
+define('BASEPATH', ICPATH.'lygphp/');
 define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
 
-$config = require FCPATH.'config/config.ini.php';
+$config = require ICPATH.'config/config.ini.php';
 
 /**
  * 配置
  */
 
-define('SYS_ROOT', FCPATH.'lygphp'.DIRECTORY_SEPARATOR);  //核心文件所在路径
+define('SYS_ROOT', ICPATH.'lygphp'.DIRECTORY_SEPARATOR);  //核心文件所在路径
 define('SYS_START_TIME', microtime(true));  //设置程序开始执行时间
 define('CONTROLLER_DIR', APP_ROOT . 'controllers' . DIRECTORY_SEPARATOR);  //controller目录的路径
 define('MODEL_DIR', APP_ROOT . 'models' . DIRECTORY_SEPARATOR);  //model目录的路径
@@ -31,7 +31,7 @@ define('VIEW_DIR', APP_ROOT . 'views' . DIRECTORY_SEPARATOR); //view目录的路
 define('CONFIG_DIR', APP_ROOT . 'config' . DIRECTORY_SEPARATOR);  //config目录的路径
 define('EXTENSION_PATH', 'extensions'); //extension目录文件夹
 define('EXTENSION_DIR', APP_ROOT . EXTENSION_PATH . DIRECTORY_SEPARATOR);  	//extension目录的路径
-define('PLUGIN_DIR', APP_ROOT . 'plugins' . DIRECTORY_SEPARATOR);       	//应用目录文件夹
+define('PLUGIN_DIR', APP_ROOT . 'plugins' . DIRECTORY_SEPARATOR);       	//插件目录文件夹
 define('DEFAULT_CONTROLLER', 'Index');	//设置系统默认的controller名称,默认为:Index
 define('DEFAULT_ACTION', 'index'); //设置系统默认的action名称,默认为index
 define('SYS_LOG', $config['SYS_LOG']); //设置是否开启运行日志

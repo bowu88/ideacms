@@ -2,13 +2,6 @@
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-/**
- * IdeaCMS
- *
- * @since		version 2.5.0
- * @author		连普创想 <976510651@qq.com>
- * @copyright   Copyright (c) 2015-9999, 连普创想, Inc.
- */
 	
 class Sms extends Admin {
 
@@ -19,7 +12,7 @@ class Sms extends Admin {
      */
     public function __construct() {
         parent::__construct();
-        $this->file = FCPATH.'config/sms.php';
+        $this->file = ICPATH.'config/sms.php';
     }
 	
 	/**
@@ -59,7 +52,7 @@ class Sms extends Admin {
 
 		$data = $this->input->post('data', true);
 		if (strlen($data['content']) > 150) {
-            exit(ijson(0, '短信数量太长，保持在70个字内'));
+            exit(da_json(0, '短信数量太长，保持在70个字内'));
         }
 		
 		$mobile = $data['mobile'];
@@ -69,14 +62,14 @@ class Sms extends Admin {
 			$mobile = trim($mobile, ',');
 		}
 		if (substr_count($mobile, ',') > 40) {
-            exit(ijson(0, '手机号码太多，不能超过40个'));
+            exit(da_json(0, '手机号码太多，不能超过40个'));
         }
 
 		$result = ia_sendsms($mobile, $data['content']);
 		if ($result === FALSE) {
-			 exit(ijson(0, '验证发送失败'));
+			 exit(da_json(0, '验证发送失败'));
 		} else {
-			 exit(ijson($result['status'], $result['msg']));
+			 exit(da_json($result['status'], $result['msg']));
 		}
     }
 	

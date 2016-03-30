@@ -15,12 +15,12 @@
     <script type="text/javascript">
         $(function() {
 
-            iset_type('{$data["type"]}');
+            da_set_type('{$data["type"]}');
         });
 
-        function iset_type(v) {
-            $(".ihide").hide();
-            $(".i"+v).show();
+        function da_set_type(v) {
+            $(".da_hide").hide();
+            $(".da_"+v).show();
         }
 
         function resources_on(){

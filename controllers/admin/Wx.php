@@ -2,14 +2,6 @@
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-/**
- * IdeaCMS
- *
- * @since		version 2.5.0
- * @author		连普创想 <976510651@qq.com>
- * @copyright   Copyright (c) 2015-9999, 连普创想, Inc.
- */
-	
 class Wx extends Admin {
 
     public $file;
@@ -23,7 +15,7 @@ class Wx extends Admin {
     public function __construct() {
         parent::__construct();
         $this->expires_in = 7200;
-        $this->file = FCPATH.'config/weixin.php';
+        $this->file = ICPATH.'config/weixin.php';
         $this->cache_file = 'wx_user';
         if(file_exists($this->file))
             $this->wx_config = unserialize(file_get_contents($this->file));
@@ -440,7 +432,7 @@ class Wx extends Admin {
             // 素材
             $cdata = $this->db->where('id', (int)$post['cid'])->get('wx_content')->row_array();
             $cdata['url'] = SITE_URL.APP_DIR.'/index.php?c=wx&a=showResource&id='.$cdata['id'];
-            $cdata['orther'] = istring2array($cdata['orther']);
+            $cdata['orther'] = da_string2array($cdata['orther']);
 
             // 图文素材
             $data['content'] = array(
@@ -504,10 +496,10 @@ class Wx extends Admin {
     {
         $ok = $this->input->get('ok');
         if (!$ok) {
-            $this->adminMsg("正在从微信服务端同步导入关注用户...", iurl('admin/wx/syncUsers', array('ok' => 1)), 2, 2,1);
+            $this->adminMsg("正在从微信服务端同步导入关注用户...", da_url('admin/wx/syncUsers', array('ok' => 1)), 2, 2,1);
         }
         $key = $this->_get_access_token();
-        $data = json_decode(@icatcher_data('https://api.weixin.qq.com/cgi-bin/user/get?access_token='.$key), true);
+        $data = json_decode(@da_catcher_data('https://api.weixin.qq.com/cgi-bin/user/get?access_token='.$key), true);
         if (!$data) {
             $this->adminMsg("微信服务端还没有关注的用户");
         }
@@ -516,7 +508,7 @@ class Wx extends Admin {
         }
         $userid = array();
         foreach ($data['data']['openid'] as $id) {
-            $result = json_decode(@icatcher_data('https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$key.'&openid='.$id), true);
+            $result = json_decode(@da_catcher_data('https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$key.'&openid='.$id), true);
             if (isset($result['errcode'])) {
                 continue;
             }
@@ -812,7 +804,7 @@ class Wx extends Admin {
         }
 
         $url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='.$this->wx_config['appid'].'&secret='.$this->wx_config['appsecret'];
-        $data = json_decode(@icatcher_data($url), true);
+        $data = json_decode(@da_catcher_data($url), true);
         if (!$data) {
             @unlink($name);
             $this->adminMsg('获取access_token失败，请检查服务器是否支持远程链接');

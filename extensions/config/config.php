@@ -191,7 +191,7 @@ $config['log_threshold'] = 0;
 | application/logs/ folder. Use a full server path with trailing slash.
 |
 */
-$config['log_path'] = FCPATH.'cache/error/';
+$config['log_path'] = ICPATH.'cache/error/';
 
 /*
 |--------------------------------------------------------------------------

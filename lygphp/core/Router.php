@@ -299,14 +299,14 @@ class CI_Router {
 		}
 
 		// Does the requested controller exist in the root folder?
-		if (file_exists(FCPATH.'controllers/'.$segments[0].'.php')
-            || file_exists(FCPATH.'controllers/'.ucfirst($segments[0]).'Controller.php'))
+		if (file_exists(ICPATH.'controllers/'.$segments[0].'.php')
+            || file_exists(ICPATH.'controllers/'.ucfirst($segments[0]).'Controller.php'))
 		{
 			return $segments;
 		}
 
 		// Is the controller in a sub-folder?
-		if (is_dir(FCPATH.'controllers/'.$segments[0]))
+		if (is_dir(ICPATH.'controllers/'.$segments[0]))
 		{
 			// Set the directory and remove it from the segment array
 			$this->set_directory($segments[0]);
@@ -317,8 +317,8 @@ class CI_Router {
 //                if ()
 
 				// Does the requested controller exist in the sub-folder?
-				if ( file_exists(FCPATH.'controllers/'.$this->fetch_directory().$segments[0].'.php')
-                    || file_exists(FCPATH.'controllers/'.$this->fetch_directory().ucfirst($segments[0]).'Controller.php'))
+				if ( file_exists(ICPATH.'controllers/'.$this->fetch_directory().$segments[0].'.php')
+                    || file_exists(ICPATH.'controllers/'.$this->fetch_directory().ucfirst($segments[0]).'Controller.php'))
 				{
 
 				}
@@ -340,9 +340,9 @@ class CI_Router {
 				}
 
 				// Does the default controller exist in the sub-folder?
-				if ( ! file_exists(FCPATH.'controllers/'.$this->fetch_directory().$this->default_controller.'.php')
+				if ( ! file_exists(ICPATH.'controllers/'.$this->fetch_directory().$this->default_controller.'.php')
 
-                    && ! file_exists(FCPATH.'controllers/'.$this->fetch_directory().ucfirst($this->default_controller).'Controller.php')
+                    && ! file_exists(ICPATH.'controllers/'.$this->fetch_directory().ucfirst($this->default_controller).'Controller.php')
                 )
 				{
 					$this->directory = '';
@@ -354,17 +354,17 @@ class CI_Router {
 			return $segments;
 		}
 
-        // 验证是否是应用
+        // 验证是否是插件
         $plugin = trim($segments[0], '/');
-        if (is_dir(FCPATH.'plugins/'.$plugin)) {
-            // 是应用
+        if (is_dir(ICPATH.'plugins/'.$plugin)) {
+            // 是插件
             define('APP_DIR', $plugin);
             $segments = array_slice($segments, 1);
             if (!$segments) {
                 $this->set_class($this->default_controller);
                 $this->set_method('index');
             } elseif (count($segments) == 1) {
-                if (file_exists(FCPATH.'plugins/'.APP_DIR.'/controllers/'.ucfirst($segments[0]).'Controller.php')) {
+                if (file_exists(ICPATH.'plugins/'.APP_DIR.'/controllers/'.ucfirst($segments[0]).'Controller.php')) {
                     $this->set_class($segments[0]);
                     $this->set_method('index');
                 } else {

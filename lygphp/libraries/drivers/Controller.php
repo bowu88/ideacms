@@ -284,7 +284,7 @@ abstract class Controller extends Ia_base {
 	}
 	
 	/**
-	 * 单例模式实例化一个应用Model对象
+	 * 单例模式实例化一个插件Model对象
 	 */
     public static function plugin_model($plugin, $table_name) {
 	    return App::plugin_model($plugin, $table_name);
@@ -338,7 +338,7 @@ abstract class Controller extends Ia_base {
 	}
 	
 	/**
-	 * 加载应用配置信息
+	 * 加载插件配置信息
 	 */
     public static function load_plugin_setting($dir) {
 	    $file = PLUGIN_DIR . $dir . DIRECTORY_SEPARATOR . 'config.php';

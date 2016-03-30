@@ -566,31 +566,31 @@ class Ia_base {
  *  Extend 1.7.x ~ 1.9.x, Free 2.0.0 is no longer supported.
  * ------------------------------------------------------
  */
-require FCPATH.'lygphp/libraries/drivers/App.php';
+require ICPATH.'lygphp/libraries/drivers/App.php';
 /*
  * ------------------------------------------------------
  *  Extend 1.7.x ~ 1.9.x, Free 2.0.0 is no longer supported.
  * ------------------------------------------------------
  */
-require FCPATH.'lygphp/libraries/drivers/Model.php';
+require ICPATH.'lygphp/libraries/drivers/Model.php';
 /*
  * ------------------------------------------------------
  *  Extend 1.7.x ~ 1.9.x, Free 2.0.0 is no longer supported.
  * ------------------------------------------------------
  */
-require FCPATH.'lygphp/libraries/drivers/Controller.php';
+require ICPATH.'lygphp/libraries/drivers/Controller.php';
 /*
  * ------------------------------------------------------
  *  Extend 1.7.x ~ 1.9.x, Free 2.0.0 is no longer supported.
  * ------------------------------------------------------
  */
-require FCPATH.'lygphp/libraries/drivers/View.php';
+require ICPATH.'lygphp/libraries/drivers/View.php';
 /*
  * ------------------------------------------------------
  *  Extend 1.8.x ~ 1.9.x, Free 2.0.0 is no longer supported.
  * ------------------------------------------------------
  */
-require FCPATH.'models/ContentModel.php';
+require ICPATH.'models/ContentModel.php';
 
 /* End of file Common.php */
 /* Location: ./system/core/Common.php */

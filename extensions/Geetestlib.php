@@ -46,6 +46,9 @@ class GeetestLib {
         if (strlen($validate) != 32) {
             return FALSE;
         }
+        if (md5(SYS_GEE_PRIVATE_KEY.'geetest'.$challenge) != $validate) {
+            return FALSE;
+        }
         return TRUE;
     }
 

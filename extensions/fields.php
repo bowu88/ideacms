@@ -464,12 +464,11 @@ function ueditor_editor($name, $content = '', $field = '') {
 	$str		= '';
 	$page		= isset($setting['pagebreak']) || (!isset($setting['system']) && $name == 'content') ? ",'snapscreen','pagebreak'" : '';
 	$source		= strpos($_SERVER['QUERY_STRING'], 's=' . ADMIN_NAMESPACE) === false || strpos($_SERVER['QUERY_STRING'], 's=' . ADMIN_NAMESPACE) === false ? '' : "'source', '|',";
-	$appkey		= file_exists(EXTENSION_DIR . 'ueditor/appkey.txt') ? ia_geturl(EXTENSION_DIR . 'ueditor/appkey.txt') : '';
 	if (!defined('IDEACMS_EDITOR_LD')) { //加载相关js
 	    $str.= '
 		<script type="text/javascript">var ueditor_url="' . EXT_PATH . 'ueditor/";</script>
-		<script type="text/javascript" charset="utf-8" src="' . EXT_PATH . 'ueditor/editor_config.js"></script>
-		<script type="text/javascript" charset="utf-8" src="' . EXT_PATH . 'ueditor/editor_all.js"></script>
+		<script type="text/javascript" charset="utf-8" src="' . EXT_PATH . 'ueditor/ueditor.config.js"></script>
+		<script type="text/javascript" charset="utf-8" src="' . EXT_PATH . 'ueditor/ueditor.all.min.js"></script>
 		';
 		define('IDEACMS_EDITOR_LD', 1);//防止重复加载JS
 	}
@@ -478,20 +477,6 @@ function ueditor_editor($name, $content = '', $field = '') {
 		<script type=\"text/plain\" id=\"fc_" . $id . "\" name=\"data[" . $id . "]\" style=\"width:" . $w . "%\">" . htmlspecialchars_decode($content) . "</script>
 		<script type=\"text/javascript\">
 			var editorOption = {
-			    UEDITOR_HOME_URL: ueditor_url,
-				toolbars:[[
-				" . $source . " 'undo', 'redo', '|',
-                'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch','autotypeset', '|',
-                'blockquote', '|', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist','selectall', 'cleardoc', '|', 'customstyle',
-                'paragraph', '|','rowspacingtop', 'rowspacingbottom','lineheight', '|','fontfamily', 'fontsize', '|',
-                'directionalityltr', 'directionalityrtl', '|', '', 'indent', '|',
-                'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|','touppercase','tolowercase','|',
-                'link', 'unlink', 'anchor', '|', 'imagenone', 'imageleft', 'imageright',
-                'imagecenter', '|', 'insertimage', 'emotion', 'insertvideo', 'music', 'attachment', 'map', 'gmap', 'insertframe','highlightcode','webapp','template','background', '|',
-                'horizontal', 'date', 'time', 'spechars','|',
-                'inserttable', 'deletetable', 'insertparagraphbeforetable', 'insertrow', 'deleterow', 'insertcol', 'deletecol', 'mergecells', 'mergeright', 'mergedown', 'splittocells', 'splittorows', 'splittocols', '|',
-                'print', 'preview', 'searchreplace'," . $page . ",'help'
-				]],
 				lang: \"" . SYS_LANGUAGE . "\",
 				initialContent:'',
 				autoClearinitialContent:false,
@@ -503,17 +488,8 @@ function ueditor_editor($name, $content = '', $field = '') {
 				autoFloatEnabled:false,
 				autoHeightEnabled:false,
 				pageBreakTag: \"{-page-}\",
-				initialStyle:'body{font-size:14px;line-height:20px;}',
-				imageUrl:\"" . url('attachment/ueditor_upload') . "&dir=image&document=\"+idea_admin_document,
-                imagePath:\"" . SITE_PATH . "\",
-				imageManagerUrl:\"" . url('attachment/ueditor_manager', array('dir' => 'image')) . "\",
-                imageManagerPath:\"" . SITE_PATH . "\",
-				fileUrl:\"" . url('attachment/ueditor_upload') . "&dir=file&document=\"+idea_admin_document,
-				filePath:\"" . SITE_PATH . "\",
-				webAppKey:\"" . $appkey . "\",
 				wordCount:false,
 				maximumWords:999999999999999999999999,
-				getMovieUrl:ueditor_url+\"getMovie.php\",
 				catchRemoteImageEnable:false
 			};
 			var editor_a = new baidu.editor.ui.Editor(editorOption);
@@ -538,13 +514,6 @@ function ueditor_editor($name, $content = '', $field = '') {
 				allHtmlEnabled:true,
 				autoHeightEnabled:false,
 				pageBreakTag: \"{-page-}\",
-				initialStyle:'body{font-size:14px;line-height:20px;}',
-				imageUrl:\"" . url('attachment/ueditor_upload', array('dir' => 'image')) . "\",
-                imagePath:\"" . SITE_PATH . "\",
-				imageManagerUrl:\"" . url('attachment/ueditor_manager', array('dir' => 'image')) . "\",
-                imageManagerPath:\"" . SITE_PATH . "\",
-				wordCount:false,
-				elementPathEnabled:false,
 				autoFloatEnabled:false,
 				catchRemoteImageEnable:false
 			};
@@ -570,12 +539,6 @@ function ueditor_editor($name, $content = '', $field = '') {
 				allHtmlEnabled:false,
 				autoHeightEnabled:false,
 				pageBreakTag: \"{-page-}\",
-				initialStyle:'body{font-size:14px;line-height:20px;}',
-				imageUrl:\"" . url('attachment/ueditor_upload', array('dir' => 'image')) . "\",
-                imagePath:\"" . SITE_PATH . "\",
-				imageManagerUrl:\"" . url('attachment/ueditor_manager', array('dir' => 'image')) . "\",
-                imageManagerPath:\"" . SITE_PATH . "\",
-				wordCount:false,
 				elementPathEnabled:false,
 				autoFloatEnabled:false,
 				catchRemoteImageEnable:false

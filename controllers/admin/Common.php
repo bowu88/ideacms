@@ -9,7 +9,7 @@ class Admin extends Common {
 
 	public function __construct() {
 		parent::__construct();
-        define('IS_FC_ADMIN', intval(SYS_MODE));
+        define('IS_IC_ADMIN', intval(SYS_MODE));
         if (SYS_MODE == 1) {
             // 中级
         } elseif (SYS_MODE == 2) {

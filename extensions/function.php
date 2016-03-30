@@ -1,6 +1,82 @@
 <?php
 
-if (!defined('IN_IDEACMS')) exit();
+//if (!defined('IN_IDEACMS')) exit();
+
+// 极验验证调用方式
+function da_geetest($product = 'embed', $submit = '') {
+
+    $url = SITE_URL;
+	$add = '';
+
+    if ($product == 'popup') {
+        $add = 'gt_captcha_obj.bindOn("#'.$submit.'");';
+    }
+	
+    return '
+    <div class="box" id="div_geetest_lib">
+        <div id="div_id_embed"></div>
+        <script type="text/javascript">
+            var gtFailbackFrontInitial = function(result) {
+                var s = document.createElement("script");
+                s.id = "gt_lib";
+                s.src = "http://static.geetest.com/static/js/geetest.0.0.0.js";
+                s.charset = "UTF-8";
+                s.type = "text/javascript";
+                document.getElementsByTagName("head")[0].appendChild(s);
+                var loaded = false;
+                s.onload = s.onreadystatechange = function() {
+                if (!loaded && (!this.readyState|| this.readyState === "loaded" || this.readyState === "complete")) {
+                    loadGeetest(result);
+                    loaded = true;
+                }
+                };
+            }
+            var loadGeetest = function(config) {
+window.gt_captcha_obj = new window.Geetest({
+                    gt : config.gt,
+                    challenge : config.challenge,
+                    product : "'.$product.'",
+                    offline : !config.success
+                });
+                gt_captcha_obj.appendTo("#div_id_embed");
+                '.$add.'
+            }
+            s = document.createElement("script");
+            s.src = "http://api.geetest.com/get.php?callback=gtcallback";
+            $("#div_geetest_lib").append(s);
+            var gtcallback =( function() {
+var status = 0, result, apiFail;
+                return function(r) {
+                    status += 1;
+                    if (r) {
+                        result = r;
+                        setTimeout(function() {
+                            if (!window.Geetest) {
+                                apiFail = true;
+                                gtFailbackFrontInitial(result)
+                            }
+                        }, 1000)
+                    }
+                    else if(apiFail) {
+                        return
+                    }
+                    if (status == 2) {
+                        loadGeetest(result);
+                    }
+                }
+            })()
+
+            $.ajax({url : "'.$url.'index.php?c=api&a=geetest&rand="+Math.round(Math.random()*100),
+                type : "get",
+                dataType : "JSON",
+                success : function(result) {
+                    console.log(result);
+                    gtcallback(result)
+                }
+            })
+        </script>
+    </div>';
+}
 
 /**
  * 静态页面处理信息函数
@@ -165,7 +241,7 @@ function position($site, $posid, $catid = 0, $num = 0) {
 }
 
 /**
- * 运行应用/验证应用
+ * 运行插件/验证插件
  */
 function plugin($dir) {
     $cache  = new cache_file();
@@ -174,10 +250,10 @@ function plugin($dir) {
     $plugin = $data[$dir];
     if (empty($plugin)) return false;
     if ($plugin['typeid'] == 1) {
-        //内置控制器应用，判断应用是否可用
+        //内置控制器插件，判断插件是否可用
 		return $plugin['disable'] ? false : true;
     } else {
-        //输出代码应用
+        //输出代码插件
         $runphp = APP_ROOT . 'plugins/' . $plugin['dir'] . '/run.php';
         $runhtm = APP_ROOT . 'plugins/' . $plugin['dir'] . '/run.html';
         if (!file_exists($runphp)) return false;
@@ -268,7 +344,7 @@ function thumb($img, $width = null, $height = null) {
 function _thumb($img, $width = null, $height = null) {
 	return url('api/thumb', array('img' => str_replace('=', '', base64_encode(ia_authcode(array('ideacms' => $img), 'ENCODE'))), 'width' => $width, 'height' => $height));
 }
-
+ 
 /**
  * 提取关键字
  */
@@ -387,7 +463,7 @@ function catposids($catid, $catids = '', $category) {
         return false;
     }
     $row = $category[$catid];
-    $catids = $catid . ',';
+    $catids = $catid . ','; 
     if ($row['parentid']) {
         $catids.= catposids($row['parentid'], $catids, $category);
     }
@@ -405,7 +481,7 @@ function _catposids($catid, $catids = '', $category) {
         return false;
     }
     $row = $category[$catid];
-    $catids = $catid . ',';
+    $catids = $catid . ','; 
     if ($row['child'] && $row['arrchildid']) {
 		$id = explode(',', $row['arrchildid']);
 		foreach ($id as $t) {
@@ -678,7 +754,7 @@ function baidunews($data, $update) {
 		$baidunews.= "<category>" . htmlspecialchars(strip_tags($cats[$item['catid']]['catname'])) . "</category>\n";
 		$baidunews.= "<pubDate>" .  date('Y-m-d', $item['updatetime']) . "</pubDate>\n";
 		$baidunews.= "</item>\n";
-    }
+    } 
     $baidunews .= "</document>\n";
 	unset($data);
     file_put_contents(APP_ROOT . $filename, $baidunews, LOCK_EX);
@@ -796,7 +872,7 @@ function new_html_special_chars($string) {
 	return $string;
 }
 
-function ijson($status, $code = '', $id = 0) {
+function da_json($status, $code = '', $id = 0) {
     return json_encode(array('status' => $status, 'code' => $code, 'id' => $id));
 }
 
@@ -893,13 +969,6 @@ function tagfont($tag, $code, $url) {
 	return "<a href=\"$url\" target=\"_blank\">$tag</a>$code";
 }
 
-
-// 格式获取文件名
-function ia_get_file_name($file) {
-  return str_replace(array('/', '\\', '..'), '', safe_replace($file));
-}
-
-
 /**
  * 文字块调用
  * @param  $id
@@ -911,6 +980,11 @@ function block($id) {
     $row   = $data[$id];
     if (empty($row)) return null;
     return htmlspecialchars_decode($row['content']);
+}
+
+// 格式获取文件名
+function ia_get_file_name($file) {
+	return str_replace(array('/', '\\', '..'), '', safe_replace($file));
 }
 
 /**
@@ -925,7 +999,7 @@ function block_name($id){
 	if (empty($row)) return null;
 	return htmlspecialchars_decode($row['name']);
 }
-function iavatar($uid, $size = 90) {
+function da_avatar($uid, $size = 90) {
     return get_member_avatar($uid, $size);
 }
 
@@ -982,8 +1056,8 @@ function get_member_info($uid, $more = 0) {
 
 /**
  * 编码转换函数
- * @param  $str
- * @param  $from
+ * @param  $str 
+ * @param  $from 
  * @param  $to
  * @return string
  */
@@ -1009,7 +1083,7 @@ function utf8_to_gbk($utfstr) {
 	$filename	= EXTENSION_DIR . 'encoding' . DIRECTORY_SEPARATOR . 'gb-unicode.table';
 	$UC2GBTABLE = array();
 	$fp	= fopen($filename, 'rb');
-	while($l = fgets($fp, 15)) {
+	while($l = fgets($fp, 15)) {        
 		$UC2GBTABLE[hexdec(substr($l, 7, 6))] = hexdec(substr($l, 0, 6));
 	}
 	fclose($fp);
@@ -1018,10 +1092,10 @@ function utf8_to_gbk($utfstr) {
 	for($i=0; $i<$ulen; $i++) {
 		$c  = $utfstr[$i];
 		$cb = decbin(ord($utfstr[$i]));
-		if(strlen($cb)==8) {
+		if(strlen($cb)==8) { 
 			$csize = strpos(decbin(ord($cb)), '0');
 			for($j = 0; $j < $csize; $j++) {
-				$i++;
+				$i++; 
 				$c .= $utfstr[$i];
 			}
 			$c = utf8_to_unicode($c);
@@ -1047,8 +1121,8 @@ function gbk_to_utf8($gbstr) {
 	$filename  = EXTENSION_DIR . 'encoding' . DIRECTORY_SEPARATOR . 'gb-unicode.table';
 	$CODETABLE = array();
 	$fp	= fopen($filename, 'rb');
-	while ($l = fgets($fp, 15)) {
-		$CODETABLE[hexdec(substr($l, 0, 6))] = substr($l, 7, 6);
+	while ($l = fgets($fp, 15)) { 
+		$CODETABLE[hexdec(substr($l, 0, 6))] = substr($l, 7, 6); 
 	}
 	fclose($fp);
 	$ret  = '';
@@ -1209,6 +1283,7 @@ function linkagelist($keyid, $id = 0) {
  */
 function linkagepos($keyid, $id, $urlrule, $s = ' > ') {
 	$ids  = linkageids($keyid, $id);
+	$str = '';
 	foreach ($ids as $_id) {
 	    $data = linkagedata($keyid, $_id);
 		$str .= $urlrule ? "<a href=\"" . str_replace('{linkageid}', $data['id'], $urlrule) . "\">" . $data['name'] . "</a>" : $data['name'];
@@ -1223,7 +1298,7 @@ function linkagepos($keyid, $id, $urlrule, $s = ' > ') {
 function linkage_ids($keyid, $id, $ids = '') {
     $datas = get_linkage_data();
     $data  = $datas[$keyid]['data'][$id];
-    $ids   = $id . ',';
+    $ids   = $id . ','; 
     if ($data['parentid']) $ids .= linkage_ids($keyid, $data['parentid'], $ids);
     return $ids;
 }
@@ -1281,8 +1356,8 @@ function linkageform($linkageid = 0, $defaultvalue = 0, $id = 'linkage', $level 
 	}
     $string.= '<script type="text/javascript">
 				$(function(){
-					var $ld5 = $(".ideacms-select-' . $id . '");
-					$ld5.ld({ajaxOptions:{"url":"' . SITE_URL . 'index.php?c=api&a=linkage&id=' . $linkageid . '"},defaultParentId:0})
+					var $ld5 = $(".ideacms-select-' . $id . '");					  
+					$ld5.ld({ajaxOptions:{"url":"' . SITE_URL . 'index.php?c=api&a=linkage&id=' . $linkageid . '"},defaultParentId:0})	 
 					var ld5_api = $ld5.ld("api");
 					ld5_api.selected(' . $default_txt . ');
 					$ld5.bind("change",onchange);
@@ -1335,7 +1410,7 @@ function baiduMap($modelid, $name, $value, $width = 600, $height = 400) {
 	var mapObj=null;
 	lngX = "' . $lngX . '";
 	latY = "' . $latY . '";
-	zoom = "' . $zoom . '";
+	zoom = "' . $zoom . '";		
 	var mapObj = new BMap.Map("mapObj");
 	var ctrl_nav = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
 	mapObj.addControl(ctrl_nav);
@@ -1353,7 +1428,7 @@ function baiduMap($modelid, $name, $value, $width = 600, $height = 400) {
 		var point = new BMap.Point(lngX,latY);
 		var marker = new BMap.Marker(point, {icon: myIcon});
 		mapObj.addOverlay(marker);
-	}';
+	}';	
 	$str   .='</script>';
 	return $str;
 }
@@ -1518,7 +1593,7 @@ class php5replace {
  * @param	string	$url
  * @return	string
  */
-function icatcher_data($url) {
+function da_catcher_data($url) {
 
     // fopen模式
     if (ini_get('allow_url_fopen')) {
@@ -1549,11 +1624,11 @@ function icatcher_data($url) {
  * @param	object	$obj	数组对象
  * @return	array
  */
-function iobject2array($obj) {
+function da_object2array($obj) {
     $_arr = is_object($obj) ? get_object_vars($obj) : $obj;
     if ($_arr && is_array($_arr)) {
         foreach ($_arr as $key => $val) {
-            $val = (is_array($val) || is_object($val)) ? iobject2array($val) : $val;
+            $val = (is_array($val) || is_object($val)) ? da_object2array($val) : $val;
             $arr[$key] = $val;
         }
     }
@@ -1566,7 +1641,7 @@ function iobject2array($obj) {
  * @param	string	$data	字符串
  * @return	array
  */
-function istring2array($data) {
+function da_string2array($data) {
     return $data ? (is_array($data) ? $data : unserialize(stripslashes($data))) : array();
 }
 
@@ -1576,7 +1651,7 @@ function istring2array($data) {
  * @param	array	$data	数组
  * @return	string
  */
-function iarray2string($data) {
+function da_array2string($data) {
     return $data ? addslashes(serialize($data)) : '';
 }
 
@@ -1591,14 +1666,41 @@ function ia_sendsms($mobile, $content) {
     $file = ICPATH.'config/sms.php';
     $config = @is_file($file) ? string2array(file_get_contents($file)) : array();
 
-    $result = icatcher_data('http://www.lygphp.com/index.php?uid='.$config['uid'].'&key='.$config['key'].'&mobile='.$mobile.'&content='.$content.'【'.$config['note'].'】&domain='.trim(str_replace('http://', '', SITE_URL), '/').'&sitename='.CMS_NAME);
+    $result = da_catcher_data('http://sms.lygphp.com/index.php?uid='.$config['uid'].'&key='.$config['key'].'&mobile='.$mobile.'&content='.$content.'【'.$config['note'].'】&domain='.trim(str_replace('http://', '', SITE_URL), '/').'&sitename='.CMS_NAME);
     if (!$result) {
         return FALSE;
     }
 
-    $result = iobject2array(json_decode($result));
+    $result = da_object2array(json_decode($result));
 
     @file_put_contents(ICPATH.'cache/sms.log', date('Y-m-d H:i:s').' ['.$mobile.'] ['.$result['msg'].'] （'.str_replace(array(chr(13), chr(10)), '', $content).'）'.PHP_EOL, FILE_APPEND);
 
     return $result;
+}
+
+
+/**
+ * 当前URL
+ */
+function ia_now_url() {
+
+	$pageURL = 'http';
+	if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+		$pageURL.= 's';
+	}
+
+	$pageURL.= '://';
+	if (strpos($_SERVER['HTTP_HOST'], ':') !== FALSE) {
+		$url = explode(':', $_SERVER['HTTP_HOST']);
+		if ($url[0]) {
+			$pageURL.= $_SERVER['HTTP_HOST'];
+		} else {
+			$pageURL.= $url[0];
+		}
+	} else {
+		$pageURL.= $_SERVER['HTTP_HOST'];
+	}
+	$pageURL.= $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : $_SERVER['PHP_SELF'];
+
+	return $pageURL;
 }

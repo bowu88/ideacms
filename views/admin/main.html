@@ -23,7 +23,7 @@ tr { height:25px;}
 <script type="text/javascript">
 $(function(){
 	$.getScript("{url('admin/index/ajaxcount', array('type'=>'member'))}");
-    $.getScript("{url('admin/index/ajaxcount', array('type'=>'size'))}");
+  $.getScript("{url('admin/index/ajaxcount', array('type'=>'size'))}");
 	$.getScript("{url('admin/index/ajaxcount', array('type'=>'install'))}");
 	if ($.browser.msie && parseInt($.browser.version) < 7) $('#browserVersionAlert').show();
 });

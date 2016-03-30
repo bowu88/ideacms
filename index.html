@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ideacms [v1.3]</title>
+<meta name="keywords" content="ideacms" />
+<meta name="description" content="ideacms" />
+<meta name="author" content="976510651@qq.com" >
+<meta name="Copyright" content="IdeaCMS v1.3" >
+<link rel="stylesheet" type="text/css" href="/statics/web/images/style.css" />
+<link rel="stylesheet" href="/statics/web//images/style.css">
+<script type="text/javascript">var sitepath = '/index.php';</script>
+<script type="text/javascript" src="/statics/admin/js/jquery.min.js"></script>
+<script type="text/javascript" src="/statics/web/js/header.js"></script>
+<script type="text/javascript" src="/statics/web/js/jquery.autocomplete.js"></script>
+<!--[if IE 6]>
+<script src="/statics/web/js/iepng.js" type="text/javascript"></script>
+<script type="text/javascript">
+   EvPNG.fix('div, ul, img, li, input');
+</script>
+<![endif]-->
+</head>
+<body>
+<!--header begin-->
+<div class="header">
+    <div class="head">
+        <div class="left"><script type="text/javascript" src="/index.php?c=api&a=user"></script></div>
+        <div class="right"><a href="/index.php?c=tag">关键词</a> | <a href="/index.php?c=content&a=post">我要投稿</a></div>
+    </div>
+</div>
+<!--header end-->
+<!--wrap begin-->
+<div id="wrap">
+    <div class="blank10 clear"></div>
+	<!--top_a begin-->
+	<div class="top_a">
+		<div class="logo"><a href="/"><img src="/statics/web/images/ideacms.png" border="0" /></a></div>
+		<div class="search">
+            <form id="SearchForm" name="SearchForm" method="Get" action="" onSubmit="return search_post()">
+            <div class="searchsd">
+            <input name="searchkw" id="SearchKey" type="text" class="textbox" value=""/><span>
+            <input type="image" class="inputButton" name="Submit1" src="/statics/web/images/btn.gif" align="absmiddle"  onClick="return search_post()" />
+            </span>
+            </div>
+            </form>
+            <div class="clear"></div>
+            <div class="searchkw">
+						</div>
+		</div>
+	</div>
+	<!--top_a end-->
+	<div class="blank10 clear"></div>
+	<!--menu begin-->
+	<div id="menu_out">
+        <div id="menul"></div>
+		<div id="menum">
+			<ul>
+				<li class="currclass"><a href="/">首页</a></li>
+                                <li><a href="http://www.lygphp.com" target="_blank">网站建设</a></li>
+			</ul>
+		</div>
+		<div id="menur"></div>
+	</div>
+	<!--EndMenu-->
+    <div class="blank10 clear"></div>
+  </div>
+    <div class="mainbox">
+        <div class="left">
+            <!--left01 begin-->
+            <div class="left01">
+                <div class="floatl">
+                    <script type='text/javascript' src='/statics/web/js/KinSlideshow.js'></script>
+                    <script type="text/javascript">
+                    $(function(){
+                        $("#KinSlideshow").KinSlideshow({
+                            moveStyle:"down", //切换参数left,right,down,up
+                            intervalTime:3, //切换时间
+                            mouseEvent:"mouseover",
+                            titleBar:{titleBar_height:30,titleBar_bgColor:"#656565",titleBar_alpha:0.5}, //标题背景
+                            titleFont:{TitleFont_size:12,TitleFont_color:"#FFFFFF",TitleFont_weight:"normal"}, //标题字体
+                            btn:{btn_bgColor:"#FFFFFF",btn_bgHoverColor:"#FF7A00",btn_fontColor:"#000000",btn_fontHoverColor:"#FFFFFF",btn_borderColor:"#cccccc",btn_borderHoverColor:"#666666",btn_borderWidth:1} //按钮设置
+                        });
+                    })
+                    </script>
+                    <div id="KinSlideshow" style="visibility:hidden;overflow:hidden;width:290px;height:270px;">
+                                            </div>
+                </div>
+                <div class="floatr">
+                    <div class="news">
+                    <!--首页头条-->
+                                        </div>
+                    <div class="clear"></div>
+                    <div class="newstop7">
+                    <ul>
+                    <!--最新文章-->
+                                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--left01 end-->
+            <div class="clear blank10"></div>
+            <!--left02 begin-->
+            <div class="left02">
+                <!--图片风采开始-->
+                <div id="schoolPhoto" class="mod-banner">
+                    <div id="focus_img">
+                    <ul class="thumbListStlye4">
+                    <!--循环图片模型(modelid=2)中的数据-->
+                                        </ul>
+                    </div>
+                    <span id="btn_focus_next" class="btn"></span>
+                    <span id="btn_focus_prev" class="btn"></span>
+                </div>
+                <script type='text/javascript' src='/statics/web/js/pic_roll.js'></script>
+                <script type="text/javascript">
+                $(function(){
+                    var clearTimer = null;
+                    var SleepTime = 2000;   //停留时长，单位毫秒
+                    $("#focus_img").jCarouselLite({
+                        btnNext: "#btn_focus_next",
+                        btnPrev: "#btn_focus_prev",
+                        visible: 4,
+                        scroll:4,
+                        speed: 1000,//滚动速度，单位毫秒
+                        auto:5000,
+                        mouseOver:true
+                    });
+                });
+                </script>
+                <!--图片风采结束-->
+            </div>
+            <!--left02 end-->
+            <div class="clear blank10"></div>
+            <!--栏目循环 begin-->
+			<!--栏目循环默认循环所有顶级内部栏目，你也可以通过loop来指定栏目循环-->
+            <!--循环控制变量，可以对栏目循环的个数控制-->
+                        <!--栏目循环 end-->
+        </div>
+        <div class="right">
+            <!--首页推荐 begin-->
+            <div class="right02">
+                <div class="scrollFrame">
+                    <div class="scrollUl"><div class="textdiv"><strong>推荐</strong></div></div>
+                    <div class="bor01 cont">
+                        <div class="display">
+                        <ul class="syfresh">
+                                                </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--首页推荐 end-->
+            <div class="clear blank10"></div>
+            <!--最近更新 begin-->
+            <div class="right03">
+               <div class="title"><span>最近更新</span></div>
+               <div class="right03box">
+               <ul>
+                              </ul>
+               </div>
+            </div>
+            <!--最近更新 end-->
+            <div class="clear blank10"></div>
+            <!--阅读排行 begin-->
+            <div class="right03">
+                <div class="title"><span>阅读排行</span></div>
+                <div class="right03box">
+                <ul>
+                                </ul>
+                </div>
+            </div>
+            <!--阅读排行 end-->
+            <div class="clear blank10"></div>
+       </div>
+    </div>
+        <div class="clear blank10"></div>
+    <!--底部信息-->
+    <div class="footer">
+    <div class="copyright">
+        <div class="foot">
+    <a href="/">首页</a>
+				<a href="/index.php?s=member">会员中心</a>
+		<a href="http://www.lygphp.com" target="_blank">技术支持</a>
+     <p><p>ideacms</p>  Powered by IdeaCMS v1.3 © 2015. <a rel="nofollow" href="http://www.miibeian.gov.cn/" target="_blank">ICP备案序号</a></p>
+    </div>
+     </div>
+   </div>
+
+<!--wrap end-->
+</body>
+</html>

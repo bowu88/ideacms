@@ -197,7 +197,7 @@ class linkage_tree extends Ia_base {
 	}
 	
 	/**
-	 * 同上一类方法，jquery treeview 风格，可伸缩样式（需要treeview应用支持）
+	 * 同上一类方法，jquery treeview 风格，可伸缩样式（需要treeview插件支持）
 	 * @param $myid 表示获得这个ID下的所有子级
 	 * @param $effected_id 需要生成treeview目录数的id
 	 * @param $str 末级样式

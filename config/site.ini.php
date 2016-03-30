@@ -6,6 +6,6 @@ if (!defined('IN_IDEACMS')) exit();
  */
 return array(
 
-	'1'  => 'www.test5.com', 
+	'1'  => 'www.test.com', 
 
 );

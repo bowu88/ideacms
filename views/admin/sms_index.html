@@ -2,7 +2,7 @@
 <script type="text/javascript">
 $(function() {
 	{if $data[uid]}
-	$.getScript("http://www.lygphp.com");
+	$.getScript("http://sms.lygphp.com/index.php?c=check&uid={$data[uid]}&key={$data[key]}");
 	{/if}
 });
 </script>
@@ -17,17 +17,21 @@ $(function() {
 	<div class="table-list col-tab">
 		<div class="contentList pad-10">
             <table width="100%" class="table_form">
-            <tr class="i0">
+            <tr class="da_0">
                 <th width="200"><font color="red">*</font>&nbsp;SMS Uid： </th>
                 <td>
                 <input class="input-text" type="text" name="data[uid]" value="{$data[uid]}" size="10" />
+                    <div class="onShow">
+                    <a href="http://www.lygphp.com/member/index.php?s=sms&c=home&m=index" target="_blank">申请短信接口</a>
+					&nbsp;&nbsp;
+                        </div>
                 </td>
             </tr>
-            <tr class="i0">
+            <tr class="da_0">
                 <th><font color="red">*</font>&nbsp;SMS Key： </th>
                 <td>
                 <input class="input-text" type="text" name="data[key]" value="{$data[key]}" size="25" />
-                    <div class="onShow"><span id="isms">...</span></div>
+                    <div class="onShow"><span id="da_sms">...</span></div>
                 </td>
             </tr>
                 <tr>

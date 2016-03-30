@@ -1,7 +1,7 @@
 <?php
 
 class TagController extends Admin {
-
+    
     protected $tag;
 
     protected $cat;
@@ -18,7 +18,7 @@ class TagController extends Admin {
         }
         $this->cat = $this->db->where('child','0')->get('category')->result_array();
 	}
-
+	
 	public function indexAction() {
 	    if ($this->post('submit_del') && $this->post('form') == 'del') {
 	        foreach ($_POST as $var=>$value) {
@@ -67,7 +67,7 @@ class TagController extends Admin {
 	    ));
 	    $this->view->display('admin/tag_list');
 	}
-
+	
 	public function addAction() {
 
 	    if ($this->post('submit')) {
@@ -89,7 +89,7 @@ class TagController extends Admin {
         );
 	    $this->view->display('admin/tag_add');
 	}
-
+	
     public function editAction() {
 
         $id = (int)$this->get('id');
@@ -118,7 +118,7 @@ class TagController extends Admin {
 	    $this->view->assign('data', $data);
 	    $this->view->display('admin/tag_add');
 	}
-
+	
     public function delAction($id=0, $all=0) {
         if (!auth::check($this->roleid, 'tag-del', 'admin')) {
             $this->adminMsg(lang('a-com-0', array('1'=>'tag', '2'=>'del')));
@@ -128,7 +128,7 @@ class TagController extends Admin {
 	    $this->tag->delete('id=' . $id);
 	    $all or $this->adminMsg($this->getCacheCode('tag') . lang('success'), url('admin/tag/index'), 3, 1, 1);
 	}
-
+	
 	public function importAction() {
 
 	    if ($this->post('submit')) {
@@ -170,7 +170,7 @@ class TagController extends Admin {
         );
 	    $this->view->display('admin/tag_import');
 	}
-
+	
 	public function cacheAction($show=0) {
 	    $qok  = $this->get('qok');
 		if ($show == 0 && !$qok) {

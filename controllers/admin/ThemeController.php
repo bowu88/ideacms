@@ -18,13 +18,13 @@ class ThemeController extends Admin {
         $dlist = $flist = array();
         if ($data) {
             foreach ($data as $t) {
-                if (!$dir && $t == 'header.html') {
+                if (!$dir && ($t == 'header.html' || $t == 'weixin' || $t == 'mobile')) {
                     continue;
                 };
                 $path = $dir . $t . DIRECTORY_SEPARATOR;
 				if (@is_dir(VIEW_DIR . $path) && !in_array($t, array('admin', 'install'))) {  //目录
 				    $ext = 'dir';
-					$dlist[] = array('name'=>$t, 'dir'=>base64_encode($path), 'ico'=>ADMIN_THEME . 'images/ext/dir.gif', 'isdir'=>1, 'url'=>url('admin/theme/index', array('dir'=>base64_encode($path), 'iframe'=>$iframe)));
+					$dlist[] = array('name'=>$t, 'dir'=>base64_encode($path), 'tdir' => basename($path), 'ico'=>ADMIN_THEME . 'images/ext/dir.gif', 'isdir'=>1, 'url'=>url('admin/theme/index', array('dir'=>base64_encode($path), 'iframe'=>$iframe)));
 				} else { //文件
 				    $ext = strtolower(trim(substr(strrchr($t, '.'), 1, 10)));
 					if (in_array($ext, array('html', 'js', 'css'))) {
@@ -102,6 +102,86 @@ class ThemeController extends Admin {
 		));
 		$this->view->display('admin/theme_add');
     }
+
+	public function installAction() {
+
+		$dir = $this->input->get('name');
+		if (!$this->input->get('todo')) {
+			$this->adminMsg('正在安装模板,请稍后....', url('admin/theme/install', array('todo'=>1, 'name'=>$dir)), 1, 1, 1);
+		}
+
+		$file = ICPATH.'views/'.$dir.'/install.sql';
+		if (!is_dir(ICPATH.'views/'.$dir)) {
+			$this->adminMsg('模板目录不存在');
+		}
+
+		// 执行sql
+		if (is_file($file)) {
+			$sql = file_get_contents($file);
+			$sql = str_replace(array('{prefix}', '{pre}'), $this->db->dbprefix, $sql);
+			$this->installsql($sql);
+		}
+
+		// 更改系统配置
+		$config = self::load_config('site' . DIRECTORY_SEPARATOR . $this->siteid);
+		$config['SITE_THEME'] = $dir;
+		$data = $config;
+		$body = "<?php" . PHP_EOL . "if (!defined('IN_IDEACMS')) exit();" . PHP_EOL . PHP_EOL . "/**" . PHP_EOL . " * " . $data['SITE_NAME'] . "配置" . PHP_EOL . " */" . PHP_EOL . "return array(" . PHP_EOL . PHP_EOL;
+		foreach ($config as $var=>$val) {
+			if ($var == 'SITE_LANGUAGE' && empty($val)) {
+				$value = "'zh-cn'";
+			} elseif ($var == 'SITE_DOMAIN') {
+				$value = "'" . $config['SITE_DOMAIN'] . "'";
+			} elseif ($var == 'SITE_EXTEND_ID') {
+				$value = "'" . $config['SITE_EXTEND_ID'] . "'";
+			} else {
+				$value = $data[$var] == 'false' || $data[$var] == 'true' ? $data[$var] : "'" . $data[$var] . "'";
+			}
+			$body .= "	'" . strtoupper($var) . "'" . $this->setspace($var) . " => " . $value . ",  //" . PHP_EOL;
+		}
+		$body .= PHP_EOL . ");";
+
+		file_put_contents(CONFIG_DIR . 'site' . DIRECTORY_SEPARATOR . $this->siteid . '.ini.php', $body);
+		$this->adminMsg('安装成功', url('admin/theme/index', array('todo'=>1, 'name'=>$dir)), 1, 1, 1);
+
+	}
+
+	/**
+	 * 空格填补
+	 */
+	private function setspace($var) {
+		$len = strlen($var) + 2;
+		$cha = 25 - $len;
+		$str = '';
+		for ($i = 0; $i < $cha; $i ++) {
+			$str.= ' ';
+		}
+		return $str;
+	}
+
+	//执行sql语句
+	private function installsql($sql) {
+		$sql = str_replace(array(PHP_EOL, chr(13), chr(10)), 'SQL_IDEACMS_EOL', $sql);
+		$ret = array();
+		$num = 0;
+		$data = explode(';SQL_IDEACMS_EOL', trim($sql));
+		foreach($data as $query){
+			$queries = explode('SQL_IDEACMS_EOL', trim($query));
+			foreach($queries as $query) {
+				$ret[$num] .= $query[0] == '#' || $query[0].$query[1] == '--' ? '' : $query;
+			} $num++;
+		}
+		unset($sql);
+		foreach($ret as $query) {
+			if(trim($query)) {
+				if ($this->mysqli) {
+					mysqli_query($this->mysqli, $query);
+				} else {
+					mysql_query($query);
+				}
+			}
+		}
+	}
 	
 	public function delAction() {
 	    $dir  = base64_decode($this->get('name'));

@@ -1,21 +1,21 @@
 <?php
 
 class PluginController extends Admin {
-
+    
     private $dir;
     private $plugin;
-
+    
     public function __construct() {
 		parent::__construct();
 		$this->dir = PLUGIN_DIR;
 		$this->plugin = $this->model('plugin');
 	}
-
+	
 	/**
-	 * 本地应用
+	 * 本地插件
 	 */
 	public function indexAction() {
-	    $data = file_list::get_file_list($this->dir); //扫描应用目录
+	    $data = file_list::get_file_list($this->dir); //扫描插件目录
 	    $list = array();
 		if ($data) {
 			foreach ($data as $id => $dir) {
@@ -35,9 +35,9 @@ class PluginController extends Admin {
 	    $this->view->assign('list', $list);
 	    $this->view->display('admin/plugin_list');
 	}
-
+	
 	/**
-	 * 应用配置
+	 * 插件配置
 	 */
 	public function setAction() {
 	    $pluginid = $this->get('pluginid');
@@ -61,9 +61,9 @@ class PluginController extends Admin {
 	    ));
 	    $this->view->display('admin/plugin_set');
 	}
-
+	
 	/**
-	 * 安装应用
+	 * 安装插件
 	 */
 	public function addAction() {
 	    $dir    = $this->get('dir');
@@ -71,7 +71,7 @@ class PluginController extends Admin {
 	    if (!file_exists($file)) $this->adminMsg(lang('a-plu-4'));
 	    $config = require $file;
 	    if ($config['typeid'] == 1) {
-	        //包含控制器的应用
+	        //包含控制器的插件    
 	        $install = $this->dir . $dir . DIRECTORY_SEPARATOR . 'install.php';
 	        if (!file_exists($install)) $this->adminMsg(lang('a-plu-5'));
 	        $data = require $install;
@@ -86,16 +86,16 @@ class PluginController extends Admin {
 	            }
 	        }
 	    }
-	    //代码调用应用，直接添加表中记录
+	    //代码调用插件，直接添加表中记录
 	    $config['dir'] = $dir;
 	    $config['setting'] = array2string($config['fields']);
         $config['markid'] = (int)$config['key'];
 	    $this->plugin->insert($config);
 	    $this->adminMsg($this->getCacheCode('plugin') . lang('a-plu-6'), url('admin/plugin/index'), 3, 0, 1);
 	}
-
+	
 	/**
-	 * 卸载应用
+	 * 卸载插件
 	 */
 	public function delAction() {
 	    $pluginid = $this->get('pluginid');
@@ -110,7 +110,7 @@ class PluginController extends Admin {
 			$this->adminMsg($html, '', 3, 1, 2);
 		}
 	    if ($data['typeid'] == 1) {
-	        //包含控制器的应用
+	        //包含控制器的插件
 	        $uninstall = $this->dir . $data['dir'] . DIRECTORY_SEPARATOR . 'uninstall.php';
 	        if (!file_exists($uninstall)) $this->adminMsg(lang('a-plu-10'));
 	        $data = require $uninstall;
@@ -125,13 +125,13 @@ class PluginController extends Admin {
 	            }
 	        }
 	    }
-	    //代码调用应用，直接删除表中记录
+	    //代码调用插件，直接删除表中记录
 	    $this->plugin->delete('pluginid=' . $pluginid);
 	    $this->adminMsg($this->getCacheCode('plugin') . lang('a-plu-11'), url('admin/plugin/index'), 1, 0, 1);
 	}
-
+	
 	/**
-	 * 硬盘删除应用
+	 * 硬盘删除插件
 	 */
 	public function unlinkAction() {
 	    $dir      = $this->get('dir');
@@ -146,7 +146,7 @@ class PluginController extends Admin {
 	    $data    = $this->plugin->getOne('dir=?', $dir);
 		if ($data) {
 			if ($data['typeid'] == 1) {
-				//包含控制器的应用
+				//包含控制器的插件
 				$uninstall = $this->dir . $data['dir'] . DIRECTORY_SEPARATOR . 'uninstall.php';
 				if (!file_exists($uninstall)) $this->adminMsg(lang('a-plu-10'));
 				$sqldata   = require $uninstall;
@@ -161,7 +161,7 @@ class PluginController extends Admin {
 					}
 				}
 			}
-	        //代码调用应用，直接删除表中记录
+	        //代码调用插件，直接删除表中记录
 	        $this->plugin->delete('pluginid=' . $data['pluginid']);
 		}
 		//删除硬盘数据
@@ -172,7 +172,7 @@ class PluginController extends Admin {
 		    $this->adminMsg(lang('a-plu-15'), url('admin/plugin/index'));
 		}
 	}
-
+	
     /**
 	 * 禁用/启用
 	 */
@@ -184,9 +184,9 @@ class PluginController extends Admin {
 	    $this->plugin->update(array('disable' => $disable), 'pluginid=' . $pluginid);
 	    $this->adminMsg($this->getCacheCode('plugin') . lang('success'), url('admin/plugin/index/'), 3, 1, 1);
 	}
-
+	
 	/**
-	 * 应用缓存
+	 * 插件缓存
 	 */
 	public function cacheAction($show=0) {
 	    $data = $this->plugin->where('disable=0')->select();
@@ -198,7 +198,7 @@ class PluginController extends Admin {
 	    $this->cache->set('plugin', $row);
 	    $show or $this->adminMsg(lang('a-update'), '', 3, 1, 1);
 	}
-
+	
     /**
 	 * 加载模板调用代码
 	 */
@@ -211,10 +211,9 @@ class PluginController extends Admin {
 	    $msg .= "</textarea>";
 	    echo $msg;
 	}
-
-
+	
 	/**
-	 * 测试应用是否包含在模板中
+	 * 测试插件是否包含在模板中
 	 */
 	public function ajaxtestpAction() {
 	    $id    = $this->post('id');
@@ -228,10 +227,9 @@ class PluginController extends Admin {
 		if (strpos($file2, $code1) !== false || strpos($file2, $code2) !== false)  exit('<font color=green>√</font>');
 		exit('<font color=red>' . lang('a-plu-17') . '</font>');
 	}
-
-
+	
 	/**
-	 * 测试应用更新情况
+	 * 测试插件更新情况
 	 */
 	public function ajaxupdateAction() {
         return;
@@ -240,7 +238,7 @@ class PluginController extends Admin {
 		if (empty($data))   exit('<font color=red>' . lang('a-plu-16') . '</font>');
 		if (ia_check_url()) exit('<font color=red>' . lang('a-plu-18') . '</font>');
 		if (empty($data['markid'])) exit('<font color=red>' . lang('a-plu-19') . '</font>');
-		$version = ia_geturl('http://www.lygphp.com/index.php?c=my&a=version&markid=' . $data['markid']);
+		$version = ia_geturl('http://app.lygphp.com/index.php?c=my&a=version&markid=' . $data['markid']);
 		if (empty($version))  exit('<font color=red>' . lang('a-plu-20') . '</font>');
 		$result  = $this->check_version($version, $data['version']);
 		if ($result == 1) {
@@ -249,15 +247,14 @@ class PluginController extends Admin {
 		    exit('<font color=green>√</font>');
 		}
 	}
-
-
+	
 	/**
-	 * 在线应用中心
+	 * 在线插件中心
 	 */
 	public function onlineAction() {
 	    $name = urlencode($this->site['SITE_NAME']);
 		$site = urlencode(SITE_URL);
-		$list = file_list::get_file_list($this->dir); //扫描应用目录
+		$list = file_list::get_file_list($this->dir); //扫描插件目录
 	    $data = array();
 		if ($list) {
 			foreach ($list as $id => $dir) {
@@ -277,9 +274,9 @@ class PluginController extends Admin {
 		$this->view->assign('url', 'http://www.lygphp.com/index.php?c=v1&m=app&admin=' . ADMIN_NAMESPACE . '&site=' . $site . '&name=' . $name . '&data=' . $data . '&version=' . CMS_VERSION);
 	    $this->view->display('admin/plugin_online');
 	}
-
+	
 	/**
-	 * 下载应用
+	 * 下载插件
 	 */
 	public function downAction() {
 	    if (!@is_writable(PLUGIN_DIR)) $this->adminMsg(lang('a-plu-22', array('1' => $this->site['PLUGIN_DIR'])));
@@ -291,7 +288,7 @@ class PluginController extends Admin {
             $this->adminMsg(lang('a-plu-23'));
         }
 		if ($result = ia_check_url()) {
-		    $this->adminMsg($result . '<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.lygphp.com/index.php?mod=viewthread&tid=100&extra=" target="_blank" style="font-size:14px">' . lang('a-plu-24') . '</a>');exit;
+		    $this->adminMsg($result . lang('a-plu-24'));exit;
 		}
 		if (empty($install) && is_dir(PLUGIN_DIR . $dir)) {
             $this->adminMsg(lang('a-plu-25', array('1' => $dir)));
@@ -377,7 +374,7 @@ class PluginController extends Admin {
 			    $this->adminMsg(lang('a-plu-34'));
 			}
 		}
-		//升级应用
+		//升级插件
 		if (!@is_writable($this->dir . $dir . DIRECTORY_SEPARATOR . 'config.php')) {
             $this->adminMsg(lang('a-plu-35'));
         }
@@ -390,9 +387,7 @@ class PluginController extends Admin {
 		$this->plugin->update($update, 'pluginid=' . $data['pluginid']);
 		$this->adminMsg(lang('a-plu-36'), url('admin/plugin/'), 3, 1, 1);
 	}
-
-
-
+	
 	/*
 	 * 版本号比较
 	 */

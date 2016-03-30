@@ -6,11 +6,37 @@ class ApiController extends Common {
         parent::__construct();
     }
 
-    /**
-     *
-     *
-     *
-     */
+    // 极验验证
+    public function geetestAction() {
+
+        require EXTENSION_DIR.'Geetestlib.php';
+
+        $GtSdk = new GeetestLib();
+        $return = $GtSdk->register();
+
+        if ($return) {
+            $this->session->set_userdata('gtserver', 1);
+            $result = array(
+                'success' => 1,
+                'gt' => SYS_GEE_CAPTCHA_ID,
+                'challenge' => $GtSdk->challenge
+            );
+            echo json_encode($result);
+        }else{
+            $this->session->set_userdata('gtserver', 0);
+            $rnd1 = md5(rand(0,100));
+            $rnd2 = md5(rand(0,100));
+            $challenge = $rnd1 . substr($rnd2,0,2);
+            $result = array(
+                'success' => 0,
+                'gt' => CAPTCHA_ID,
+                'challenge' => $challenge
+            );
+            $this->session->set_userdata('challenge', $result['challenge']);
+            echo json_encode($result);
+        }
+        exit;
+    }
 
     /**
      * JS调用数据
@@ -150,7 +176,7 @@ class ApiController extends Common {
     }
 
     /**
-     * Jquery-autocomplete应用搜索提示
+     * Jquery-autocomplete插件搜索提示
      */
     public function searchAction() {
         $kw = str_replace(' ', '%', urldecode($this->get('q')));

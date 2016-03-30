@@ -2,7 +2,6 @@
 
 /**
  * @name		火车采集器接口程序
- * @author		976510651@qq.com
  * @version		v2.0
  * @description	采集数据可以不再手动修改接收参数，程序自动处理POST数据
  */

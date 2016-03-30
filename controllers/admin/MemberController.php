@@ -487,12 +487,12 @@ class MemberController extends Admin {
 		//删除收藏夹
 		$favorite = $this->model('favorite');
 		$favorite->delete('userid=' . $id);
-		//删除支付应用
+		//删除支付插件
 		if (plugin('pay')) {
 		    $pay  = $this->plugin_model('pay', 'pay_data');
             $pay->delete('userid=' . $id);			
 		}
-		//删除会员付费应用
+		//删除会员付费插件
 		if (plugin('vip')) {
 		    $vip  = $this->plugin_model('vip', 'vip');
             $vip->delete('userid=' . $id);			

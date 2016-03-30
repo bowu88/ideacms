@@ -21,8 +21,8 @@ class View {
 	public function __construct() {
         $this->_options['ci'] = $this->ci = &get_instance();
         $this->theme = APP::get_namespace_id() == 'admin' ? false : true;
-		if (APP_DIR && is_dir(FCPATH.'plugins/'.APP_DIR.'/') && $this->ci->controller == 'admin') {
-			// 表示应用的后台
+		if (APP_DIR && is_dir(ICPATH.'plugins/'.APP_DIR.'/') && $this->ci->controller == 'admin') {
+			// 表示插件的后台
 			$this->theme = false;
 		}
 	}
@@ -105,74 +105,93 @@ class View {
 		if (!$view_content) return false;
 		//正则表达式匹配的模板标签
 		$regex_array = array(
-		'#'.$this->left_delimiter.'([a-z_0-9]+)\((.*)\)'.$this->right_delimiter.'#Ui',
-		'#'.$this->left_delimiter.'([A-Z_]+)'.$this->right_delimiter.'#',
-		'#'.$this->left_delimiter.'\$(.+?)'.$this->right_delimiter.'#i',
-         '#{\s*tpl\s+"([\$\-_\/\w\.]+)"\s*}#Uis',
-		'#'.$this->left_delimiter.'\s*include\s+(.+?)\s*'.$this->right_delimiter.'#is',
-		'#'.$this->left_delimiter.'\s*template\s+(.+?)\s*'.$this->right_delimiter.'#is',
-		'#'.$this->left_delimiter.'php\s+(.+?)'.$this->right_delimiter.'#is',
+			// 3维数组变量
+			'#{\$(\w+?)\.(\w+?)\.(\w+?)\.(\w+?)}#i',
+			// 2维数组变量
+			'#{\$(\w+?)\.(\w+?)\.(\w+?)}#i',
+			// 1维数组变量
+			'#{\$(\w+?)\.(\w+?)}#i',
+			// 3维数组变量
+			'#\$(\w+?)\.(\w+?)\.(\w+?)\.(\w+?)#Ui',
+			// 2维数组变量
+			'#\$(\w+?)\.(\w+?)\.(\w+?)#Ui',
+			// 1维数组变量
+			'#\$(\w+?)\.(\w+?)#Ui',
+			'#{([a-z_0-9]+)\((.*)\)}#Ui',
+			'#{([A-Z_]+)}#',
+			'#{\$(.+?)}#i',
+			 '#{\s*tpl\s+"([\$\-_\/\w\.]+)"\s*}#Uis',
+			'#{\s*include\s+(.+?)\s*}#is',
+			'#{\s*template\s+(.+?)\s*}#is',
+			'#{php\s+(.+?)}#is',
 
-		'#'.$this->left_delimiter.'sql:([a-z_0-9]+)\s+(.+?)'.$this->right_delimiter.'#is',
-		'#'.$this->left_delimiter.'sql\s+\"(.+)\"'.$this->right_delimiter.'#iUs',
-		'#'.$this->left_delimiter.'\/sql'.$this->right_delimiter.'#is',
-		'#'.$this->left_delimiter.'plugin:([a-z_0-9]+)::([a-z_]+)\s+(.+?)'.$this->right_delimiter.'#is',
-		'#'.$this->left_delimiter.'relation\s+(.+?)'.$this->right_delimiter.'#is',
+			'#{sql:([a-z_0-9]+)\s+(.+?)}#is',
+			'#{sql\s+\"(.+)\"}#iUs',
+			'#{\/sql}#is',
+			'#{plugin:([a-z_0-9]+)::([a-z_]+)\s+(.+?)}#is',
+			'#{relation\s+(.+?)}#is',
 
-		'#'.$this->left_delimiter.'list\s+(.+?)return=(.+?)\s?'.$this->right_delimiter.'#i',
-		'#'.$this->left_delimiter.'list\s+(.+?)\s?'.$this->right_delimiter.'#i',
-		'#'.$this->left_delimiter.'\s?\/list\s?'.$this->right_delimiter.'#i',
+			'#{list\s+(.+?)return=(.+?)\s?}#i',
+			'#{list\s+(.+?)\s?}#i',
+			'#{\s?\/list\s?}#i',
 
-		'#'.$this->left_delimiter.'\s?if\s+(.+?)\s?'.$this->right_delimiter.'#i',
-		'#'.$this->left_delimiter.'\s?else\sif\s+(.+?)\s?'.$this->right_delimiter.'#i',
-		'#'.$this->left_delimiter.'\s?else\s?'.$this->right_delimiter.'#i',
-		'#'.$this->left_delimiter.'\s?\/if\s?'.$this->right_delimiter.'#i',
+			'#{\s?if\s+(.+?)\s?}#i',
+			'#{\s?else\sif\s+(.+?)\s?}#i',
+			'#{\s?else\s?}#i',
+			'#{\s?\/if\s?}#i',
 
-		'#'.$this->left_delimiter.'\s?loop\s+\$(.+?)\s+\$(\w+?)\s?'.$this->right_delimiter.'#i',
-		'#'.$this->left_delimiter.'\s?loop\s+\$(.+?)\s+\$(\w+?)\s?=>\s?\$(\w+?)\s?'.$this->right_delimiter.'#i',
-		'#'.$this->left_delimiter.'\s?\/loop\s?'.$this->right_delimiter.'#i',
+			'#{\s?loop\s+\$(.+?)\s+\$(\w+?)\s?}#i',
+			'#{\s?loop\s+\$(.+?)\s+\$(\w+?)\s?=>\s?\$(\w+?)\s?}#i',
+			'#{\s?\/loop\s?}#i',
 
-		'#'.$this->left_delimiter.'\s?php\s?'.$this->right_delimiter.'#i',
-		'#'.$this->left_delimiter.'\s?\/php\s?'.$this->right_delimiter.'#i',
+			'#{\s?php\s?}#i',
+			'#{\s?\/php\s?}#i',
 
-		'#\?\>\s*\<\?php\s#s',
+			'#\?\>\s*\<\?php\s#s',
 		);
 
 		///替换直接变量输出
 		$replace_array = array(
-		"<?php echo \\1(\\2); ?>",
-		"<?php echo \\1; ?>",
-		"<?php echo \$\\1; ?>",
-        "<?php include \$this->_include(\\1); ?>",
-		"<?php include \$this->_include('\\1'); ?>",
-		"<?php include \$this->_include('\\1'); ?>",
-		"<?php \\1 ?>",
+			"<?php echo \$\\1['\\2']['\\3']['\\4']; ?>",
+			"<?php echo \$\\1['\\2']['\\3']; ?>",
+			"<?php echo \$\\1['\\2']; ?>",
+			"\$\\1['\\2']['\\3']['\\4']",
+			"\$\\1['\\2']['\\3']",
+			"\$\\1['\\2']",
+			"<?php echo \\1(\\2); ?>",
+			"<?php echo \\1; ?>",
+			"<?php echo \$\\1; ?>",
+			"<?php include \$this->_include(\\1); ?>",
+			"<?php include \$this->_include('\\1'); ?>",
+			"<?php include \$this->_include('\\1'); ?>",
+			"<?php \\1 ?>",
 
-		"<?php \$sql_model = \$this->load_model('\\1');\$return = \$sql_model->\\2; ?>",
-        "<?php \$return = \$this->_sqldata(\"\\1\"); extract(\$return); \$count=count(\$return); if (is_array(\$return)) { foreach (\$return as \$key=>\$t) { ?>",
-        "<?php } } ?>",
+			"<?php \$sql_model = \$this->load_model('\\1');\$return = \$sql_model->\\2; ?>",
+			"<?php \$return = \$this->_sqldata(\"\\1\"); extract(\$return); \$count=count(\$result); if (is_array(\$result)) { foreach (\$result as \$key=>\$t) { ?>",
+			"<?php } } ?>",
 
-        "<?php \$plugin_model = App::plugin_model('\\1','\\2');\$return = \$plugin_model->\\3; ?>",
-		"<?php \$return = \$this->relation(\\1);?>",
+			"<?php \$plugin_model = App::plugin_model('\\1','\\2');\$return = \$plugin_model->\\3; ?>",
+			"<?php \$return = \$this->relation(\\1);?>",
 
-		"<?php \$return_\\2 = \$this->_listdata(\"\\1 return=\\2\"); extract(\$return_\\2); \$count_\\2=count(\$return_\\2); if (is_array(\$return_\\2)) { foreach (\$return_\\2 as \$key_\\2=>\$\\2) { ?>",
-		"<?php \$return = \$this->_listdata(\"\\1\"); extract(\$return); \$count=count(\$return); if (is_array(\$return)) { foreach (\$return as \$key=>\$t) { ?>",
-		"<?php } } ?>",
+			"<?php \$return_\\2 = \$this->_listdata(\"\\1 return=\\2\"); extract(\$return_\\2); \$count_\\2=count(\$return_\\2); if (is_array(\$return_\\2)) { foreach (\$return_\\2 as \$key_\\2=>\$\\2) { ?>",
+			"<?php \$return = \$this->_listdata(\"\\1\"); extract(\$return); \$count=count(\$result); if (is_array(\$result)) { foreach (\$result as \$key=>\$t) { ?>",
+			"<?php } } ?>",
 
-		"<?php if (\\1) { ?>",
-		"<?php } else if (\\1) { ?>",
-		"<?php } else { ?>",
-		"<?php } ?>",
+			"<?php if (\\1) { ?>",
+			"<?php } else if (\\1) { ?>",
+			"<?php } else { ?>",
+			"<?php } ?>",
 
-		"<?php if (is_array(\$\\1)) { \$count=count(\$\\1);foreach (\$\\1 as \$\\2) { ?>",
-		"<?php if (is_array(\$\\1)) { \$count=count(\$\\1);foreach (\$\\1 as \$\\2=>\$\\3) { ?>",
-		"<?php } } ?>",
+			"<?php if (is_array(\$\\1)) { \$count=count(\$\\1);foreach (\$\\1 as \$\\2) { ?>",
+			"<?php if (is_array(\$\\1)) { \$count=count(\$\\1);foreach (\$\\1 as \$\\2=>\$\\3) { ?>",
+			"<?php } } ?>",
 
-		"<?php ",
-		" ?>",
+			"<?php ",
+			" ?>",
 
-		" ",
+			" ",
 		);
+
 		return preg_replace($regex_array, $replace_array, $view_content);
 	}
 
@@ -665,7 +684,7 @@ class View {
 			    'pagelist_' . $system['return'] => $pagelist
 		    );
 		}
-		return array('pagelist' => $pagelist, 'return' => $data, 'sql' => $sql, 'total' => isset($total) ? $total : count($data));
+		return array('pagelist' => $pagelist, 'result' => $data, 'sql' => $sql, 'total' => isset($total) ? $total : count($data));
 	}
 
     /**
@@ -721,7 +740,7 @@ class View {
 
         if (strpos($file_name, '.html') && APP_DIR) {
             $viewpath = 'plugins/'.APP_DIR.'/templates/admin/';
-            $this->view_dir = FCPATH.$viewpath;
+            $this->view_dir = ICPATH.$viewpath;
             $this->viewpath = $viewpath;
         } else {
             $viewpath = basename(VIEW_DIR) . '/';
@@ -746,7 +765,7 @@ class View {
 			$this->create_compile_file($compile_file, $view_content);
 		}
 		include $compile_file;
-        if (defined('IS_FC_ADMIN')
+        if (defined('IS_IC_ADMIN')
             && defined('SYS_MODE') && SYS_MODE == 2
             && !IS_AJAX
             && strpos($file_name, 'msg') === false) {

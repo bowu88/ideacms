@@ -21,6 +21,13 @@ class ContentController extends Common {
 		    header('HTTP/1.1 404 Not Found');
 			$this->msg(lang('con-0', array('1' => ($catdir && empty($catid) ? $catdir : $catid))));
 		}
+
+		if ($page <= 1 && strpos(ia_now_url(), $cat['url']) === false) {
+			// 301 定向地址
+			redirect(SITE_URL.$cat['url'], 'location', '301');
+			exit;
+		}
+
 	    if ($cat['typeid'] == 1) {
 	        //内部栏目
 			$this->view->assign($cat);
@@ -31,7 +38,7 @@ class ContentController extends Common {
 	            'pageurl' => urlencode($this->getCaturl($cat, '{page}'))
 	        ));
             if ($cat['child'] == 1
-                && is_file(FCPATH.'views/'.$this->site['SITE_THEME'].'/'.$cat['categorytpl'])) {
+                && is_file(ICPATH.'views/'.$this->site['SITE_THEME'].'/'.$cat['categorytpl'])) {
                 $tpl = $cat['categorytpl'];
             } else {
                 $tpl = $cat['listtpl'];
@@ -121,8 +128,13 @@ class ContentController extends Common {
 		$data = $this->get_content_page($data, 1, $page);	//内容分页和子标题
 	    $data['content'] = relatedlink($data['content']);	//关联链接
 
-        $mainTable = 'content_'.SITE_ID;
+		if ($page <= 1 && strpos(ia_now_url(), $data['url']) === false) {
+			// 301 定向地址
+			redirect(SITE_URL.$data['url'], 'location', '301');
+			exit;
+		}
 
+        $mainTable = 'content_'.SITE_ID;
         $prev_page = $this->db                             //前一篇文章的数据
             ->join($table,$table.'.id = '.$mainTable.'.id')
             ->where($mainTable.".catid = $catid AND ".$this->db->dbprefix."content_".SITE_ID.".id < $id AND status = 1")

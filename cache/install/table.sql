@@ -376,20 +376,6 @@ CREATE TABLE `{pre}position_data` (
   KEY `contentid` (`contentid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `{pre}navigate`;
-CREATE TABLE `{pre}navigate` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `typeid` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `name` varchar(50) NOT NULL DEFAULT '',
-  `url` varchar(255) NOT NULL DEFAULT '',
-  `logo` varchar(255) NOT NULL DEFAULT '',
-  `introduce` text NOT NULL,
-  `listorder` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `addtime` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `typeid` (`typeid`,`listorder`,`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
-
 -- ----------------------------
 -- Table structure for {pre}adsense
 -- ----------------------------
@@ -425,6 +411,20 @@ CREATE TABLE `{pre}adsense_data` (
   KEY `aid` (`aid`),
   KEY `listorder` (`listorder`)
 ) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `{pre}navigate`;
+CREATE TABLE `{pre}navigate` (
+  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `typeid` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `url` varchar(255) NOT NULL DEFAULT '',
+  `logo` varchar(255) NOT NULL DEFAULT '',
+  `introduce` text NOT NULL,
+  `listorder` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `addtime` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `typeid` (`typeid`,`listorder`,`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
 
 DROP TABLE IF EXISTS `{pre}relatedlink`;
 CREATE TABLE `{pre}relatedlink` (

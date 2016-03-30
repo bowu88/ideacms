@@ -33,7 +33,7 @@ html{ _overflow-y:scroll}
     </div>
     <div class="bk10"></div>
     <div class="table-list">
-        <table width="100%" id="iresult">
+        <table width="100%" id="da_result">
             {loop $caches $cache}
             <tr>
                 <td width="200" style="height:15px;line-height:15px;padding:0" align="left">
@@ -47,7 +47,7 @@ html{ _overflow-y:scroll}
                     ?>
                     {$msg}
                 </td>
-                <td align="left" id="icache_{$cache[0]}_{$cache[3][site]}">
+                <td align="left" id="da_cache_{$cache[0]}_{$cache[3][site]}">
                     ....
                 </td>
             </tr>
@@ -64,7 +64,7 @@ html{ _overflow-y:scroll}
         contentType: "application/json; charset=utf-8",
         dataType: "text",
         success: function (data) {
-            $("#icache_{$cache[0]}_{$cache[3][site]}").html("<font color=green>√</font>");
+            $("#da_cache_{$cache[0]}_{$cache[3][site]}").html("<font color=green>√</font>");
         }
     });
 {/loop}
@@ -74,7 +74,7 @@ $.ajax({
     contentType: "application/json; charset=utf-8",
     dataType: "text",
     success: function (data) {
-        $("#icache_{$cache[0]}").html("<font color=green>√</font>");
+        $("#da_cache_{$cache[0]}").html("<font color=green>√</font>");
     }
 });
 </script>

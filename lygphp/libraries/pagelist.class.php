@@ -171,8 +171,8 @@ class pagelist extends Ia_base {
 	public function loadconfig($config = '') {
         $rule = 0;
         if ($config) {
-            $file1 = FCPATH.'config/'.$config.'.ini.php';
-            $file2 = FCPATH.$config.'.ini.php';
+            $file1 = ICPATH.'config/'.$config.'.ini.php';
+            $file2 = ICPATH.$config.'.ini.php';
             if (is_file($file1)) {
                 $rule = require $file1;
             } elseif (is_file($file2)) {

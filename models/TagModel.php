@@ -9,22 +9,22 @@ class TagModel extends Model {
     public function get_fields() {
         return $this->get_table_fields();
     }
-
+	
 	public function getList($num, $cache) {
 		return $this->order('listorder DESC,id DESC')->limit($num)->select(true, $cache);
 	}
-
+	
 	public function getData($kw) {
 		return $this->where('letter=?', $kw)->select();
 	}
-
+	
 	public function listData($tag, $where, $cache) {
 		$data = $this->from('tag_cache')->where('tag=?', $tag)->select(false);
 		$data = empty($data) ? $this->addData($tag, $where) : $data;
 		if (empty($data)) return false;
 	    return time() - $data['addtime'] > $cache ? $this->updateData($data['id'], $where) : $data;
 	}
-
+	
 	private function addData($tag, $where) {
 	    $data = $this->execute('SELECT id FROM ' . $this->prefix . 'content_' . App::get_site_id() . ' WHERE ' . $where, true);
 		if (empty($data)) return false;
@@ -42,7 +42,7 @@ class TagModel extends Model {
 		$this->set_table_name('tag_cache');
 		return $this->insert($data) ? $data : false;
 	}
-
+	
 	private function updateData($id, $where) {
 	    $data = $this->execute('SELECT id FROM ' . $this->prefix . 'content_' . App::get_site_id() . ' WHERE ' . $where, true);
 		$this->set_table_name('tag_cache');

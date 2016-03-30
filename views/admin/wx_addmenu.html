@@ -21,12 +21,12 @@
     <script type="text/javascript">
         $(function() {
 
-            iset_type('{$data["type"]}');
+            da_set_type('{$data["type"]}');
         });
 
-        function iset_type(v) {
-            $(".ihide").hide();
-            $(".i"+v).show();
+        function da_set_type(v) {
+            $(".da_hide").hide();
+            $(".da_"+v).show();
         }
     </script>
     <title>admin</title>
@@ -63,20 +63,20 @@
                 <tr>
                     <th>按钮类型： </th>
                     <td>
-                        <input name="data[type]" onclick="iset_type(this.value)" type="radio" value="click" {if $data['type'] == 'click'}checked{/if} />&nbsp;接口推送&nbsp;&nbsp;
-                        <input name="data[type]" onclick="iset_type(this.value)" type="radio" value="view" {if $data['type'] == 'view'}checked{/if} />&nbsp;地址链接
+                        <input name="data[type]" onclick="da_set_type(this.value)" type="radio" value="click" {if $data['type'] == 'click'}checked{/if} />&nbsp;接口推送&nbsp;&nbsp;
+                        <input name="data[type]" onclick="da_set_type(this.value)" type="radio" value="view" {if $data['type'] == 'view'}checked{/if} />&nbsp;地址链接
                     </td>
                 </tr>
-                <tr class="iclick ihide " style="display:none;">
+                <tr class="da_click da_hide " style="display:none;">
                     <th style="border:none"><font color="red">*</font>&nbsp;菜单KEY值： </th>
                     <td style="border:none">
-                        <input class="input-text" id="ikey" type="text" name="data[key]" value="{$data['key']}" size="30" />
+                        <input class="input-text" id="da_key" type="text" name="data[key]" value="{$data['key']}" size="30" />
 
                         <div class="onShow">KEY值可以设置为自动回复中的关键字。</div>
                     </td>
                 </tr>
 
-                <tr class="iview ihide" style="display:none;">
+                <tr class="da_view da_hide" style="display:none;">
                     <th style="border:none"><font color="red">*</font>&nbsp;网页链接： </th>
                     <td style="border:none"><input class="input-text" type="text" name="data[url]" value="{$data['url']}" size="60" /></td>
                 </tr>

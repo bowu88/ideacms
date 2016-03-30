@@ -16,8 +16,8 @@
 <div class="subnav">
     <div class="content-menu ib-a blue line-x">
         <a href="{url('admin/plugin')}" class="on"><em>{lang('da015')}</em></a><span>|</span>
-        <a href="{url('admin/plugin/cache')}"><em>{lang('a-cache')}</em></a><span>|</span>
-        <a href="tencent://message/?uin=976510651" target="_blank"><em>{lang('da016')}</em></a>
+        <a href="{url('admin/plugin/online')}"><em>{lang('da016')}</em></a><span>|</span>
+        <a href="{url('admin/plugin/cache')}"><em>{lang('a-cache')}</em></a>
     </div>
 	<div class="bk10"></div>
 	<div class="table-list">
@@ -53,7 +53,7 @@
 			{else}
 			{if admin_auth($userinfo['roleid'], 'plugin-add')}<a href="{url('admin/plugin/add',array('dir'=>$t['dir']))}"><font color="#FF0000">{lang('a-plu-48')}</font></a>&nbsp;{/if}
 			{/if}
-			<!-- {if admin_auth($userinfo['roleid'], 'plugin-unlink')}<a href="{url('admin/plugin/unlink',array('dir'=>$t['dir']))}">{lang('a-del')}</a>{/if} -->
+			{if admin_auth($userinfo['roleid'], 'plugin-unlink')}<a href="{url('admin/plugin/unlink',array('dir'=>$t['dir']))}">{lang('a-del')}</a>{/if}
 			</td>
 			<td width="35%" align="left"></td>
 		</tr>
@@ -64,15 +64,15 @@
 </div>
 <script type="text/javascript">
 function testP(id) {
-    $('#test_'+id).html("Checking...");
-    $.post('{url('admin/plugin/ajaxtestp')}&randid='+Math.random(), { id: id }, function(data){
-        $('#test_'+id).html(data);
+    $('#test_'+id).html("Checking..."); 
+    $.post('{url('admin/plugin/ajaxtestp')}&randid='+Math.random(), { id: id }, function(data){ 
+        $('#test_'+id).html(data); 
 	});
 }
 function updateP(id) {
-    $('#test_'+id).html("Checking...");
-    $.post('{url('admin/plugin/ajaxupdate')}&randid='+Math.random(), { id: id }, function(data){
-        $('#test_'+id).html(data);
+    $('#test_'+id).html("Checking..."); 
+    $.post('{url('admin/plugin/ajaxupdate')}&randid='+Math.random(), { id: id }, function(data){ 
+        $('#test_'+id).html(data); 
 	});
 }
 function getViewData(pluginid) {
@@ -93,7 +93,7 @@ function getViewData(pluginid) {
                 name: '{lang('a-close')}'
             }
         ]
-
+		
 		}
 	);
 }
@@ -106,7 +106,7 @@ function copyToClipboard(meintext) {
             netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
         } catch (e) {
             alert("{lang('a-att-18')}");
-		}
+		} 
         var clip = Components.classes['@mozilla.org/widget/clipboard;1'].
         createInstance(Components.interfaces.nsIClipboard);
         if (!clip) return;

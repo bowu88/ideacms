@@ -1204,7 +1204,7 @@ class CI_DB_driver {
 				exit('您的MySql服务器环境配置不合理，导致系统错误（'.$error[1].'），建议按照论坛方式配置my.ini。');
 			} else {
 				$heading = 'MySql兼容性配置错误';
-				$message = '系统错误（'.$error[1].'）';
+				$message = '系统错误（'.$error[1].'）<br>您的MySql服务器环境配置不合理，请正确配置my.ini';
 			}
         }
 

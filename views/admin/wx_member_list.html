@@ -12,13 +12,13 @@
     <script type="text/javascript">
         $(document).ready(
             function(){
-                $("#iselect").click(
+                $("#da_select").click(
                    function()
                    {
-                       if($("#iselect").attr('checked')) {
-                           $(".iselect").attr("checked",true);
+                       if($("#da_select").attr('checked')) {
+                           $(".da_select").attr("checked",true);
                        } else {
-                           $(".iselect").attr("checked",false);
+                           $(".da_select").attr("checked",false);
                        }
                    }
                 )
@@ -40,25 +40,25 @@
             <table width="100%">
                 <thead>
                 <tr>
-                    <th width="20" align="right"><input name="iselect" id="iselect" type="checkbox" onClick="" />&nbsp;</th>
+                    <th width="20" align="right"><input name="da_select" id="da_select" type="checkbox" onClick="" />&nbsp;</th>
                     <th width="50"align="center">头像</th>
                     <th width="120" align="left">昵称</th>
                     <th width="50" align="center">性别</th>
                     <th width="90" align="left">地区</th>
                     <th width="130" align="left">关注时间</th>
-                    <th align="left" class="ioption">地理位置</th>
+                    <th align="left" class="da_option">地理位置</th>
                 </tr>
                 </thead>
                 <tbody>
                 {loop $data $t}
                 <tr>
-                    <td align="right"><input name="ids[]" type="checkbox" class="iselect" value="{$t['id']}" />&nbsp;</td>
+                    <td align="right"><input name="ids[]" type="checkbox" class="da_select" value="{$t['id']}" />&nbsp;</td>
                     <td align="center"><img src="{$t['headimgurl']}46" width="30" height="30"></td>
                     <td align="left">{$t['nickname']}</td>
                     <td align="center">{if $t['sex']==1}男{else if $t['sex']==2}女{else}未知{/if}</td>
                     <td align="left">{$t['province']} - {$t['city']}</td>
                     <td align="left">{date('Y-m-d',$t['subscribe_time'])}</td>
-                    <td align="left" class="ioption">
+                    <td align="left" class="da_option">
                         {if $t['location_x'] && $t['location_y']}{$t['location_x']},{$t['location_y']}{if $t['location_info']} （{$t['location_info']}）{/if}{/if}
                     </td>
                 </tr>

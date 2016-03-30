@@ -1,11 +1,9 @@
 <?php
 
 class AttachmentController extends Common {
-
-
-
+    
     private $dir;
-
+    
     public function __construct() {
 		parent::__construct();
 		if (!in_array($this->action, array('ajaxswfupload', 'ueditor_upload')) &&
@@ -15,8 +13,7 @@ class AttachmentController extends Common {
         }
 		$this->dir = 'uploadfiles/';
 	}
-
-
+	
 	/**
 	 * 目录浏览
 	 */
@@ -81,7 +78,7 @@ class AttachmentController extends Common {
         ));
         $this->view->display('../admin/attachment_album');
 	}
-
+	
     /**
 	 * 上传图片(单)
 	 */
@@ -138,7 +135,7 @@ class AttachmentController extends Common {
 	        $this->view->display('../admin/content_upload');
 	    }
 	}
-
+    
     /**
      * 多文件（图片）上传
      */
@@ -166,7 +163,7 @@ class AttachmentController extends Common {
         ));
         $this->view->display('../admin/attachment_swfupload');
     }
-
+	
 	/**
 	 * 上传文件(单)
 	 */
@@ -205,7 +202,7 @@ class AttachmentController extends Common {
 	        $this->view->display('../admin/content_upload');
 	    }
 	}
-
+    
     /**
      * 文件上传
      * @param  $fields		上传字段 'file'
@@ -244,8 +241,11 @@ class AttachmentController extends Common {
 	    $upload->set($_FILES[$fields])->set_limit_size(1024*1024*$size)->set_limit_type($type);
         //设置路径和名称
         $ext = $upload->fileext();
-		if (stripos($ext, 'php') !== FALSE || stripos($ext, 'asp') !== FALSE || stripos($ext, 'aspx') !== FALSE) {
-			return array('result' => '非法文件');
+		if (stripos($ext, 'php') !== FALSE
+			|| stripos($ext, 'asp') !== FALSE
+			|| stripos($ext, 'aspx') !== FALSE
+			) {
+			return array('result' => '文件格式被系统禁止');
 		}
         if (in_array($ext, array('jpg','jpeg','bmp','png','gif'))) {
             $dir = 'image';
@@ -272,7 +272,7 @@ class AttachmentController extends Common {
         }
         return array('result' => $result, 'path' => $path . $fname, 'file' => $file , 'ext' => $dir == 'image' ? 1 : $ext);
     }
-
+	
 	/**
      * Swf上传
      */
@@ -296,7 +296,7 @@ class AttachmentController extends Common {
             exit('0,' . lang('att-4'));
         }
     }
-
+	
 	/**
      * KE上传
      */
@@ -327,9 +327,9 @@ class AttachmentController extends Common {
 			echo json_encode(array('error' => 0, 'url' => $data['path']));exit;
 		}
 	}
-
+	
 	/**
-     * KE浏览
+     * KE浏览 
      */
 	public function kindeditor_managerAction() {
 		$root_url = SITE_PATH . 'uploadfiles/';
@@ -455,7 +455,7 @@ class AttachmentController extends Common {
 		//输出JSON字符串
 		echo json_encode($result);
 	}
-
+	
 	/**
      * Ueditor上传
      */
@@ -484,9 +484,9 @@ class AttachmentController extends Common {
 			echo json_encode(array('state' => 'SUCCESS','fileType' => '.'.$data['ext'], 'url' => $data['path'], 'title' => $this->post('pictitle'), 'original' => $_FILES['upfile']['name']));exit;
 		}
 	}
-
+	
 	/**
-     * Ueditor浏览
+     * Ueditor浏览 
      */
 	public function ueditor_managerAction() {
 		$path = 'uploadfiles/';
@@ -536,7 +536,7 @@ class AttachmentController extends Common {
 			echo $str;
 		}
 	}
-
+	
 	/**
      * 会员组权限检测
      */
@@ -551,7 +551,7 @@ class AttachmentController extends Common {
 			}
         }
 	}
-
+	
 	/**
      * 判断是否来自后台
      */
@@ -563,7 +563,7 @@ class AttachmentController extends Common {
 		}
 		return 0;
 	}
-
+	
 	/**
      * 消息提示
      */
@@ -577,5 +577,5 @@ class AttachmentController extends Common {
 		}
 	    exit("<div style='padding-top:40px;text-align:center;font-size:14px;'><font color=red>×</font>&nbsp;&nbsp;" . $msg . "</div>");
 	}
-
+    
 }

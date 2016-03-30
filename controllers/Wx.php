@@ -2,14 +2,6 @@
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-/**
- * IdeaCMS
- *
- * @since		version 2.5.0
- * @author		连普创想 <976510651@qq.com>
- * @copyright   Copyright (c) 2015-9999, 连普创想, Inc.
- */
-
 class Wx extends Common {
 
     public $wx;
@@ -19,7 +11,7 @@ class Wx extends Common {
      */
     public function __construct() {
         parent::__construct();
-        $file = FCPATH.'config/weixin.php';
+        $file = ICPATH.'config/weixin.php';
         $this->wx = is_file($file) ? string2array(file_get_contents($file)) : array();
         define("TOKEN", $this->wx['token']);
         define('WECHAT_THEME', SITE_PATH . basename(VIEW_DIR) . '/weixin/');
@@ -59,57 +51,29 @@ class Wx extends Common {
 
     public function responseMsg()
     {
-        //get post data, May be due to the different environments
         $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+        libxml_disable_entity_loader(true);
+        $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $fromUsername = $postObj->FromUserName;
+        $toUsername = $postObj->ToUserName;
+        $keyword = trim($postObj->Content);
+        $MsgType = $postObj->MsgType;
+        $time = time();
+        $textTpl = "<xml>
+ <ToUserName><![CDATA[%s]]></ToUserName>
+ <FromUserName><![CDATA[%s]]></FromUserName>
+ <CreateTime>%s</CreateTime>
+ <MsgType><![CDATA[%s]]></MsgType>
+ <Content><![CDATA[%s]]></Content>
+ <FuncFlag>0</FuncFlag>
+ </xml>";
 
-        //extract post data
-        if (!empty($postStr)){
-            /* libxml_disable_entity_loader is to prevent XML eXternal Entity Injection,
-               the best way is to check the validity of xml by yourself */
-            libxml_disable_entity_loader(true);
-            $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
-            $fromUsername = $postObj->FromUserName;
-            $toUsername = $postObj->ToUserName;
-            $keyword = trim($postObj->Content);
-            $MsgType = $postObj->MsgType;
+        $msgType = "text";
 
-            $time = time();
-            $textTpl = "<xml>
-							<ToUserName><![CDATA[%s]]></ToUserName>
-							<FromUserName><![CDATA[%s]]></FromUserName>
-							<CreateTime>%s</CreateTime>
-							<MsgType><![CDATA[%s]]></MsgType>
-							<Content><![CDATA[%s]]></Content>
-							<FuncFlag>0</FuncFlag>
-							</xml>";
-
-
-            if(!empty( $keyword ))
-            {
-
-                $msgType = "text";
-                $data = $this-> _find_msg($keyword);
-                $contentStr = "微信测试账号";
-                if(empty($data)) {
-                    $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-                }
-                else {
-                    $data = $this->getResultData($data,$toUsername,$fromUsername);
-                    if($data)
-                        $resultStr = $data;
-                    else
-                        $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-                }
-
-                echo $resultStr;
-            }else{
-                echo "Input something...";
-            }
-
-        }else {
-            echo "";
-            exit;
-        }
+        $data = $this-> _find_msg($keyword);
+        $contentStr=$data['content'];
+        $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+        echo $resultStr;
     }
 
     /**

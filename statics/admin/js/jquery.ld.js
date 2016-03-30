@@ -169,7 +169,7 @@
 			/**
 			 * 选中包含指定文本的选择项
 			 * @param {Number} index 选择框的索引值
-			 * @param {String} text  选择框的value值 (lygphp修改为按id匹配)
+			 * @param {String} text  选择框的value值按id匹配
 			 * @return {Number} 该选择框的value值
 			 */
 			function _selected(index,text){

@@ -279,7 +279,7 @@ abstract class App {
 	}
 	
 	/**
-	 * 返回应用模型的唯一实例(单例模式)
+	 * 返回插件模型的唯一实例(单例模式)
 	 */
     public static function plugin_model($plugin, $table_name) {
 	    if (!$table_name || !$plugin) return false;
@@ -329,12 +329,12 @@ function url($route, $params = null) {
     return Controller::create_url($route, $params);
 }
 
-function iurl($route, $params) {
+function da_url($route, $params) {
     return url($route, $params);
 }
 
 /**
- * 应用中的URL函数
+ * 插件中的URL函数
  */
 function purl($route, $params = '') {
 	return url(App::get_namespace_id() . '/' . $route, $params);
@@ -354,7 +354,7 @@ function lang($name, $data = '') {
 	return $string;
 }
 
-function ilang($name, $data = '') {
+function da_lang($name, $data = '') {
     return lang($name, $data);
 }
 

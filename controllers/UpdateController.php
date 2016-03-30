@@ -21,7 +21,7 @@ class UpdateController extends Common {
         if (!$page) {
             $this->adminMsg(
                 '正在为您清空全站数据...',
-                iurl('update/index', array('page' => $page + 1)),
+                da_url('update/index', array('page' => $page + 1)),
                 3, 1, 2);
         }
         exit;
@@ -55,7 +55,7 @@ class UpdateController extends Common {
                 if (count($site) > 1) {
                     foreach ($site as $i => $t) {
                         if ($i != 1) {
-                            @unlink(FCPATH.'config/site/'.$i.'.ini.php');
+                            @unlink(ICPATH.'config/site/'.$i.'.ini.php');
                         }
                     }
                 }
@@ -77,12 +77,12 @@ class UpdateController extends Common {
                         $this->db->where_in('modelid', $mid)->delete('model_field');
                     }
                 }
-                $this->adminMsg('正在导入默认数据...', iurl('update/index', array('page' => $page + 1)), 3, 1, 2);
+                $this->adminMsg('正在导入默认数据...', da_url('update/index', array('page' => $page + 1)), 3, 1, 2);
                 break;
 
             case 2:
 
-                $this->adminMsg('正在导入默认数据...', iurl('update/index', array('page' => $page + 1)), 3, 1, 2);
+                $this->adminMsg('正在导入默认数据...', da_url('update/index', array('page' => $page + 1)), 3, 1, 2);
                 break;
 
             default:
