@@ -1,0 +1,36 @@
+{template header.html}
+<form action="" method="post" name="myform" id="myform">
+<div class="subnav">
+	<div class="content-menu ib-a blue line-x">
+        <a href="{url('admin/visit/config')}" class="on"><em>访客统计配置</em></a><span>|</span>
+        <a href="{url('admin/visit/index')}" class="on"><em>访客统计</em></a>
+	</div>
+	<div class="bk10"></div>
+	<div class="table-list col-tab">
+		<div class="contentList pad-10">
+            <table width="100%" class="table_form">
+            <tr class="da_0">
+                <th>&nbsp;申请地址： </th>
+                <td>
+                <a rel="nofollow" href="http://apistore.baidu.com/apiworks/servicedetail/114.html" target="_blank">百度API</a>
+                </td>
+            </tr>
+            <tr class="da_0">
+                <th><font color="red">*</font>&nbsp;ApiKey： </th>
+                <td>
+                <input class="input-text" type="text" name="data[apikey]" value="{php echo $data[apikey]}" size="60" />
+                </td>
+            </tr>
+
+            <tr>
+                <th style="border:none;">&nbsp;</th>
+                <td><input class="button" type="submit" name="submit" value="{lang('submit')}" />
+								</td>
+            </tr>
+            </table>
+		</div>
+	</div>
+</div>
+</form>
+</body>
+</html>

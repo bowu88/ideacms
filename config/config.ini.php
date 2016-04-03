@@ -11,7 +11,7 @@ return array(
 	'ADMIN_NAMESPACE'         => 'admin',  //后台管理路径名字，默认admin
 	'SYS_DOMAIN'              => '',  //域名目录，针对虚拟主机用户
 	'SYS_DEBUG'               => true,  //调试模式开关，网站正式上线时建议关闭
-	'SYS_LOG'                 => false,  //程序运行日志开关,日志目录（项目目录/logs/）
+	'SYS_LOG'                 => true,  //程序运行日志开关,日志目录（项目目录/logs/）
 	'SYS_VAR_PREX'            => 'idea_b1bf4_',  //Sessoin、Cookie变量前缀
 	'SYS_GZIP'                => false,  //是否Gzip压缩后输出
 	'SITE_MEMBER_COOKIE'      => '2967e68d382902a',  //Cookie随机字符串
@@ -21,7 +21,7 @@ return array(
 
 	/* 网站相关配置 */
 
-	'SITE_COMMENT'            => true,  //
+	'SITE_COMMENT'            => false,  //
 	'SYS_MODE'                => '0',  //版本模式
 	'SITE_ADMINLOG'           => true,  //后台操作日志开关
 	'SITE_BDPING'             => false,  //百度Ping推送

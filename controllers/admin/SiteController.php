@@ -1,27 +1,27 @@
 <?php
 
 class SiteController extends Admin {
-	
+
 	private $string;
-	
+
     public function __construct() {
 		parent::__construct();
 		$this->string = array(
 			'SITE_EXTEND_ID'			=> lang('a-sit-8'),
-            'SITE_LANGUAGE'				=> lang('a-cfg-12'),
+       'SITE_LANGUAGE'				=> lang('a-cfg-12'),
 			'SITE_TIMEZONE'				=> lang('a-cfg-15'),
-	        'SITE_THEME'				=> lang('a-cfg-16'),
-	        'SITE_NAME'					=> lang('a-cfg-17'),
-            'SITE_TITLE'				=> lang('a-cfg-18'),
-            'SITE_KEYWORDS'				=> lang('a-cfg-19'),
-            'SITE_DESCRIPTION'			=> lang('a-cfg-20'),
-            'SITE_BOTTOM_INFO'			=> lang('a-cfg-ex-1'),
-	        'SITE_WATERMARK'			=> lang('a-cfg-21'),
-	        'SITE_WATERMARK_ALPHA'		=> lang('a-cfg-22'),
-	        'SITE_WATERMARK_TEXT'		=> lang('a-cfg-23'),
+	    'SITE_THEME'				=> lang('a-cfg-16'),
+	    'SITE_NAME'					=> lang('a-cfg-17'),
+       'SITE_TITLE'				=> lang('a-cfg-18'),
+       'SITE_KEYWORDS'				=> lang('a-cfg-19'),
+       'SITE_DESCRIPTION'			=> lang('a-cfg-20'),
+       'SITE_BOTTOM_INFO'			=> lang('a-cfg-ex-1'),
+	    'SITE_WATERMARK'			=> lang('a-cfg-21'),
+	    'SITE_WATERMARK_ALPHA'		=> lang('a-cfg-22'),
+	    'SITE_WATERMARK_TEXT'		=> lang('a-cfg-23'),
 			'SITE_WATERMARK_SIZE'		=> lang('a-cfg-70'),
 			'SITE_WATERMARK_IMAGE'		=> lang('a-sit-0'),
-	        'SITE_WATERMARK_POS'		=> lang('a-cfg-67'),
+	    'SITE_WATERMARK_POS'		=> lang('a-cfg-67'),
 			'SITE_THUMB_TYPE'			=> lang('a-mod-204'),
 			'SITE_THUMB_WIDTH'			=> lang('a-cfg-44'),
 			'SITE_THUMB_HEIGHT'			=> lang('a-cfg-45'),
@@ -29,10 +29,10 @@ class SiteController extends Admin {
 			'SITE_MOBILE'				=> lang('a-cfg-72'),
 			'SITE_MURL'				    => lang('da013'),
 			'SITE_ICP'				    => lang('a-site-tcp'),
-            'SITE_JS'                  => lang('a-site-tps')
+       'SITE_JS'                  => lang('a-site-tps')
         );
 	}
-	
+
 	/**
 	 * 站点列表
 	 */
@@ -51,7 +51,7 @@ class SiteController extends Admin {
 		));
 	    $this->view->display('admin/site_list');
 	}
-	
+
 	/**
 	 * 添加站点
 	 */
@@ -105,7 +105,7 @@ class SiteController extends Admin {
 		));
 		$this->view->display('admin/site_add');
 	}
-	
+
 	/**
 	 * 修改站点
 	 */
@@ -140,7 +140,7 @@ class SiteController extends Admin {
 		));
 		$this->view->display('admin/site_add');
 	}
-	
+
 	/**
 	 * 删除站点
 	 */
@@ -199,7 +199,7 @@ class SiteController extends Admin {
 		@unlink(APP_ROOT . 'cache/index/' . $site . '.html');
 		$show or $this->adminMsg(lang('success'), purl('site/index'), 3, 1, 1);
 	}
-	
+
 	/**
 	 * 站点配置
 	 */
@@ -246,7 +246,7 @@ class SiteController extends Admin {
         ));
         $this->view->display('admin/site_config');
 	}
-	
+
 	/**
 	 * 空格填补
 	 */
@@ -259,7 +259,7 @@ class SiteController extends Admin {
         }
 	    return $str;
 	}
-	
+
 	/**
 	 * 保存网站域名配置文件
 	 */
@@ -278,7 +278,7 @@ class SiteController extends Admin {
 		file_put_contents(CONFIG_DIR . 'site.ini.php', $body);
 		file_put_contents(CONFIG_DIR . 'mobile.ini.php', $body2);
 	}
-	
+
 	/**
 	 * 保存网站域名配置文件
 	 */
@@ -298,7 +298,7 @@ class SiteController extends Admin {
 		$body.= PHP_EOL . ");";
 		file_put_contents(CONFIG_DIR . 'site' . DIRECTORY_SEPARATOR . $id . '.ini.php', $body);
 	}
-	
+
 	/**
 	 * 复制表以及模型文件
 	 */
@@ -314,7 +314,7 @@ class SiteController extends Admin {
 		if ($table != 'content_{site}_extend') { //内容扩展表无模型
 			$news = ucfirst($news); //首字母大写
 			//继承对象
-			if ($table == 'content_{site}') { 
+			if ($table == 'content_{site}') {
 				$e = 'ContentModel';
 			} elseif (strpos($table, 'form_{site}_') !== false) {
 				$e = 'FormModel';
@@ -333,7 +333,7 @@ class SiteController extends Admin {
 			file_put_contents(MODEL_DIR . $news . 'Model.php', $body); //创建模型文件
 		}
 	}
-	
+
 	/**
 	 * 删除表以及模型文件
 	 */

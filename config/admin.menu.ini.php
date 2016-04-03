@@ -16,7 +16,7 @@ return array (
         0 => array('name' => 'a-men-0', 'ico' => 'fa fa-home', 'url' => url('admin/index/main'), 'select' => '1',   'option' => ''),
 				1 => array('name' => 'a-men-1', 'ico' => 'fa fa-cog', 'url' => url('admin/index/config'), 'select' => '101', 'option' => array('index-config', 'user-index', 'user-syn','auth-index','index-log','index-attack', 'ip-index')),
         2 => array('name' => 'a-men-90', 'ico' => 'fa fa-globe', 'url' => url('admin/site/config'), 'select' => '121', 'option' => array('site-config', 'site-index','category-index', 'model-index', 'attachment-index', 'position-index', 'relatedlink-index', 'block-index', 'linkage-index', 'form-index')),
-        4 => array('name' => 'a-men-26', 'ico' => 'fa fa-list-ul', 'url' => url('admin/category/index'), 'select' => '201', 'option' =>'category-index'),
+        4 => array('name' => 'a-men-96', 'ico' => 'fa fa-list-ul', 'url' => url('admin/category/index'), 'select' => '201', 'option' =>'category-index'),
         9 => array('name' => 'a-men-2', 'ico' => 'fa fa-table', 'url' => '', 'select' => '0', 'option' => array('content-index')),
 				6 => array('name' => 'a-men-4', 'ico' => 'fa fa-html5', 'url' => url('admin/html/index'), 'select' => '601', 'option' => array('html-index', 'html-cache')),
 				3 => array('name' => 'a-men-5', 'ico' => 'fa fa-user', 'url' => url('admin/member/index'), 'select' => '301', 'option' => array('member-index', 'member-config', 'member-group', 'member-pms','member-extend')),
@@ -40,6 +40,7 @@ return array (
 						1 => array('name' => 'a-men-8', 'url' => url('admin/index/main'), 'option' => ''),
 						177 => array('name' => 'da003', 'url' => url('admin/index/bq'), 'option' => 'index-bq'),
 						117 => array('name' => 'a-men-66', 'url' => url('admin/index/attack'), 'option' => 'index-attack'),
+						118 => array('name' => 'a-men-95', 'url' => url('admin/visit/index'), 'option' =>'index-visit'),
 					),
 				),
 			    1 => array(

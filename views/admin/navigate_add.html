@@ -45,10 +45,11 @@ function ajaxdir() {
         <input name="data[typeid]" type="radio" value="1" <?php echo $data[typeid]==1 ? "checked" : ''?> onClick="$('#logos').show();"> 图片链接&nbsp;&nbsp;
         <input name="data[typeid]" type="radio" value="2" <?php echo $data[typeid]==2 ? "checked" : ''?> onClick="$('#logos').hide();$('#descri').hide();"> 左导航&nbsp;&nbsp;
         <input name="data[typeid]" type="radio" value="3" <?php echo $data[typeid]==3 ? "checked" : ''?> onClick="$('#logos').hide();$('#descri').hide();"> 右导航&nbsp;&nbsp;
-        <input name="data[typeid]" type="radio" value="4" <?php echo $data[typeid]==4 ? "checked" : ''?> onClick="$('#logos').hide();$('#descri').hide();"> 自定义链接&nbsp;&nbsp;
+        <input name="data[typeid]" type="radio" value="4" <?php echo $data[typeid]==4 ? "checked" : ''?> onClick="$('#logos').hide();$('#descri').hide();"> 顶部导航&nbsp;&nbsp;
+        <input name="data[typeid]" type="radio" value="5" <?php echo $data[typeid]==5 ? "checked" : ''?> onClick="$('#logos').hide();$('#descri').hide();"> 底部导航&nbsp;&nbsp;
+        <input name="data[typeid]" type="radio" value="6" <?php echo $data[typeid]==6 ? "checked" : ''?> onClick="$('#logos').hide();$('#descri').hide();"> 友情链接&nbsp;&nbsp;
         </td>
       </tr>
-     <tr>
 	<tr>
         <th>网站名称：</th>
         <td><input type="text" class="input-text" style="width:300px;" id="name" value="<?php echo $data[name]?>" name="data[name]">

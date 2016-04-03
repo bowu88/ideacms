@@ -27,13 +27,24 @@
 					{/if}
 				</div>
 				<div class="contentList pad-10">
-					{if !$ismb}
+					<div class="step">
+						<h4>第一步：</h4>
+						<input type="button" class="button" value="第一步&nbsp;{lang('a-men-52')}" name="submit" onClick="window.location.href='{url("admin/index/cache")}';">&nbsp;&nbsp;
+					</div>
+					<div class="step">
+						<h4>第二步：</h4>
+						<input type="button" class="button" value="第二步&nbsp;{lang('a-men-54')}" name="submit" onClick="window.location.href='{url("admin/content/updateurl/")}';">&nbsp;&nbsp;
+					</div>
+					<div class="step">
+						<h4>第三步(选择相应操作)：</h4>
+						{if !$ismb}
 					<input type="button" class="button" value="{lang('a-con-119')}" name="submit" onClick="window.location.href='{url("admin/html/indexc")}';">&nbsp;&nbsp;
 					{/if}
 					<input type="button" class="button" value="{lang('a-con-120')}" name="submit" onClick="window.location.href='{url("admin/html/category")}';">&nbsp;&nbsp;
 					<input type="button" class="button" value="{lang('a-con-121')}" name="submit" onClick="window.location.href='{url("admin/html/show")}';">&nbsp;&nbsp;
 					<input type="button" class="button" value="{lang('a-men-70')}" name="submit" onClick="window.location.href='{url("admin/html/form")}';">&nbsp;&nbsp;
 					<input type="button" class="button" value="{lang('a-con-122')}" name="submit" onClick="window.location.href='{url("admin/html/clear")}';">&nbsp;&nbsp;
+					</div>
 				</div>
 			</div>
 		</div>

@@ -1,18 +1,18 @@
 <?php
 
 class LinkageController extends Admin {
-    
+
     private $link;
 	private $level;
 	private $childnode;
-    
+
     public function __construct() {
 		parent::__construct();
 		$this->link  = $this->model('linkage');
 		$this->level = 0;
 		$this->childnode = array();
 	}
-    
+
     public function indexAction() {
 	    if ($this->isPostForm()) {
 			if (!auth::check($this->roleid, 'linkage-del', 'admin')) $this->adminMsg(lang('a-com-0', array('1'=>'linkage', '2'=>'del')));
@@ -28,7 +28,7 @@ class LinkageController extends Admin {
 		$this->view->assign('data', $this->link->where('keyid=0')->select());
 		$this->view->display('admin/linkage');
     }
-	
+
 	/*
 	 * 子菜单列表
 	 */
@@ -88,7 +88,7 @@ class LinkageController extends Admin {
 		));
 		$this->view->display('admin/linkage_list');
     }
-    
+
 	/*
 	 * 添加顶级菜单
 	 */
@@ -105,7 +105,7 @@ class LinkageController extends Admin {
 		}
 	    $this->view->display('admin/linkage_add');
 	}
-	
+
 	/*
 	 * 修改顶级菜单
 	 */
@@ -126,7 +126,7 @@ class LinkageController extends Admin {
 		$this->view->assign('data', $data);
 	    $this->view->display('admin/linkage_add');
 	}
-	
+
 	/*
 	 * 添加子级菜单
 	 */
@@ -135,13 +135,13 @@ class LinkageController extends Admin {
 		$keyid = $this->get('keyid');
 		if ($id) {
 		    $data  = $this->link->find($id, 'keyid');
-            $keyid = $keyid ? $keyid : $data['keyid'];			
+            $keyid = $keyid ? $keyid : $data['keyid'];
 		}
 	    if ($this->isPostForm()) {
 			$names = $this->post('name');
 			if (empty($names)) $this->adminMsg(lang('a-lin-3'));
-			$names = explode(chr(13), $names);
-			$pid   = $this->post('parentid'); 
+			$names = explode(PHP_EOL, $names);
+			$pid   = $this->post('parentid');
 			foreach ($names as $name) {
 			    $n = trim($name);
 			    if (!empty($n)) {
@@ -174,13 +174,13 @@ class LinkageController extends Admin {
 		));
 	    $this->view->display('admin/linkage_addson');
 	}
-	
+
 	/*
 	 * 修改子级菜单
 	 */
 	public function editsonAction() {
 	    $id   = (int)$this->get('id');
-		$data = $this->link->find($id);	
+		$data = $this->link->find($id);
 		if (empty($data)) $this->adminMsg(lang('a-lin-4'));
 	    if ($this->isPostForm()) {
 			$name  = $this->post('name');
@@ -211,7 +211,7 @@ class LinkageController extends Admin {
 		));
 	    $this->view->display('admin/linkage_addson');
 	}
-	
+
 	/**
 	 * 删除菜单
 	 */
@@ -229,7 +229,7 @@ class LinkageController extends Admin {
 		$this->link->delete('id=' . $id);
 		$this->adminMsg($this->getCacheCode('linkage') . lang('success'), url('admin/linkage/list', array('keyid'=>$keyid)), 3, 1, 1);
 	}
-	
+
 	/**
 	 * 获取联动菜单子节点
 	 */
@@ -242,13 +242,13 @@ class LinkageController extends Admin {
 			}
 		}
 	}
-	
+
 	/*
 	 * 菜单缓存
 	 * array(
 	        顶级菜单id => array(
 			                  ...内容
-							  'data' => array( 
+							  'data' => array(
 							      //所有子菜单
 							  ),
 			              )
@@ -279,7 +279,7 @@ class LinkageController extends Admin {
 		$this->cache->set('linkage_' . $site_id, $site);
 	    $show or $this->adminMsg(lang('a-update') . '(' . runtime() . 's)', '', 3, 1, 1);
 	}
-	
+
 	/**
 	 * 递归调出菜单所有子菜单
 	 */
@@ -314,7 +314,7 @@ class LinkageController extends Admin {
 		}
 		return $child;
 	}
-	
+
 	/**
 	 * 递归设置菜单所有子菜单组
 	 */
@@ -326,7 +326,7 @@ class LinkageController extends Admin {
 		}
 		return $data;
 	}
-	
+
 	/**
 	 * 获取子菜单ID列表
 	 */
@@ -339,7 +339,7 @@ class LinkageController extends Admin {
 		}
 		return $arrchildid;
 	}
-	
+
 	/*
 	 * 查询是否有子菜单
 	 */

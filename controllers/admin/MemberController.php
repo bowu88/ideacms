@@ -1,9 +1,9 @@
 <?php
 
 class MemberController extends Admin {
-    
+
 	private $mgroup;
-    
+
     public function __construct() {
 		parent::__construct();
         if ($this->config['SYS_MEMBER']) {
@@ -11,7 +11,7 @@ class MemberController extends Admin {
         }
 		$this->mgroup = $this->model('member_group');
 	}
-    
+
     public function indexAction() {
         $is_syn =FALSE;
         if(file_exists(APP_ROOT.'cache\member.lock'))
@@ -83,7 +83,7 @@ class MemberController extends Admin {
 	    ));
 	    $this->view->display('admin/member_list');
     }
-	
+
 	/*
 	 * 用户组
 	 */
@@ -153,7 +153,7 @@ class MemberController extends Admin {
 				$this->view->display('admin/member_group_list');
 		}
 	}
-    
+
 	/*
 	 * 配置信息
 	 */
@@ -170,7 +170,7 @@ class MemberController extends Admin {
 			if ($data['uc_use']) {
 			    $m = self::load_config('database');
 				$s = '<?php ' . PHP_EOL . '/* UCenter配置 */' . PHP_EOL
-				. stripslashes($data['uc_config']) 
+				. stripslashes($data['uc_config'])
 				. PHP_EOL . '/* IdeaCMS配置 */' . PHP_EOL
 				. '$dbhost    = \'' . $m['host'] . ':' . $m['port'] . '\';' . PHP_EOL
 				. '$dbuser    = \'' . $m['username'] . '\';' . PHP_EOL
@@ -200,7 +200,7 @@ class MemberController extends Admin {
         ));
         $this->view->display('admin/member_config');
 	}
-	
+
 	/*
 	 * 修改资料
 	 */
@@ -246,7 +246,7 @@ class MemberController extends Admin {
         ));
         $this->view->display('admin/member_edit');
 	}
-	
+
 	/*
 	 * 注册会员
 	 */
@@ -259,13 +259,15 @@ class MemberController extends Admin {
 			    //批量
 				$data	= $this->post('members');
 				if (empty($data)) $this->adminMsg(lang('a-mem-6'));
-				$data	= explode(chr(13), $data);
+				$data	= explode(PHP_EOL, $data);
+
 				$y = $n = 0;
 				foreach ($data as $val) {
-				    list($username, $password, $email) = explode(' ', $val);
+				  list($username, $password, $email) = explode(' ', $val);
 					$email    = trim($email);
 					$username = trim($username);
 					$password = trim($password);
+
 					if (empty($username) || empty($password) || empty($email)) {
 					    $n ++;
 					} elseif (!$this->is_username($username)) {
@@ -273,7 +275,7 @@ class MemberController extends Admin {
 					} elseif (!check::is_email($email)) {
 					    $n ++;
 					} else {
-					    $row1 = $this->member->getOne('username=?', $username, 'id');
+					  $row1 = $this->member->getOne('username=?', $username, 'id');
 						$row2 = $this->member->getOne('email=?', $email, 'id');
 						if (empty($row1) && empty($row2)) {
 						    $salt   = substr(md5(rand(0, 999)), 0, 10);
@@ -356,7 +358,7 @@ class MemberController extends Admin {
         ));
         $this->view->display('admin/member_reg');
 	}
-	
+
 	/*
 	 * 短消息
 	 */
@@ -453,7 +455,7 @@ class MemberController extends Admin {
 			    break;
 		}
 	}
-	
+
 	/**
 	 * 删除会员
 	 */
@@ -490,12 +492,12 @@ class MemberController extends Admin {
 		//删除支付插件
 		if (plugin('pay')) {
 		    $pay  = $this->plugin_model('pay', 'pay_data');
-            $pay->delete('userid=' . $id);			
+            $pay->delete('userid=' . $id);
 		}
 		//删除会员付费插件
 		if (plugin('vip')) {
 		    $vip  = $this->plugin_model('vip', 'vip');
-            $vip->delete('userid=' . $id);			
+            $vip->delete('userid=' . $id);
 		}
 		//删除关联表单
 		$model = $this->get_model('form');
@@ -518,20 +520,20 @@ class MemberController extends Admin {
 		if (file_exists($path)) $this->delDir($path);
 		$this->adminMsg(lang('success'), url('admin/member'), 3, 1, 1);
 	}
-	
+
 	/**
 	 * 会员组缓存
 	 */
 	public function cacheAction($show=0) {
 	    $data  = $this->mgroup->order(array('listorder ASC', 'id DESC'))->select();
-		$cache = array(); 
+		$cache = array();
 		foreach ($data as $t) {
 			$cache[$t[id]] = $t;
 		}
 		$this->cache->set('membergroup', $cache);
 		$show or $this->adminMsg(lang('a-update'), url('admin/member/group/'), 3, 1, 1);
 	}
-	
+
 	/*
 	 * 会员扩展
 	 */
@@ -564,7 +566,7 @@ class MemberController extends Admin {
 				$list_code	= '{list table=' . $model['tablename'] . ' order=updatetime num=10}' . PHP_EOL
 				. 'id：{$t[\'id\']}' . PHP_EOL
 				. '{/list}' . PHP_EOL . '<!-- '. lang('a-for-12') . ' -->' . PHP_EOL . PHP_EOL
-				. '{sql:' . $model['tablename'] . ' where("'. lang('a-mod-183') . '")->select(false);}' 
+				. '{sql:' . $model['tablename'] . ' where("'. lang('a-mod-183') . '")->select(false);}'
 				. PHP_EOL . '<!-- '. lang('a-mod-184') . ' -->' . PHP_EOL . PHP_EOL
 				. '{url(\'member/extend\', array(\'modelid\'=>' . $mid . ',\'touserid\'=>' . lang('a-mod-187') . '))}'
 				. PHP_EOL . '<!-- '. lang('a-mod-185') . ' -->'
@@ -671,7 +673,7 @@ class MemberController extends Admin {
 		));
 		$this->view->display($tpl);
 	}
-	
+
 	/*
 	 * 连接测试
 	 */
@@ -684,7 +686,7 @@ class MemberController extends Admin {
 			exit('0');
 		}
     }
-	
+
 	/**
 	 * Email是否重复检查
 	 */
@@ -694,11 +696,11 @@ class MemberController extends Admin {
 	    $id    = $this->post('id');
 	    if (empty($email)) exit('<b><font color=red>' . lang('a-mem-22') . '</font></b>');
 	    $where = $id ? "email='" . $email . "' and id<>" . $id : "email='" . $email . "'";
-	    $data  = $this->member->getOne($where); 
+	    $data  = $this->member->getOne($where);
 	    if ($data) exit('<b><font color=red>' . lang('a-mem-23') . '</font></b>');
 	    exit('<b><font color=green>√</font></b>');
 	}
-	
+
 	/**
 	 * username是否重复检查
 	 */
@@ -706,11 +708,11 @@ class MemberController extends Admin {
 	    $name  = $this->post('username');
 		if (!$this->is_username($name)) exit('<b><font color=red>' . lang('a-mem-24') . '</font></b>');
 	    if (empty($name)) exit('<b><font color=red>' . lang('a-mem-25') . '</font></b>');
-	    $data  = $this->member->getOne('username=?', $name, 'id'); 
+	    $data  = $this->member->getOne('username=?', $name, 'id');
 	    if ($data) exit('<b><font color=red>' . lang('a-mem-11') . '</font></b>');
 	    exit('<b><font color=green>√</font></b>');
 	}
-	
+
 	/**
 	 * 补填空格
 	 */

@@ -552,6 +552,36 @@ CREATE TABLE IF NOT EXISTS `{pre}form_1_gbook` (
   KEY `cid` (`cid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `{pre}visit`;
+CREATE TABLE IF NOT EXISTS `{pre}visit` (
+  `id` int(10) NOT NULL,
+  `year` int(10) unsigned NOT NULL,
+  `month` int(10) unsigned NOT NULL,
+  `day` int(10) unsigned NOT NULL,
+  `time` int(10) NOT NULL,
+  `get` varchar(255) NOT NULL,
+  `referrer` varchar(255) NOT NULL,
+  `ip` varchar(20) NOT NULL,
+  `country` varchar(255) NOT NULL,
+  `province` varchar(255) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `district` varchar(255) NOT NULL,
+  `carrier` varchar(255) NOT NULL,
+  `os` varchar(255) NOT NULL,
+  `lang` varchar(255) NOT NULL,
+  `browser` varchar(255) NOT NULL,
+  `ua` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `{pre}_news`;
+CREATE TABLE `{pre}content_1_news` (
+  `id` int(10) NOT NULL,
+  `catid` smallint(5) NOT NULL,
+  `content` mediumtext NOT NULL,
+  PRIMARY KEY `id` (`id`),
+  KEY `catid` (`catid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 INSERT INTO `{pre}model` (`modelid`,`site`, `typeid`, `modelname`, `tablename`, `categorytpl`, `listtpl`, `showtpl`) VALUES
 (1, 1, 1, '文章', 'content_1_news', 'category_news.html', 'list_news.html', 'show_news.html'),
 (2, 1, 1, '图片', 'content_1_image', 'category_image.html', 'list_image.html', 'show_image.html'),

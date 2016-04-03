@@ -21,7 +21,7 @@ class Wx extends Admin {
             $this->wx_config = unserialize(file_get_contents($this->file));
         $this->createTable();
     }
-	
+
 	/**
      * 配置
      */

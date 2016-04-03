@@ -259,6 +259,25 @@ class AdsenseController extends Admin {
                 array('field'=>'setting_content', 'name'=>'广告代码', 'tips'=>'', 'formtype'=>'textarea', 'setting'=>"array('width'=>430,'height'=>130)", 'isshow'=>1),
             ),
         );
+        $list[3] = array(
+            'name'   => '双图广告',
+            'fields' => array(
+                //array('field'=>'setting_title', 'name'=>'标题', 'tips'=>'', 'formtype'=>'input', 'setting'=>"array('width'=>400,'height'=>30)", 'isshow'=>1),
+                array('field'=>'setting_thumb', 'name'=>'上传大图片', 'tips'=>'', 'formtype'=>'image', 'setting'=>"array('size'=>'300')", 'isshow'=>1),
+                array('field'=>'setting_thumb1',   'name'=>'上传小图片', 'tips'=>'', 'formtype'=>'image', 'setting'=>"array('size'=>'300')", 'isshow'=>1),
+                array('field'=>'setting_url',   'name'=>'链接地址', 'tips'=>'', 'formtype'=>'input', 'setting'=>"array('size'=>'300')", 'isshow'=>1),
+                array('field'=>'setting_content', 'name'=>'描述内容', 'tips'=>'', 'formtype'=>'textarea', 'setting'=>"array('width'=>430,'height'=>130)", 'isshow'=>1),
+            ),
+        );
+        $list[4] = array(
+            'name'   => '客片广告',
+            'fields' => array(
+                //array('field'=>'setting_title', 'name'=>'标题', 'tips'=>'', 'formtype'=>'input', 'setting'=>"array('width'=>400,'height'=>30)", 'isshow'=>1),
+                array('field'=>'setting_content', 'name'=>'场景名称', 'tips'=>'', 'formtype'=>'input', 'setting'=>"array('width'=>430,'height'=>30)", 'isshow'=>1),
+                array('field'=>'setting_thumb', 'name'=>'封面图片', 'tips'=>'', 'formtype'=>'image', 'setting'=>"array('size'=>'300')", 'isshow'=>1),
+                array('field'=>'setting_url',   'name'=>'链接地址', 'tips'=>'', 'formtype'=>'input', 'setting'=>"array('size'=>'300')", 'isshow'=>1),
+            ),
+        );
         return $list;
     }
 

@@ -1,0 +1,60 @@
+{template header.html}
+
+      <div class="subnav">
+	<div class="content-menu ib-a blue line-x">
+        <a href="{url('admin/visit/config')}" class="on"><em>访客统计配置</em></a><span>|</span>
+        <a href="{url('admin/visit/index')}" class="on"><em>访客统计</em></a>
+	</div>
+	<div class="bk10"></div>
+      </div>
+	<div class="table-list">
+            <form action="" method="post" name="myform" id="myform">
+		<div class="contentList pad-10">
+            <table width="100%">
+            <thead>
+            <tr>
+            <th align="left">ID</th>
+            <th align="left">时间</th>
+            <th align="left">路径</th>
+            <th align="left">来路</th>
+            <th align="left">来访ip</th>
+            <th align="left">国家</th>
+            <th align="left">省份</th>
+            <th align="left">城市</th>
+            <th align="left">地区</th>
+            <th align="left">运营商</th>
+            <th align="left">系统</th>
+            <th align="left">语言</th>
+            <th align="left">浏览器</th>
+            <!-- <th>UA</th> -->
+            </tr>
+            </thead>
+            <tbody>
+            {loop $list $t}
+            <tr>
+            <td align="left">{$t['id']}</td>
+            <td align="left">{date('Y-m-d',$t['time'])}</td>
+            <td align="left">{$t['get']}</td>
+            <td align="left">{$t['referrer']}</td>
+            <td align="left">{$t['ip']}</td>
+            <td align="left">{$t['country']}</td>
+            <td align="left">{$t['province']}</td>
+            <td align="left">{$t['city']}</td>
+            <td align="left">{$t['district']}</td>
+            <td align="left">{$t['carrier']}</td>
+            <td align="left">{$t['os']}</td>
+            <td align="left">{$t['lang']}</td>
+            <td align="left">{$t['browser']}</td>
+            <!-- <td align="left">{$t['ua']}</td> -->
+            </tr>
+            {/list}
+            </tbody>
+            </table>
+            {$pagelist}
+		</div>
+            </form>
+	</div>
+</div>
+
+</body>
+</html>

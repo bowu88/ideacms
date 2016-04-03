@@ -37,7 +37,8 @@
 			<td width="70%">
 			{if admin_auth($userinfo['roleid'], 'theme-del')}
 			&nbsp;<a href="javascript:;" onClick="if(confirm('{lang('a-confirm')}')){ window.location.href='{url('admin/theme/del',array('name'=>$t['dir']))}'; }" title="{lang('a-del')}">×</a>{/if}
-			{if !$istop}
+			<!-- //if !$istop -->
+			{if !$istop && $t.tdir !='mobile'}
 				&nbsp;
 				{if $SITE_THEME == $t['tdir']}
 				<span class="label label-important">{lang('a-now-install')}</span>
