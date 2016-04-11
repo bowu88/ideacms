@@ -1,11 +1,11 @@
 <?php
 
 class ContentModel extends Model {
-    
+
     public function get_primary_key() {
         return $this->primary_key = 'id';
     }
-    
+
     public function get_fields() {
         return $this->get_table_fields();
     }
@@ -15,7 +15,7 @@ class ContentModel extends Model {
         $url = url('admin/wx/sendContent', array('ids' => $id,'$catid'=>$catid));
         header('Location: '.$url);
     }
-	
+
 	/**
      * 获取内容数据
      */
@@ -24,7 +24,7 @@ class ContentModel extends Model {
 		$extend = $this->get_extend_data($id);
 		return empty($extend) ? $data : array_merge($data, $extend);
 	}
-	
+
 	/**
      * 内容表数据统计
      */
@@ -32,7 +32,7 @@ class ContentModel extends Model {
 		$site = empty($site) ? App::get_site_id() : $site;
 		return $this->count('content_' . $site, null, $where, $value, $cache);
 	}
-	
+
 	/**
      * 会员添加、修改内容数据
      */
@@ -47,10 +47,10 @@ class ContentModel extends Model {
 			return $id;
 		} else {
 			//存入内容审核表中
-			return $this->set_verify_data($id, $tablename, $data); 
+			return $this->set_verify_data($id, $tablename, $data);
 		}
 	}
-	
+
     /**
      * 添加、修改内容数据
      */
@@ -59,6 +59,7 @@ class ContentModel extends Model {
         if (!$this->is_table_exists($tablename)) {
             return lang('m-con-37', array('1' => $tablename));
         }
+
         $table = Controller::model($tablename); //加载附表Model
         if (empty($data['catid'])) {
             return lang('m-con-8');
@@ -115,7 +116,7 @@ class ContentModel extends Model {
 				    if ($name) {
 						$d = $this->from('tag', 'id')->where('name=?', $name)->where('catid=?', $data['catid'])->select(false);
 						if (empty($d)) {
-							$this->query('INSERT INTO `' . $this->prefix . 'tag` (`name`,`letter`,`catid`) VALUES ("' . $name . '", "' . word2pinyin($name) . '","'.$data['catid'].'")');
+              $this->query('INSERT INTO `' . $this->prefix . 'tag` (`name`,`letter`,`catid`, `listorder`) VALUES ("' . $name . '", "' . word2pinyin($name) . '","'.$data['catid'].'", 0)');
 						}
 					}
 				}
@@ -128,6 +129,7 @@ class ContentModel extends Model {
 				$data['id'] = $id;
 				$data['url'] = getUrl($data); //更新URL
 				$data['status'] = 1; //插入时状态设置为1
+        $data['listorder'] = 0;
 				$this->insert($data);
 				$table->insert($data);
                 $is_add = 1;
@@ -138,8 +140,9 @@ class ContentModel extends Model {
 				$data['status'] = $data['status'] > 0 ? 1 : 0; //修改时，非0状态设置为1
 				$this->update($data,  'id=' . $id);
 				$table->update($data, 'id=' . $id);
-				$status			= 0; //修改时不作为积分处理
+				$status = 0; //修改时不作为积分处理
 				$data['userid'] = $_data['userid'];
+        $data['listorder'] = $_data['listorder'] ? $_data['listorder'] : 0;
 			}
         } else { //添加
 			$data['id'] = $id = $this->get_content_id();
@@ -148,6 +151,7 @@ class ContentModel extends Model {
             }
 			$data['url'] = getUrl($data); //更新URL
 			$data['status'] = 1; //插入时状态设置为1
+      $data['listorder'] = 0;
 			$this->insert($data);
 			$table->insert($data);
             $is_add = 1;
@@ -192,7 +196,7 @@ class ContentModel extends Model {
         }
         return $id;
     }
-    
+
 	/**
      * 删除
      */
@@ -230,14 +234,14 @@ class ContentModel extends Model {
 		//删除推荐位信息
 		$this->query('delete from ' . $this->prefix . 'position_data where contentid=' . $id);
     }
-    
+
 	/**
      * 更新URL地址
      */
     public function url($id, $url) {
         $this->update(array('url' => $url), 'id=' . $id);
     }
-	
+
 	/**
      * 审核文档
      */
@@ -260,14 +264,14 @@ class ContentModel extends Model {
 		}
 		$this->set_verify_data($id, $verify['tablename'], $data);
     }
-    
+
     /**
      * 相关文档
      */
     public function relation($ids, $num) {
         return $this->from('content_' . App::get_site_id())->where('id in (' . $ids . ')')->order('listorder desc, updatetime desc')->limit($num)->select();
     }
-	
+
 	/**
      * 积分处理
      */
@@ -290,7 +294,7 @@ class ContentModel extends Model {
 		}
 		if (isset($credit) && $credit != '') $this->query('update ' . $this->prefix . 'member set credits=' . (int)$credit . ' where id=' . $userid);
 	}
-    
+
 	/**
      * 下载远程图片
      */
@@ -327,7 +331,7 @@ class ContentModel extends Model {
 		}
 		return count($regex) > 0 ? array('regex' => $regex, 'replace' => $replace) : null;
 	}
-	
+
 	/**
      * 递归创建目录
      */
@@ -337,7 +341,7 @@ class ContentModel extends Model {
             mkdir($dir);
         }
     }
-	
+
 	/**
      * 处理内容扩展数据
      */
@@ -354,7 +358,7 @@ class ContentModel extends Model {
 		}
 		return true;
     }
-	
+
 	/**
      * 获取内容扩展数据
      */
@@ -362,7 +366,7 @@ class ContentModel extends Model {
 		$extend = $this->from('content_' . App::get_site_id() . '_extend')->where('id=' . $id)->select(false);
 		return empty($extend) ? $data : (empty($data) ? $extend : array_merge($data, $extend));
 	}
-	
+
 	/**
      * 获取内容审核数据
      */
@@ -373,7 +377,7 @@ class ContentModel extends Model {
 		$_data	= string2array($verify['content']);
 		return array_merge($data, $_data);
 	}
-	
+
 	/**
      * 处理内容审核数据
      */
@@ -423,7 +427,7 @@ class ContentModel extends Model {
 		$this->set_extend_data($id, $data);	//处理内容扩展数据
 		return $id;
     }
-	
+
 	/**
      * 插入新的内容id
      */
@@ -436,12 +440,12 @@ class ContentModel extends Model {
         }
         return $id;
 	}
-	
+
 	/**
      * 清理缓存内容id
      */
 	public function clear_cache_id() {
 		$this->query('DELETE FROM `' . $this->prefix . 'content` WHERE 1');
 	}
-	
+
 }

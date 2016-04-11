@@ -1,11 +1,11 @@
 <?php
 
 class ThemeController extends Admin {
-    
+
     public function __construct() {
 		parent::__construct();
 	}
-    
+
     public function indexAction() {
         $dir = $this->get('dir') ? base64_decode($this->get('dir')) : '';
         $iframe = $this->get('iframe') ? 1 : 0;
@@ -18,7 +18,7 @@ class ThemeController extends Admin {
         $dlist = $flist = array();
         if ($data) {
             foreach ($data as $t) {
-                if (!$dir && ($t == 'header.html' || $t == 'weixin' || $t == 'mobile')) {
+                if (!$dir && ($t == 'header.html' || $t == 'weixin')) {
                     continue;
                 };
                 $path = $dir . $t . DIRECTORY_SEPARATOR;
@@ -47,7 +47,7 @@ class ThemeController extends Admin {
         ));
         $this->view->display('admin/theme_list');
     }
-    
+
     public function editAction() {
         $dir = base64_decode($this->get('dir'));
 		$dir = substr($dir, -1) == DIRECTORY_SEPARATOR ? substr($dir, 0, -1) : $dir;
@@ -75,7 +75,7 @@ class ThemeController extends Admin {
 		));
 		$this->view->display('admin/theme_add');
     }
-	
+
 	public function addAction() {
         $dir  = base64_decode($this->get('cpath'));
 		if ($this->checkFileName($dir)) $this->adminMsg(lang('m-con-20'));
@@ -182,7 +182,7 @@ class ThemeController extends Admin {
 			}
 		}
 	}
-	
+
 	public function delAction() {
 	    $dir  = base64_decode($this->get('name'));
 		if ($this->checkFileName($dir)) $this->adminMsg(lang('m-con-20'));
@@ -192,7 +192,7 @@ class ThemeController extends Admin {
 		$Pdir = VIEW_DIR == dirname($name) . DIRECTORY_SEPARATOR ? '' : str_replace(VIEW_DIR, '', dirname($name));
 		$this->adminMsg(lang('success'),url('admin/theme/index', array('dir'=>base64_encode($Pdir . DIRECTORY_SEPARATOR))), 3, 1, 1);
 	}
-	
+
 	public function demoAction() {
 		if ($this->isPostForm()) {
 		    $type = $this->post('type');
@@ -281,9 +281,9 @@ class ThemeController extends Admin {
 					break;
 				case 6:
 					$code = '{loop $cats $c}' . PHP_EOL .
-					'{if $c[\'parentid\']==' . (int)$data['catid'] . '}' . PHP_EOL . 
-					'栏目名称: {$c[\'catname\']}' . PHP_EOL . 
-					'{/if}' . PHP_EOL . 
+					'{if $c[\'parentid\']==' . (int)$data['catid'] . '}' . PHP_EOL .
+					'栏目名称: {$c[\'catname\']}' . PHP_EOL .
+					'{/if}' . PHP_EOL .
 					'{/loop}' . PHP_EOL;
 					break;
 			}
@@ -300,7 +300,7 @@ class ThemeController extends Admin {
 		));
 		$this->view->display('admin/theme_demo');
     }
-	
+
 	public function cacheAction($show=0) {
 		$dir = APP_ROOT . 'cache/views/';
 		if (!file_exists($dir)) mkdir($dir);

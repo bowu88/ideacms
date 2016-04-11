@@ -99,6 +99,8 @@ class LinkageController extends Admin {
 			$data = array(
 				'name' => $name,
 				'site' => $this->post('site'),
+				'child' => 0,
+				'arrchilds' => '',
 			);
 			$this->link->insert($data);
 			$this->adminMsg($this->getCacheCode('linkage') . lang('success'), url('admin/linkage/'), 3, 1, 1);
@@ -150,6 +152,8 @@ class LinkageController extends Admin {
 						'site'     => $this->siteid,
 						'name'     => $n,
 						'parentid' => $pid,
+						'child' => 0,
+						'arrchilds' => '',
 					);
 					$this->link->insert($sdata);
 				}

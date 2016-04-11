@@ -9,7 +9,7 @@ return array(
 	'host'     => 'localhost', 
 	'username' => 'root', 
 	'password' => '', 
-	'dbname'   => 'test1', 
+	'dbname'   => 'ideacms', 
 	'prefix'   => 'idea_', 
 	'charset'  => 'utf8', 
 	'port'     => '3306', 

@@ -1,6 +1,6 @@
 <?php
 
-//if (!defined('IN_IDEACMS')) exit();
+if (!defined('IN_IDEACMS')) exit();
 
 // 极验验证调用方式
 function da_geetest($product = 'embed', $submit = '') {
@@ -11,7 +11,7 @@ function da_geetest($product = 'embed', $submit = '') {
     if ($product == 'popup') {
         $add = 'gt_captcha_obj.bindOn("#'.$submit.'");';
     }
-	
+
     return '
     <div class="box" id="div_geetest_lib">
         <div id="div_id_embed"></div>
@@ -82,7 +82,7 @@ var status = 0, result, apiFail;
  * 静态页面处理信息函数
  */
 function html_to_data($data, $file) {
-	$data = is_array($data) ? $data : array('idea_html_to_data' => $data);
+	$data = is_array($data) ? $data : array('finecms_html_to_data' => $data);
 	$data = str_replace('=', '', base64_encode(ia_authcode($data, 'ENCODE')));	//加密数据
 	return '<script type="text/javascript" src="' . url('api/data', array('data' => $data, 'file' => $file)) . '"></script>';
 }
@@ -285,7 +285,7 @@ function getImage($url) {
  * 下载文件函数
  */
 function downfile($url) {
-	return url('api/down', array('file' => str_replace('=', '', base64_encode(ia_authcode(array('ideacms' => $url), 'ENCODE')))));
+	return url('api/down', array('file' => str_replace('=', '', base64_encode(ia_authcode(array('finecms' => $url), 'ENCODE')))));
 }
 
 /**
@@ -342,9 +342,9 @@ function thumb($img, $width = null, $height = null) {
  * 强制动态模式调用图片
  */
 function _thumb($img, $width = null, $height = null) {
-	return url('api/thumb', array('img' => str_replace('=', '', base64_encode(ia_authcode(array('ideacms' => $img), 'ENCODE'))), 'width' => $width, 'height' => $height));
+	return url('api/thumb', array('img' => str_replace('=', '', base64_encode(ia_authcode(array('finecms' => $img), 'ENCODE'))), 'width' => $width, 'height' => $height));
 }
- 
+
 /**
  * 提取关键字
  */
@@ -463,7 +463,7 @@ function catposids($catid, $catids = '', $category) {
         return false;
     }
     $row = $category[$catid];
-    $catids = $catid . ','; 
+    $catids = $catid . ',';
     if ($row['parentid']) {
         $catids.= catposids($row['parentid'], $catids, $category);
     }
@@ -481,7 +481,7 @@ function _catposids($catid, $catids = '', $category) {
         return false;
     }
     $row = $category[$catid];
-    $catids = $catid . ','; 
+    $catids = $catid . ',';
     if ($row['child'] && $row['arrchildid']) {
 		$id = explode(',', $row['arrchildid']);
 		foreach ($id as $t) {
@@ -754,7 +754,7 @@ function baidunews($data, $update) {
 		$baidunews.= "<category>" . htmlspecialchars(strip_tags($cats[$item['catid']]['catname'])) . "</category>\n";
 		$baidunews.= "<pubDate>" .  date('Y-m-d', $item['updatetime']) . "</pubDate>\n";
 		$baidunews.= "</item>\n";
-    } 
+    }
     $baidunews .= "</document>\n";
 	unset($data);
     file_put_contents(APP_ROOT . $filename, $baidunews, LOCK_EX);
@@ -1056,8 +1056,8 @@ function get_member_info($uid, $more = 0) {
 
 /**
  * 编码转换函数
- * @param  $str 
- * @param  $from 
+ * @param  $str
+ * @param  $from
  * @param  $to
  * @return string
  */
@@ -1083,7 +1083,7 @@ function utf8_to_gbk($utfstr) {
 	$filename	= EXTENSION_DIR . 'encoding' . DIRECTORY_SEPARATOR . 'gb-unicode.table';
 	$UC2GBTABLE = array();
 	$fp	= fopen($filename, 'rb');
-	while($l = fgets($fp, 15)) {        
+	while($l = fgets($fp, 15)) {
 		$UC2GBTABLE[hexdec(substr($l, 7, 6))] = hexdec(substr($l, 0, 6));
 	}
 	fclose($fp);
@@ -1092,10 +1092,10 @@ function utf8_to_gbk($utfstr) {
 	for($i=0; $i<$ulen; $i++) {
 		$c  = $utfstr[$i];
 		$cb = decbin(ord($utfstr[$i]));
-		if(strlen($cb)==8) { 
+		if(strlen($cb)==8) {
 			$csize = strpos(decbin(ord($cb)), '0');
 			for($j = 0; $j < $csize; $j++) {
-				$i++; 
+				$i++;
 				$c .= $utfstr[$i];
 			}
 			$c = utf8_to_unicode($c);
@@ -1121,8 +1121,8 @@ function gbk_to_utf8($gbstr) {
 	$filename  = EXTENSION_DIR . 'encoding' . DIRECTORY_SEPARATOR . 'gb-unicode.table';
 	$CODETABLE = array();
 	$fp	= fopen($filename, 'rb');
-	while ($l = fgets($fp, 15)) { 
-		$CODETABLE[hexdec(substr($l, 0, 6))] = substr($l, 7, 6); 
+	while ($l = fgets($fp, 15)) {
+		$CODETABLE[hexdec(substr($l, 0, 6))] = substr($l, 7, 6);
 	}
 	fclose($fp);
 	$ret  = '';
@@ -1298,7 +1298,7 @@ function linkagepos($keyid, $id, $urlrule, $s = ' > ') {
 function linkage_ids($keyid, $id, $ids = '') {
     $datas = get_linkage_data();
     $data  = $datas[$keyid]['data'][$id];
-    $ids   = $id . ','; 
+    $ids   = $id . ',';
     if ($data['parentid']) $ids .= linkage_ids($keyid, $data['parentid'], $ids);
     return $ids;
 }
@@ -1328,8 +1328,8 @@ function linkageform($linkageid = 0, $defaultvalue = 0, $id = 'linkage', $level 
 	$datas = $data[$linkageid];
 	$infos = $datas['data'];
     $string = '';
-	if(!defined('IDEACMS_LINKAGE_INIT_LD')) {
-		define('IDEACMS_LINKAGE_INIT_LD', 1);
+	if(!defined('FINECMS_LINKAGE_INIT_LD')) {
+		define('FINECMS_LINKAGE_INIT_LD', 1);
 		$string.= '<script type="text/javascript" src="' . ADMIN_THEME . 'js/jquery.ld.js"></script>';
 	}
 	$default_txt = '';
@@ -1352,12 +1352,12 @@ function linkageform($linkageid = 0, $defaultvalue = 0, $id = 'linkage', $level 
             $style = '';
         }
 		$required = $i == 1 && $required ? ' required' : '';
-		$string.='<select class="ideacms-select-' . $id . '" name="' . $id . '-' . $i . '" id="' . $id . '-' . $i .'" width="100" ' . $style . $required . '><option value=""> -- </option></select>&nbsp;&nbsp;';
+		$string.='<select class="finecms-select-' . $id . '" name="' . $id . '-' . $i . '" id="' . $id . '-' . $i .'" width="100" ' . $style . $required . '><option value=""> -- </option></select>&nbsp;&nbsp;';
 	}
     $string.= '<script type="text/javascript">
 				$(function(){
-					var $ld5 = $(".ideacms-select-' . $id . '");					  
-					$ld5.ld({ajaxOptions:{"url":"' . SITE_URL . 'index.php?c=api&a=linkage&id=' . $linkageid . '"},defaultParentId:0})	 
+					var $ld5 = $(".finecms-select-' . $id . '");
+					$ld5.ld({ajaxOptions:{"url":"' . SITE_URL . 'index.php?c=api&a=linkage&id=' . $linkageid . '"},defaultParentId:0})
 					var ld5_api = $ld5.ld("api");
 					ld5_api.selected(' . $default_txt . ');
 					$ld5.bind("change",onchange);
@@ -1410,7 +1410,7 @@ function baiduMap($modelid, $name, $value, $width = 600, $height = 400) {
 	var mapObj=null;
 	lngX = "' . $lngX . '";
 	latY = "' . $latY . '";
-	zoom = "' . $zoom . '";		
+	zoom = "' . $zoom . '";
 	var mapObj = new BMap.Map("mapObj");
 	var ctrl_nav = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
 	mapObj.addControl(ctrl_nav);
@@ -1428,7 +1428,7 @@ function baiduMap($modelid, $name, $value, $width = 600, $height = 400) {
 		var point = new BMap.Point(lngX,latY);
 		var marker = new BMap.Marker(point, {icon: myIcon});
 		mapObj.addOverlay(marker);
-	}';	
+	}';
 	$str   .='</script>';
 	return $str;
 }
@@ -1663,17 +1663,17 @@ function ia_sendsms($mobile, $content) {
         return FALSE;
     }
 
-    $file = ICPATH.'config/sms.php';
+    $file = FCPATH.'config/sms.php';
     $config = @is_file($file) ? string2array(file_get_contents($file)) : array();
 
-    $result = da_catcher_data('http://sms.lygphp.com/index.php?uid='.$config['uid'].'&key='.$config['key'].'&mobile='.$mobile.'&content='.$content.'【'.$config['note'].'】&domain='.trim(str_replace('http://', '', SITE_URL), '/').'&sitename='.CMS_NAME);
+    $result = da_catcher_data('http://sms.dayrui.com/index.php?uid='.$config['uid'].'&key='.$config['key'].'&mobile='.$mobile.'&content='.$content.'【'.$config['note'].'】&domain='.trim(str_replace('http://', '', SITE_URL), '/').'&sitename='.CMS_NAME);
     if (!$result) {
         return FALSE;
     }
 
     $result = da_object2array(json_decode($result));
 
-    @file_put_contents(ICPATH.'cache/sms.log', date('Y-m-d H:i:s').' ['.$mobile.'] ['.$result['msg'].'] （'.str_replace(array(chr(13), chr(10)), '', $content).'）'.PHP_EOL, FILE_APPEND);
+    @file_put_contents(FCPATH.'cache/sms.log', date('Y-m-d H:i:s').' ['.$mobile.'] ['.$result['msg'].'] （'.str_replace(array(chr(13), chr(10)), '', $content).'）'.PHP_EOL, FILE_APPEND);
 
     return $result;
 }
@@ -1703,4 +1703,9 @@ function ia_now_url() {
 	$pageURL.= $_SERVER['REQUEST_URI'] ? $_SERVER['REQUEST_URI'] : $_SERVER['PHP_SELF'];
 
 	return $pageURL;
+}
+
+function ia_icon($i) {
+	$i = trim($i);
+	return $i ? $i : 'table';
 }

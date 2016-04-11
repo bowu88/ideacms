@@ -1,7 +1,7 @@
 <?php
 
 class TagController extends Admin {
-    
+
     protected $tag;
 
     protected $cat;
@@ -18,7 +18,7 @@ class TagController extends Admin {
         }
         $this->cat = $this->db->where('child','0')->get('category')->result_array();
 	}
-	
+
 	public function indexAction() {
 	    if ($this->post('submit_del') && $this->post('form') == 'del') {
 	        foreach ($_POST as $var=>$value) {
@@ -33,8 +33,11 @@ class TagController extends Admin {
 
 			if (empty($data)) $this->adminMsg(lang('a-tag-0'));
 
-            if($this->checkRepeat($data)) $this->adminMsg(lang('a-tag-ex-2'),url('admin/tag'));
+      //if($this->checkRepeat($data)) $this->adminMsg(lang('a-tag-ex-2'),url('admin/tag'));
 			foreach ($data as $id=>$t) {
+          if ($this->checkRepeat($t, 0, $id)) {
+           $this->adminMsg(lang('a-tag-ex-2'),url('admin/tag'));
+         }
 			    $this->tag->update($t, 'id=' . $id);
 			}
 			$this->adminMsg($this->getCacheCode('tag') . lang('success'), url('admin/tag/'), 3, 1, 1);
@@ -67,7 +70,7 @@ class TagController extends Admin {
 	    ));
 	    $this->view->display('admin/tag_list');
 	}
-	
+
 	public function addAction() {
 
 	    if ($this->post('submit')) {
@@ -78,8 +81,9 @@ class TagController extends Admin {
 			if (empty($data['letter'])){
                 $data['letter'] = word2pinyin($data['letter']);
             }
-            if($this->checkRepeat($data, 1)) $this->adminMsg(lang('a-tag-ex-2'),url('admin/tag/add'));
-	        $this->db->replace('tag', $data);
+          if($this->checkRepeat($data, 1, 0)) $this->adminMsg(lang('a-tag-ex-2'),url('admin/tag/add'));
+          $data['listorder'] = intval($data['listorder']);
+          $this->db->replace('tag', $data);
 	        $this->adminMsg($this->getCacheCode('tag') . lang('success'), url('admin/tag'), 3, 1, 1);
 	    }
         $this->view->assign(
@@ -89,7 +93,7 @@ class TagController extends Admin {
         );
 	    $this->view->display('admin/tag_add');
 	}
-	
+
     public function editAction() {
 
         $id = (int)$this->get('id');
@@ -106,7 +110,7 @@ class TagController extends Admin {
                 $data['letter'] = word2pinyin($data['letter']);
             }
             $data['listorder'] = intval($data['listorder']);
-            if($this->checkRepeat($data, 1)) $this->adminMsg(lang('a-tag-ex-2'),url('admin/tag/'));
+            if($this->checkRepeat($data, 1, $id)) $this->adminMsg(lang('a-tag-ex-2'),url('admin/tag/'));
             $this->tag->update($data, 'id=' . $id);
 	        $this->adminMsg($this->getCacheCode('tag') . lang('success'), url('admin/tag'), 3, 1, 1);
 	    }
@@ -118,7 +122,7 @@ class TagController extends Admin {
 	    $this->view->assign('data', $data);
 	    $this->view->display('admin/tag_add');
 	}
-	
+
     public function delAction($id=0, $all=0) {
         if (!auth::check($this->roleid, 'tag-del', 'admin')) {
             $this->adminMsg(lang('a-com-0', array('1'=>'tag', '2'=>'del')));
@@ -128,7 +132,7 @@ class TagController extends Admin {
 	    $this->tag->delete('id=' . $id);
 	    $all or $this->adminMsg($this->getCacheCode('tag') . lang('success'), url('admin/tag/index'), 3, 1, 1);
 	}
-	
+
 	public function importAction() {
 
 	    if ($this->post('submit')) {
@@ -170,7 +174,7 @@ class TagController extends Admin {
         );
 	    $this->view->display('admin/tag_import');
 	}
-	
+
 	public function cacheAction($show=0) {
 	    $qok  = $this->get('qok');
 		if ($show == 0 && !$qok) {

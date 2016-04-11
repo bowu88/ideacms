@@ -17,7 +17,7 @@ class View {
 	public $left_delimiter  = '{';
 	public $right_delimiter = '}';
 	protected static $_instance;
-	
+
 	public function __construct() {
         $this->_options['ci'] = $this->ci = &get_instance();
         $this->theme = APP::get_namespace_id() == 'admin' ? false : true;
@@ -211,7 +211,7 @@ class View {
         $rt = $ci->db->query($param)->result_array();
 
         return array(
-            'return' => $rt,
+            'result' => $rt,
             'sql' => $param,
         );
     }
@@ -298,7 +298,7 @@ class View {
 					'total_' . $system['return']  => count($data)
 				);
 			}
-		    return array('return' => $data, 'total' => count($data));
+		    return array('result' => $data, 'total' => count($data));
 		} elseif (isset($system['action']) && $system['action'] == 'keywords') {
 		    //搜索关键字
 			$search = Controller::model('search');
@@ -326,7 +326,7 @@ class View {
 					'total_' . $system['return']  => count($data),
 				);
 			}
-		    return array('return' => $data, 'total' => count($data));
+		    return array('result' => $data, 'total' => count($data));
 		} elseif (isset($system['action']) && $system['action'] == 'tag') {
             // tag 标签aa
             $num = $system['num'] ? (int)$system['num'] : 999;
@@ -349,7 +349,7 @@ class View {
                     'total_' . $system['return']  => count($data),
                 );
             }
-            return array('return' => $data, 'total' => count($data));
+            return array('result' => $data, 'total' => count($data));
 		} elseif (isset($system['action']) && $system['action'] == 'relation') {
 			if (isset($system['tag']) && $system['tag']) {
 			    //按关键字搜索
@@ -430,7 +430,7 @@ class View {
 					'return_' . $system['return'] => $data,
 				);
 			}
-		    return array('return' => $data);
+		    return array('result' => $data);
 		}
 		//主表判断
 		if (isset($system['table']) && $system['table']) {
@@ -747,8 +747,8 @@ class View {
             $this->view_dir = VIEW_DIR;
             $this->viewpath = $viewpath;
         }
-		
-		
+
+
 		if (!$this->theme && strpos($file_name, '../') !== false) {
 			$this->theme = true;
 		}
@@ -773,21 +773,21 @@ class View {
             echo $this->ci->profiler->run();
         }
 	}
-	
+
 	/**
 	 * 设置风格
 	 */
 	public function setTheme($theme) {
 	    $this->theme = $theme;
 	}
-	
+
 	/**
 	 * 析构函数
 	 */
 	public function __destruct() {
 		$this->_options = array();
 	}
-	
+
 	/**
 	 * 单件模式调用方法
 	 */

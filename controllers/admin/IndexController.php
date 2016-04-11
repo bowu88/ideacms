@@ -5,7 +5,7 @@ class IndexController extends Admin {
     public function __construct() {
 		parent::__construct();
 	}
-	
+
 	/**
 	 * 首页
 	 */
@@ -14,7 +14,7 @@ class IndexController extends Admin {
 	    $this->view->assign('menu', $this->optionMenu());
 		$this->view->display('admin/index');
 	}
-	
+
 	/**
 	 * 后台首页
 	 */
@@ -24,7 +24,7 @@ class IndexController extends Admin {
 		));
 	    $this->view->display('admin/main');
 	}
-	
+
 	/**
 	 * 系统配置
 	 */
@@ -41,7 +41,7 @@ class IndexController extends Admin {
 			'SESSION_COOKIE_DOMAIN'   => lang('a-cfg-71'),
 			'SYS_EDITOR'              => lang('a-cfg-68'),
 			'SYS_CAPTCHA_MODE'        => lang('a-mod-161'),
-	    
+
 	        'SYS_ILLEGAL_CHAR'        => lang('a-cfg-7'),
 			'SYS_ATTACK_LOG'          => lang('a-cfg-1'),
 			'SYS_ATTACK_MAIL'         => lang('a-cfg-2'),
@@ -136,7 +136,7 @@ class IndexController extends Admin {
         ));
         $this->view->display('admin/config');
 	}
-	
+
 	/**
 	 * 全站缓存
 	 */
@@ -204,7 +204,7 @@ class IndexController extends Admin {
 	        $this->view->display('admin/cache');
 	    }
 	}
-	
+
 	/**
 	 * 后台日志
 	 */
@@ -239,7 +239,7 @@ class IndexController extends Admin {
 		$pagesize = isset($this->site['SITE_ADMIN_PAGESIZE']) && $this->site['SITE_ADMIN_PAGESIZE'] ? $this->site['SITE_ADMIN_PAGESIZE'] : 8;
 		$list = array();
 		$count_pg = ceil($total/$pagesize);
-        $offset   = ($page - 1) * $pagesize;		
+        $offset   = ($page - 1) * $pagesize;
 		foreach ($data as $i => $t) {
 		    if ($i >= $offset && $i < $offset + $pagesize) $list[] = $t;
 		}
@@ -250,7 +250,7 @@ class IndexController extends Admin {
 	    ));
 	    $this->view->display('admin/log');
 	}
-	
+
 	/**
 	 * 修改版权
 	 */
@@ -311,7 +311,7 @@ return array(
 		$pagesize = isset($this->site['SITE_ADMIN_PAGESIZE']) && $this->site['SITE_ADMIN_PAGESIZE'] ? $this->site['SITE_ADMIN_PAGESIZE'] : 8;
 		$list     = array();
 		$count_pg = ceil($total/$pagesize);
-        $offset   = ($page - 1) * $pagesize;		
+        $offset   = ($page - 1) * $pagesize;
 		foreach ($data as $i => $t) {
 		    if ($i >= $offset && $i < $offset + $pagesize) $list[] = $t;
 		}
@@ -323,7 +323,7 @@ return array(
 	    ));
 	    $this->view->display('admin/attacklog');
 	}
-	
+
 	/**
 	 * 清除日志
 	 */
@@ -345,7 +345,7 @@ return array(
 		}
 	    $this->adminMsg(lang('a-ind-32') . '(#' . $count . ')', purl('index/log'), 3, 1, 1);
 	}
-	
+
 	/**
 	 * 清除攻击日志
 	 */
@@ -367,7 +367,7 @@ return array(
 		}
 	    $this->adminMsg(lang('a-ind-32') . '(#' . $count . ')', purl('index/attack'), 3, 1, 1);
 	}
-	
+
 	/**
 	 * 验证Email
 	 */
@@ -394,7 +394,7 @@ return array(
 	        exit(lang('a-ind-38'));
 	    }
 	}
-	
+
 	/**
 	 * 更新地图
 	 */
@@ -406,7 +406,7 @@ return array(
 	    $count = sitemap_xml();
 	    $this->adminMsg(lang('a-ind-39') . '(#' . $count . ')', '', 3, 1, 1);
 	}
-	
+
 	/**
 	 * 更新指定缓存
 	 */
@@ -415,7 +415,7 @@ return array(
 	    $c = $this->get('cc');
         Controller::redirect(url('admin/'.$c.'/'.$a).'&cache=1');
 	}
-	
+
 	/**
 	 * 数据统计
 	 */
@@ -426,7 +426,7 @@ return array(
 			echo '$("#member_1").html("' . $c1 . '");$("#member_2").html("' . $c2 . '");';
 		} elseif ($this->get('type') == 'install') {
 		    $ck = $this->cache->get('install');
-			echo empty($ck) ? '' : "window.top.art.dialog({title:'" . lang('a-ind-41') . "',fixed:true, content: '<a href=" . url('admin/index/cache') . " target=right>" . lang('a-ind-42') . "</a>'});";
+				echo empty($ck) ? '' : "window.top.art.dialog({title:'" . lang('a-ind-41') . "',fixed:true, content: '<a href=" . url('admin/index/cache') . " target=_blank>" . lang('a-ind-42') . "</a>'});";
 		} else {
 		    $id = (int)$this->get('modelid');
 			$c1 = $this->content->_count(null, 'modelid=' . $id, null, 36000);
@@ -440,7 +440,7 @@ return array(
 		}
 		exit;
 	}
-	
+
 	/**
 	 * 空格填补
 	 */

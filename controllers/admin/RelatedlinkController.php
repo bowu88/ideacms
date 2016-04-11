@@ -1,14 +1,14 @@
 <?php
 
 class RelatedlinkController extends Admin {
-    
+
     protected $relatedlink;
-    
+
     public function __construct() {
 		parent::__construct();
 		$this->relatedlink = $this->model('relatedlink');
 	}
-	
+
 	public function indexAction() {
 	    if ($this->post('submit_del') && $this->post('form') == 'del') {
 	        foreach ($_POST as $var=>$value) {
@@ -47,18 +47,19 @@ class RelatedlinkController extends Admin {
 	    ));
 	    $this->view->display('admin/relatedlink_list');
 	}
-	
+
 	public function addAction() {
 	    if ($this->post('submit')) {
 	        $data = $this->post('data');
 	        if (empty($data['name']) || empty($data['url'])) $this->adminMsg(lang('a-tag-12'));
 	        if (!check::is_url($data['url'])) $this->adminMsg(lang('a-tag-13'));
+	        $data['sort'] = intval($data['sort']);
 	        $this->relatedlink->insert($data);
 	        $this->adminMsg($this->getCacheCode('relatedlink') . lang('success'), url('admin/relatedlink'), 3, 1, 1);
 	    }
 	    $this->view->display('admin/relatedlink_add');
 	}
-	
+
     public function editAction() {
         $id   = (int)$this->get('id');
         $data = $this->relatedlink->find($id);
@@ -73,7 +74,7 @@ class RelatedlinkController extends Admin {
 	    $this->view->assign('data', $data);
 	    $this->view->display('admin/relatedlink_add');
 	}
-	
+
     public function delAction($id=0, $all=0) {
         if (!auth::check($this->roleid, 'relatedlink-del', 'admin')) $this->adminMsg(lang('a-com-0', array('1'=>'relatedlink', '2'=>'del')));
 	    $all = $all ? $all : $this->get('all');
@@ -81,7 +82,7 @@ class RelatedlinkController extends Admin {
 	    $this->relatedlink->delete('id=' . $id);
 	    $all or $this->adminMsg($this->getCacheCode('relatedlink') . lang('success'), url('admin/relatedlink/index'), 3, 1, 1);
 	}
-	
+
 	public function importAction() {
 	    if ($this->post('submit')) {
 	        $i    = $j = $k = 0;
@@ -111,7 +112,7 @@ class RelatedlinkController extends Admin {
 	    }
 	    $this->view->display('admin/relatedlink_import');
 	}
-	
+
 	public function cacheAction($show=0) {
 	    $data = $this->relatedlink->from(null, 'name,url')->order('sort DESC, id DESC')->select();
 		$list = array();

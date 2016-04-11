@@ -1,21 +1,21 @@
 <?php
 
 class CategoryModel extends Model {
-	
+
 	public function get_primary_key() {
 		return $this->primary_key = 'catid';
 	}
-	
+
 	public function getSiteId($site = 0) {
 		$site = $site ? $site : App::get_site_id();
 		$sites = App::get_site();
 		return $sites[$site]['SITE_EXTEND_ID'] ? $sites[$site]['SITE_EXTEND_ID'] : $site;
 	}
-	
+
 	public function getData($site = 0) {
 		return $this->where('site=' . $this->getSiteId($site))->order('listorder ASC,catid ASC')->select();
 	}
-	
+
 	public function set($catid, $data) {
 	    unset($data['catid']);
 		$data['site'] = $this->getSiteId();
@@ -78,17 +78,18 @@ class CategoryModel extends Model {
 			$data['child'] = 0;
 			$data['arrchildid'] = '';
 			$data['arrparentid'] = '';
+			$data['content'] = $data['content'] ? $data['content'] : '';
 	        $this->insert($data);
 	    }
 	    $catid = $this->get_insert_id();
 	    $this->repair();
 	    return empty($catid)? lang('failure') : $catid;
 	}
-	
+
 	/**
 	 * 删除栏目及数据
 	 * @param int $catid
-	 * @return boolean 
+	 * @return boolean
 	 */
 	public function del($catid) {
 	    if (empty($catid)) {
@@ -131,13 +132,13 @@ class CategoryModel extends Model {
 		}
 	    return true;
 	}
-	
+
 	/**
 	 * 递归查找所有子栏目ID
 	 * @param int $catid
 	 * @param boolean $parent
 	 * @param int $typeid
-	 * @return string 
+	 * @return string
 	 */
 	public function child($catid, $parent = false, $typeid = 0) {
 	    $str = '';
@@ -164,7 +165,7 @@ class CategoryModel extends Model {
 	    }
 	    return $str;
 	}
-	
+
 	/**
 	 * 递归修复所有栏目的子类id和同级分类id
 	 * @param int $parentid
@@ -198,9 +199,9 @@ class CategoryModel extends Model {
 	            //没有子栏目
 	            $this->update(array('child' => 0, 'arrchildid' => '', 'arrparentid' => $arrparentid), 'catid=' . $catid);
 	        }
-	    } 
+	    }
 	}
-	
+
 	/**
 	 * 验证栏目路径是否存在
 	 * @param int $catid
@@ -218,14 +219,14 @@ class CategoryModel extends Model {
 	    $data = $this->select(false);
 	    return empty($data) ? FALSE : TRUE;
 	}
-	
+
 	/**
 	 * 设置栏目URL
 	 */
     public function url($id, $url) {
         $this->update(array('url' => $url), 'catid=' . $id);
     }
-	
+
 	/**
      * 递归查询所有父级栏目信息
      * @param  int $catid  当前栏目ID
@@ -238,7 +239,7 @@ class CategoryModel extends Model {
         }
         return $cat;
     }
-    
+
 	/**
 	 * 递归设置栏目所有子栏目组
 	 */
@@ -250,7 +251,7 @@ class CategoryModel extends Model {
 		}
 		return $data;
 	}
-	
+
 	/**
 	 * 获取子栏目ID列表
 	 */

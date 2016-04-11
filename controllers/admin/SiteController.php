@@ -218,10 +218,13 @@ class SiteController extends Admin {
 				    $value = "'" . $config['SITE_DOMAIN'] . "'";
 				} elseif ($var == 'SITE_EXTEND_ID') {
 				    $value = "'" . $config['SITE_EXTEND_ID'] . "'";
+				} elseif ($var == 'SITE_JS') {
+						$value = '\''.array2string(array('value' => str_replace('\'', "{|}", $data[$var]))).'\'';
+						//加密统计代码
 				} else {
                     $value = $data[$var] == 'false' || $data[$var] == 'true' ? $data[$var] : "'" . $data[$var] . "'";
 				}
-				$body .= "	'" . strtoupper($var) . "'" . $this->setspace($var) . " => " . $value . ",  //" . $str . PHP_EOL;
+				$body.= "	'" . strtoupper($var) . "'" . $this->setspace($var) . " => " . str_replace('\'', "", $value) . ",  //" . $str . PHP_EOL;
             }
             $body .= PHP_EOL . ");";
             file_put_contents(CONFIG_DIR . 'site' . DIRECTORY_SEPARATOR . $siteid . '.ini.php', $body);

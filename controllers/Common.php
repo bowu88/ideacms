@@ -2,7 +2,7 @@
 
 /**
  * Common.php
- * 控制器公共类 
+ * 控制器公共类
  */
 
 if (!defined('IN_IDEACMS')) exit();
@@ -38,6 +38,10 @@ class Common extends CI_Controller {
 		if (!file_exists(APP_ROOT.'./cache/install.lock')) {
             $this->redirect(url('install/'));
         }
+
+        //加载系统函数库和自定义函数库
+        require EXTENSION_DIR.'function.php';
+        require EXTENSION_DIR.'custom.php';
 
         $system_cms = $this->load_config('version');
         require_once SYS_ROOT.'libraries/cache_file.class.php';
@@ -129,14 +133,11 @@ class Common extends CI_Controller {
 			'is_admin' => IS_ADMIN,
 		));
 
-		//加载系统函数库和自定义函数库
-        require EXTENSION_DIR.'function.php';
-        require EXTENSION_DIR.'custom.php';
 		date_default_timezone_set(SYS_TIME_ZONE);
         $this->load->library('user_agent');
         //
         if (defined('SITE_BDPING') && SITE_BDPING &&
-            date('G') < 6 && $this->user_agent->is_robot()
+            date('G') < 6 && $this->agent->is_robot()
             && !get_cookie('sb') && $this->db->query("SHOW TABLES LIKE '".$this->db->dbprefix."sb'")->row_array()) {
             $data = $this->db->limit(5)->order_by('id desc')->get('sb')->result_array();
             if ($data) {
@@ -193,7 +194,7 @@ class Common extends CI_Controller {
             }
         }
     }
-	
+
 	/**
 	 * 获取会员信息
 	 */
@@ -222,7 +223,7 @@ class Common extends CI_Controller {
         }
 		return false;
 	}
-    
+
     /**
      * 后台提示信息
 	 * msg    消息名称
@@ -244,7 +245,7 @@ class Common extends CI_Controller {
         $this->view->display($tpl);
         exit;
     }
-	
+
 	/**
      * 会员提示信息
 	 * msg    消息名称
@@ -262,7 +263,7 @@ class Common extends CI_Controller {
         $this->view->display('member/msg');
         exit;
     }
-    
+
     /**
      * 前台提示信息
 	 * msg    消息名称
@@ -280,21 +281,21 @@ class Common extends CI_Controller {
         $this->view->display('msg');
         exit;
     }
-    
+
     /**
      * 栏目URL
      */
     protected function getCaturl($data, $page = 0) {
          return getCaturl($data, $page);
     }
-    
+
     /**
      * 内容页URL
      */
     protected function getUrl($data, $page = 0) {
         return getUrl($data, $page);
     }
-    
+
     /**
      * 递归创建目录
      */
@@ -368,7 +369,7 @@ class Common extends CI_Controller {
             return $this->get_menu_calss($menu, $uri, $__uri);
         }
     }
-     
+
 	/**
 	* 加载自定义字段
 	* fields 字段数组
@@ -464,7 +465,7 @@ class Common extends CI_Controller {
 				}
 				$data_fields .= '</ul>
 				<div class="bk10"></div>
-				<div class="picBut cu"><a href="javascript:;" onClick="add_block_' . $t['field'] . '()">' . lang('a-add') . '</a></div> 
+				<div class="picBut cu"><a href="javascript:;" onClick="add_block_' . $t['field'] . '()">' . lang('a-add') . '</a></div>
 				<script type="text/javascript">
 				function add_block_' . $t['field'] . '() {
 				    var json  = ' . json_encode(array('echo' => $merge_string)) . ';
@@ -481,7 +482,7 @@ class Common extends CI_Controller {
 	    }
 	    return $data_fields;
     }
-	
+
 	/**
      *	发布文章执行的动作
 	 *	$data			发布的数据
@@ -498,6 +499,7 @@ class Common extends CI_Controller {
 				include_once $file;	//加载函数文件
 				$function = $name . '_' . $event;
 				if (function_exists($function)) {
+                $result = '';
 					eval("\$result = " . $function . "('" . array2string($data) . "');");
 					if ($result && $event == 'before') {	//发布前，有返回信息
 						$action == 'member' ? $this->memberMsg($result) : $this->adminMsg($result);
@@ -507,7 +509,7 @@ class Common extends CI_Controller {
 		}
 		return true;
 	}
-	
+
 	/**
      * 验证自定义字段
      */
@@ -537,11 +539,11 @@ class Common extends CI_Controller {
 							return $showmsg;
 						}
 					}
-				} 
+				}
 			}
 	    }
 	}
-    
+
     /**
      * 生成水印图片
      */
@@ -556,14 +558,14 @@ class Common extends CI_Controller {
             $image->make_text_watermark($file, $this->site['SITE_WATERMARK_POS'], $this->site['SITE_WATERMARK_SIZE']);
         }
     }
-    
+
     /**
      * 生成网站地图
      */
     protected function sitemap() {
         sitemap_xml();
     }
-	
+
 	/**
      * 删除目录及文件
      */
@@ -581,7 +583,7 @@ class Common extends CI_Controller {
             rmdir($filename);
         }
     }
-	
+
 	/**
      * 用户是否能够查看未审核信息
      */
@@ -591,7 +593,7 @@ class Common extends CI_Controller {
 		if (get_cookie('member_id') && get_cookie('member_id') == $data['userid'] && $data['sysadd'] == 0) return true;
 		return false;
 	}
-	
+
     /**
      * 验证验证码
      */
@@ -627,7 +629,7 @@ class Common extends CI_Controller {
             return $code == $value ? true : false;
         }
 	}
-	
+
 	/**
      * 模型栏目
      */
@@ -638,7 +640,7 @@ class Common extends CI_Controller {
 		}
 		return $data;
 	}
-	
+
 	/**
      * 模型的关联表单
      */
@@ -653,7 +655,7 @@ class Common extends CI_Controller {
 		}
 		return $return;
 	}
-	
+
 	/**
      * 可在会员中心显示的表单
      */
@@ -672,7 +674,7 @@ class Common extends CI_Controller {
 		}
 		return $return;
 	}
-	
+
 	/**
      * 格式化字段数据
      */
@@ -690,7 +692,7 @@ class Common extends CI_Controller {
 		}
 		return $data;
 	}
-	
+
 	/**
      * 检查文件/目录名称是否规范
      */
@@ -698,7 +700,7 @@ class Common extends CI_Controller {
 		if (strpos($file, '../') !== false || strpos($file, '..\\') !== false) return true;
 		return false;
 	}
-	
+
 	/**
      * 会员投稿权限判断
      */
@@ -710,7 +712,7 @@ class Common extends CI_Controller {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * 生成内容html
 	 */
@@ -735,7 +737,7 @@ class Common extends CI_Controller {
         if (strpos($url, 'index.php') !== false || strpos($url, 'http://') != false) {
             return false;
         }
-	    if (substr($url, -5) != '.html') { 
+	    if (substr($url, -5) != '.html') {
 			$file = 'index.html'; //文件名
 			$dir = $url; //目录
 		} else {
@@ -791,7 +793,7 @@ class Common extends CI_Controller {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * 生成表单html
 	 */
@@ -802,8 +804,8 @@ class Common extends CI_Controller {
         if (strpos($url, 'index.php') !== false || strpos($url, 'http://') != false) {
             return false;
         }
-	    if (substr($url, -5) != '.html') { 
-			$file	= 'index.html'; //文件名 
+	    if (substr($url, -5) != '.html') {
+			$file	= 'index.html'; //文件名
 			$dir	= $url; //目录
 		} else {
 			$file	= basename($url);
@@ -824,7 +826,7 @@ class Common extends CI_Controller {
 			'modelid'			=> $mid,
 			'form_name'			=> $form['modelname'],
 	        'meta_title'		=> $form['setting']['form']['meta_title'],
-	        'meta_keywords'		=> $form['setting']['form']['meta_keywords'], 
+	        'meta_keywords'		=> $form['setting']['form']['meta_keywords'],
 	        'meta_description'	=> $form['setting']['form']['meta_description']
 	    ));
 		if ($this->namespace == 'admin') $this->view->setTheme(true);
@@ -838,7 +840,7 @@ class Common extends CI_Controller {
 		$this->cache->set('html_files', $htmlfiles);
 		return true;
 	}
-	
+
 	/**
 	 * 获取栏目缓存
 	 */
@@ -856,7 +858,7 @@ class Common extends CI_Controller {
 		}
 		return $cats;
 	}
-	
+
 	/**
 	 * 获取栏目缓存目录名称
 	 */
@@ -868,14 +870,14 @@ class Common extends CI_Controller {
 		}
 		return $cats;
 	}
-	
+
 	/**
 	 * 获取模型缓存(非会员模型)
 	 */
 	protected function get_model($name = 'content', $site = 0) {
 		return get_model_data($name, $site);
 	}
-	
+
 	/**
 	 * 检查会员名是否符合规定
 	 */
@@ -889,7 +891,7 @@ class Common extends CI_Controller {
 		}
 		return true;
     }
-	
+
 	/**
 	 * 内容分页
 	 */
@@ -919,7 +921,7 @@ class Common extends CI_Controller {
 		}
 		return $data;
 	}
-	
+
 	/**
 	 * 更新登录信息
 	 */
@@ -927,9 +929,9 @@ class Common extends CI_Controller {
 		$userip	= client::get_user_ip();
 		if (empty($data['loginip']) || $data['loginip'] != $userip) {	//如果会员表中的登录ip不一致，则重新记录
 			$update = array(
-				'lastloginip'   => $data['loginip'], 
+				'lastloginip'   => $data['loginip'],
 				'lastlogintime' => $data['logintime'],
-				'loginip'       => $ip,
+				'loginip'       => $userip,
 				'logintime'     => time(),
 			);
 			$this->member->update($update, 'id=' . $data['id']);
@@ -978,6 +980,7 @@ class Common extends CI_Controller {
         $site = isset($info[$siteid]) ? $info[$siteid] : array();
         $config = array_merge($config, $site);
         $config['PLUGIN_DIR'] = basename(PLUGIN_DIR);
+        $config['SITE_MOBILE'] = isset($config['SITE_MOBILE']) && $config['SITE_MOBILE'] == 'true' ? 1 : 0;
 
         // 移动判断
         if (isset($config['SITE_MOBILE']) && $config['SITE_MOBILE'] == true) {

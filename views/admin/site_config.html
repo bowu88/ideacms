@@ -35,7 +35,7 @@
 					<li onClick="SwapTab('setting','on','',3,2);" id="tab_setting_2" class="{if $typeid==2}on{/if}">{lang('a-men-13')}</li>
 					<li onClick="SwapTab('setting','on','',3,3);" id="tab_setting_3" class="{if $typeid==3}on{/if}">{lang('da011')}</li>
 				</ul>
-				
+
 				<div class="contentList pad-10" id="div_setting_1" style="display: none;">
 				<table width="100%" class="table_form">
 				<tr>
@@ -144,15 +144,15 @@
 				<table width="100%" class="table_form">
 				<tr>
 					<th width="200">{lang('a-mod-204')}： </th>
-					<td><input name="data[SITE_THUMB_TYPE]" type="radio" value="1" {if $data['SITE_THUMB_TYPE']==1}checked{/if} /> {lang('a-mod-205')} 
+					<td><input name="data[SITE_THUMB_TYPE]" type="radio" value="1" {if $data['SITE_THUMB_TYPE']==1}checked{/if} /> {lang('a-mod-205')}
 					&nbsp;&nbsp;&nbsp;<input name="data[SITE_THUMB_TYPE]" type="radio" value="0" {if empty($data['SITE_THUMB_TYPE'])}checked{/if} /> {lang('a-mod-206')}
 					<div class="onShow">{lang('a-mod-207')}</div>
 					</td>
 				</tr>
 				<tr>
 					<th>{lang('a-ind-49')}： </th>
-					<td><input name="data[SITE_WATERMARK]" type="radio" value="1" {if $data['SITE_WATERMARK']==1}checked{/if} onClick="setSateType(1)"> {lang('a-ind-50')} 
-					&nbsp;&nbsp;&nbsp;<input name="data[SITE_WATERMARK]" type="radio" value="2" {if $data['SITE_WATERMARK']==2}checked{/if} onClick="setSateType(2)" /> {lang('a-ind-51')} 
+					<td><input name="data[SITE_WATERMARK]" type="radio" value="1" {if $data['SITE_WATERMARK']==1}checked{/if} onClick="setSateType(1)"> {lang('a-ind-50')}
+					&nbsp;&nbsp;&nbsp;<input name="data[SITE_WATERMARK]" type="radio" value="2" {if $data['SITE_WATERMARK']==2}checked{/if} onClick="setSateType(2)" /> {lang('a-ind-51')}
 					&nbsp;&nbsp;&nbsp;<input name="data[SITE_WATERMARK]" type="radio" value="0" {if $data['SITE_WATERMARK']==0}checked{/if} onClick="setSateType(0)" /> {lang('a-close')}</td>
 				</tr>
 				<tbody id="w_0">
@@ -241,11 +241,11 @@
 
                         <tr>
                             <th width="200">{lang('a-cfg-74')}： </th>
-                            <td><input name="data[SITE_MOBILE]" type="radio" value="true" {if $data['SITE_MOBILE']==true}checked{/if} /> {lang('a-open')}
-                                &nbsp;&nbsp;&nbsp;<input name="data[SITE_MOBILE]" type="radio" value="false" {if empty($data['SITE_MOBILE'])}checked{/if} /> {lang('a-close')}
-                                <div class="onShow">{lang('a-cfg-72')}</div>
+                            <td>
+                            	<input name="data[SITE_MOBILE]" type="radio" value="true" {if $data['SITE_MOBILE']=='true'}checked{/if} /> {lang('a-open')}&nbsp;&nbsp;&nbsp;<input name="data[SITE_MOBILE]" type="radio" value="false" {if empty($data['SITE_MOBILE']) || $data['SITE_MOBILE'] == 'false'}checked{/if} /> {lang('a-close')}<div class="onShow">{lang('a-cfg-72')}</div>
                             </td>
                         </tr>
+
                         <tr>
                             <th>{lang('da012')}： </th>
                             <td><input class="input-text" type="text" name="data[SITE_MURL]" value="{$data['SITE_MURL']}" size="40" /><div class="onShow">{$string['SITE_MURL']}</div></td>

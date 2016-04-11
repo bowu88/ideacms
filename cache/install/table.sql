@@ -53,10 +53,12 @@ DROP TABLE IF EXISTS `{pre}tag`;
 CREATE TABLE IF NOT EXISTS `{pre}tag` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
+  `catid` int(10) NOT NULL,
   `letter` varchar(200) NOT NULL,
   `listorder` tinyint(3) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
+  KEY `catid` (`catid`),
   KEY `letter` (`letter`,`listorder`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

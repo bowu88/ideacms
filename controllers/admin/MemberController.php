@@ -93,6 +93,12 @@ class MemberController extends Admin {
 		    case 'add':
 			    if ($this->isPostForm()) {
 				    $data = $this->post('data');
+				    $data['listorder'] = intval($data['listorder']);
+				    $data['disabled'] = intval($data['disabled']);
+				    $data['credits'] = intval($data['credits']);
+				    $data['allowpost'] = intval($data['allowpost']);
+				    $data['allowpms'] = intval($data['allowpms']);
+				    $data['filesize'] = intval($data['filesize']);
 					if (empty($data['name'])) $this->adminMsg(lang('a-mem-1'));
 					$this->mgroup->insert($data);
 					$this->adminMsg($this->getCacheCode('member') . lang('success'), url('admin/member/group/'), 3, 1, 1);

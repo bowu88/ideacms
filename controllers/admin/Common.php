@@ -466,7 +466,7 @@ class Admin extends Common {
      * @param int $mode
      * @return bool
      */
-    public function checkRepeat($data, $mode = 0)
+    public function checkRepeat($data, $mode = 0, $id = 0)
     {
         if($mode === 0)
         {
@@ -486,13 +486,13 @@ class Admin extends Common {
         }
         elseif($mode === 1)
         {
-            $count = $this->db->where(array('catid' => $data['catid'], 'name' => $data['name']))->count_all_results('tag');
+            $count = $this->db->where('id <> '.$id)->where(array('catid' => $data['catid'], 'name' => $data['name']))->count_all_results('tag');
 
             return $count > 0 ? TRUE : FALSE;
         }
         else
         {
-            $count = $this->db->where(array('catid' => $data['catid'], 'name' => $data['name']))->count_all_results('tag');
+            $count = $this->db->where('id <> '.$id)->where(array('catid' => $data['catid'], 'name' => $data['name']))->count_all_results('tag');
 
             return $count > 1 ? TRUE : FALSE;
         }
