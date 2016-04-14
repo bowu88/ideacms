@@ -420,7 +420,12 @@ return array(
 	 * 数据统计
 	 */
 	public function ajaxcountAction() {
-		if ($this->get('type') == 'member') {
+		if ($this->get('type') == 'gbook') {
+			$c1 = $this->content->count('form_1_gbook', 'id', null);
+			$c2 = $this->content->count('form_1_gbook', 'id', 'status=0');
+			echo '$("#gbook_1").html("' . $c1 . '");$("#gbook_2").html("' . $c2 . '");';
+
+		} elseif ($this->get('type') == 'member') {
 		    $c1 = $this->content->count('member', 'id', null);
 			$c2 = $this->content->count('member', 'id', 'status=0');
 			echo '$("#member_1").html("' . $c1 . '");$("#member_2").html("' . $c2 . '");';

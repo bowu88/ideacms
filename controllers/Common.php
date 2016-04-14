@@ -39,6 +39,7 @@ class Common extends CI_Controller {
             $this->redirect(url('install/'));
         }
 
+
         //加载系统函数库和自定义函数库
         require EXTENSION_DIR.'function.php';
         require EXTENSION_DIR.'custom.php';

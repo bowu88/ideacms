@@ -33,7 +33,7 @@
             {loop $list $t}
             <tr>
             <td align="left">{$t['id']}</td>
-            <td align="left">{date('Y-m-d',$t['time'])}</td>
+            <td align="left">{date('Y-m-d H:m:s',$t['time'])}</td>
             <td align="left">{$t['get']}</td>
             <td align="left">{$t['referrer']}</td>
             <td align="left">{$t['ip']}</td>

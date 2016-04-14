@@ -143,7 +143,7 @@ class AdsenseController extends Admin {
             }
             $data['setting']   = array2string($setting);
             $this->adsense_data->insert($data);
-            $this->adminMsg('操作成功', purl('admin/alist', array('aid'=>$aid)), 3, 1, 1);
+            $this->adminMsg('操作成功', purl('admin/adsense'), 3, 1, 1);
         }
 		$this->view->assign(array(
 	        'type' => $this->getType(),

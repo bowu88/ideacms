@@ -5,7 +5,7 @@ class FormController extends Common {
     private $model;
 	private $form;
 	private $modelid;
-	
+
 	public function __construct() {
         parent::__construct();
 		$model = $this->get_model('form');
@@ -25,27 +25,36 @@ class FormController extends Common {
 		    'form_name' => $this->model['modelname']
 		));
 	}
-	
+
+
+
 	/*
 	 * 提交页面
 	 */
 	public function postAction() {
-	    $cid = (int)$this->get('cid');
+	  $cid = (int)$this->get('cid');
+
 		$backurl = urldecode($this->get('backurl'));
 		$joinmodel = $this->cache->get('model_join_' . $this->siteid);
 		$joindata = isset($joinmodel[$this->model['joinid']]) ? $joinmodel[$this->model['joinid']] : null;
+
 		if ($joindata && empty($cid)) {
             $this->callback(lang('for-2', array('1'=>$joindata['modelname'])));
+
         }
 		if ($joindata) { //关联内容数据
+
 			$cdata = $this->content->getOne('id=' . $cid . ' AND modelid=' . $this->model['joinid']);
 			$backurl = isset($cdata['url']) ? $cdata['url'] : $backurl;
 			if (empty($cdata)) {
                 $this->callback(lang('for-3', array('1'=>$joindata['modelname'], '2'=>$cid)));
             }
 		}
+
 	    if ($this->isPostForm()) {
+
 			$data = $this->post('data');
+
 			//会员投稿权限验证
 		    if ($this->model['setting']['form']['code']
                 && !$this->checkCode($this->post('code'))) {
@@ -97,7 +106,7 @@ class FormController extends Common {
 	    ));
 		$this->view->display(is_file(VIEW_DIR . SYS_THEME_DIR . $this->model['categorytpl']) ? substr($this->model['categorytpl'], 0, -5) : 'post_form');
 	}
-	
+
 	/*
 	 * 列表页面
 	 */
@@ -107,13 +116,13 @@ class FormController extends Common {
 			'page' => $this->get('page') ? (int)$this->get('page') : 1,
 			'urlrule' => url('form/list', array('modelid'=>$this->modelid, 'cid'=>$cid, 'page'=>'[page]')),
 			'pagesize' => $this->model['setting']['form']['pagesize'],
-	        'meta_title' => $this->model['setting']['form']['meta_title'],
-	        'meta_keywords' => $this->model['setting']['form']['meta_keywords'],
-	        'meta_description' => $this->model['setting']['form']['meta_description'],
+	    'meta_title' => $this->model['setting']['form']['meta_title'],
+	    'meta_keywords' => $this->model['setting']['form']['meta_keywords'],
+	    'meta_description' => $this->model['setting']['form']['meta_description'],
 	    ));
-		$this->view->display(is_file(VIEW_DIR . SYS_THEME_DIR . $this->model['listtpl']) ? substr($this->model['listtpl'], 0, -5) : 'list_form');
+		  $this->view->display(is_file(VIEW_DIR . SYS_THEME_DIR . $this->model['listtpl']) ? substr($this->model['listtpl'], 0, -5) : 'list_form');
 	}
-	
+
 	/*
 	 * 显示页面
 	 */
@@ -140,7 +149,7 @@ class FormController extends Common {
 	    ));
 		$this->view->display(is_file(VIEW_DIR . SYS_THEME_DIR . $this->model['showtpl']) ? substr($this->model['showtpl'], 0, -5) : 'show_form');
 	}
-	
+
 	/*
 	 * 同一会员（游客）提交一次
 	 */
@@ -168,7 +177,7 @@ class FormController extends Common {
 		}
 		return false;
 	}
-	
+
 	/*
 	 * 同一IP提交间隔
 	 */
@@ -189,7 +198,7 @@ class FormController extends Common {
         }
 		return false;
 	}
-	
+
 	/*
 	 * 返回信息处理[callback]
 	 */
@@ -202,5 +211,5 @@ class FormController extends Common {
 		}
 		exit;
 	}
-	
+
 }

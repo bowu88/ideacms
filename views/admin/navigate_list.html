@@ -26,8 +26,8 @@
 	<tr>
 	  <th width="33" align="right"><input name="deletec" id="deletec" type="checkbox" onClick="setC()"></th>
 		<th width="62">排序</th>
-		<th width="136" align="left">网站名称</th>
-		<th width="325" align="left">网站地址</th>
+		<th width="136" align="left">链接名称</th>
+		<th width="325" align="left">链接地址</th>
 		<th width="113" align="left">链接类型</th>
 		<th width="195" align="left">添加时间</th>
 		<th width="244" align="left">管理操作</th>
@@ -41,7 +41,34 @@
 	  <td align="center"><input type="text" name="order_<?php echo $t['id'];?>" class="input-text" style="width:25px; height:15px;" value="<?php echo $t['listorder'];?>"></td>
 	  <td align="left"><?php echo $t['name'];?></td>
 	  <td align="left"><a href="<?php echo $t['url'];?>" target="_blank"><?php echo $t['url'];?></a></td>
-	  <td align="left"><?php echo $t['typeid'] ? "LOGO链接" : "文字链接";?></td>
+	  <td align="left"><?php
+     switch ($t['typeid']) {
+            case '0':
+                echo "文字链接";
+                break;
+            case '1':
+                echo "图片链接";
+                break;
+            case '2':
+                echo "左导航";
+                break;
+            case '3':
+                echo "右导航";
+                break;
+            case '4':
+                echo "顶部导航";
+                break;
+            case '5':
+                echo "底部导航";
+                break;
+            case '6':
+                echo "友情链接";
+                break;
+
+            default:
+                echo "默认链接";
+                break;
+        } ?></td>
 	  <td align="left"><?php echo date("Y-m-d H:i:s", $t[addtime])?></td>
 	  <td align="left">
       <a href="<?php echo $t[url]?>" target="_blank">访问</a> |
@@ -55,8 +82,6 @@
 	  <td colspan="9" align="left"><input type="submit" class="button" value="排  序" name="submit_order" onClick="$('#list_form').val('order')">&nbsp;
       <input type="submit" class="button" value="删  除" name="submit_del" onClick="$('#list_form').val('del')">&nbsp;<div class="onShow">友情提示：排序方式为“从小到大”</div></td>
 	  </tr>
-	<tr>
-	  <td>
 	  </tbody>
 </table>
 {$pagelist}

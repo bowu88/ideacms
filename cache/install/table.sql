@@ -390,7 +390,7 @@ CREATE TABLE `{pre}adsense` (
   `position` varchar(255) NOT NULL,
   `showtype` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 -- ----------------------------
 -- Table structure for {pre}adsense_data
 -- ----------------------------
@@ -412,7 +412,8 @@ CREATE TABLE `{pre}adsense_data` (
   KEY `disabled` (`disabled`),
   KEY `aid` (`aid`),
   KEY `listorder` (`listorder`)
-) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 
 DROP TABLE IF EXISTS `{pre}navigate`;
 CREATE TABLE `{pre}navigate` (
@@ -591,10 +592,10 @@ INSERT INTO `{pre}model` (`modelid`,`site`, `typeid`, `modelname`, `tablename`, 
 (4, 1, 1, '下载', 'content_1_down', 'list_down.html', 'list_down.html', 'show_down.html');
 
 INSERT INTO `{pre}model_field` (`fieldid`, `modelid`, `field`, `name`, `type`, `length`, `indexkey`, `isshow`, `tips`, `not_null`, `pattern`, `errortips`, `formtype`, `setting`, `listorder`, `disabled`) VALUES
-(1, 1, 'content', '内容', '', '0', '', 1, '', 0, '', '', 'editor', 'a:3:{s:5:"width";s:2:"80";s:6:"height";s:3:"500";s:4:"type";s:1:"1";}', 0, 0),
-(2, 2, 'content', '内容', '', '0', '', 1, '', 0, '', '', 'editor', 'a:3:{s:5:"width";s:2:"80";s:6:"height";s:3:"300";s:4:"type";s:1:"0";}', 0, 0),
+(1, 1, 'content', '内容', '', '0', '', 1, '', 0, '', '', 'editor', 'a:3:{s:5:"width";s:2:"98";s:6:"height";s:3:"500";s:4:"type";s:1:"1";}', 0, 0),
+(2, 2, 'content', '内容', '', '0', '', 1, '', 0, '', '', 'editor', 'a:3:{s:5:"width";s:2:"98";s:6:"height";s:3:"300";s:4:"type";s:1:"0";}', 0, 0),
 (3, 2, 'images', '上传图片', 'TEXT', '0', '', 1, '', 0, '', '', 'files', 'a:2:{s:4:"type";s:16:"jpg,jpeg,png,gif";s:4:"size";s:1:"2";}', 0, 0),
-(4, 3, 'content', '内容', '', '0', '', 1, '', 0, '', '', 'editor', 'a:3:{s:5:"width";s:2:"90";s:6:"height";s:3:"200";s:4:"type";s:1:"0";}', 99, 0),
+(4, 3, 'content', '内容', '', '0', '', 1, '', 0, '', '', 'editor', 'a:3:{s:5:"width";s:2:"98";s:6:"height";s:3:"200";s:4:"type";s:1:"0";}', 99, 0),
 (6, 3, 'quyu', '区域', 'INT', '5', 'INDEX', 1, '', 0, '', '', 'linkage', 'a:2:{s:2:"id";s:1:"1";s:5:"level";s:1:"2";}', 1, 0),
 (7, 3, 'shi', '室', 'TINYINT', '2', '', 1, '', 0, '', '', 'input', 'a:1:{s:4:"size";s:2:"50";}', 0, 0),
 (8, 3, 'ting', '厅', 'TINYINT', '2', '', 1, '', 0, '', '', 'input', 'a:1:{s:4:"size";s:2:"50";}', 0, 0),
@@ -614,8 +615,8 @@ INSERT INTO `{pre}model_field` (`fieldid`, `modelid`, `field`, `name`, `type`, `
 (25, 3, 'dizhi', '地址', 'VARCHAR', '200', '', 1, '', 0, '', '', 'input', 'a:1:{s:4:"size";s:3:"300";}', 8, 0),
 (26, 3, 'dianhua', '联系电话', 'VARCHAR', '40', '', 1, '', 0, '', '', 'input', 'a:1:{s:4:"size";s:0:"";}', 9, 0),
 (27, 3, 'ditu', '地图', 'VARCHAR', '100', '', 1, '', 0, '', '', 'map', 'a:2:{s:6:"apikey";s:40:"D8DA516A60D11BE12A649224CD1DEB373AEAB063";s:4:"city";s:6:"成都";}', 0, 0),
-(28, 4, 'content', '软件介绍', '', '', '', 1, '', 0, '', '', 'editor', 'a:3:{s:5:"width";s:2:"90";s:6:"height";s:3:"200";s:4:"type";s:1:"1";}', 99, 0),
-(29, 5, 'content', '商品描述', '', '', '', 1, '', 0, '', '', 'editor', 'a:3:{s:5:"width";s:2:"90";s:6:"height";s:3:"300";s:4:"type";s:1:"1";}', 99, 0),
+(28, 4, 'content', '软件介绍', '', '', '', 1, '', 0, '', '', 'editor', 'a:3:{s:5:"width";s:2:"98";s:6:"height";s:3:"200";s:4:"type";s:1:"1";}', 99, 0),
+(29, 5, 'content', '商品描述', '', '', '', 1, '', 0, '', '', 'editor', 'a:3:{s:5:"width";s:2:"98";s:6:"height";s:3:"300";s:4:"type";s:1:"1";}', 99, 0),
 (30, 4, 'version', '软件版本', 'CHAR', '20', '', 1, '', 0, '', '', 'input', 'a:1:{s:4:"size";s:0:"";}', 0, 0),
 (31, 4, 'language', '软件语言', 'CHAR', '20', '', 1, '', 0, '', '', 'input', 'a:1:{s:4:"size";s:0:"";}', 0, 0),
 (32, 4, 'os', '操作系统', '', '', '', 1, '', 0, '', '', 'checkbox', 'a:2:{s:7:"content";s:23:"linux\nwindows\n苹果机";s:7:"default";s:0:"";}', 0, 0),
@@ -639,6 +640,6 @@ CREATE TABLE IF NOT EXISTS `{pre}member_geren` (
 INSERT INTO `{pre}model` VALUES(6, 1, 2, '个人会员', 'member_geren', 'category_geren.html', 'list_geren.html', 'show_geren.html', NULL, '');
 INSERT INTO `{pre}model` VALUES (7, 1, 3, '留言', 'form_1_gbook', 'post_gbook.html', 'list_gbook.html', 'show_gbook.html', NULL, 'a:1:{s:4:"auth";a:2:{s:9:"adminpost";s:1:"0";s:10:"memberpost";s:1:"0";}}');
 
-INSERT INTO `{pre}model_field` VALUES(40, 7, 'neirong', '内容', 'TEXT', '255', '', 1, '', 1, '', '', 'textarea', 'a:3:{s:5:"width";s:3:"400";s:6:"height";s:2:"90";s:7:"default";s:0:"";}', 3, 0);
+INSERT INTO `{pre}model_field` VALUES(40, 7, 'neirong', '内容', 'TEXT', '255', '', 1, '', 1, '', '', 'textarea', 'a:3:{s:5:"width";s:3:"400";s:6:"height";s:2:"99";s:7:"default";s:0:"";}', 3, 0);
 INSERT INTO `{pre}model_field` VALUES(41, 7, 'xingming', '姓名', 'VARCHAR', '255', '', 1, '', 1, '', '', 'input', 'a:2:{s:4:"size";s:3:"200";s:7:"default";s:0:"";}', 0, 0);
 INSERT INTO `{pre}model_field` VALUES(42, 7, 'dianhua', '电话', 'VARCHAR', '255', '', 1, '', 1, '', '', 'input', 'a:2:{s:4:"size";s:3:"200";s:7:"default";s:0:"";}', 0, 0);

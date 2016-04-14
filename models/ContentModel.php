@@ -128,11 +128,12 @@ class ContentModel extends Model {
 			if (empty($_data)) {
 				$data['id'] = $id;
 				$data['url'] = getUrl($data); //更新URL
+        $data['hits'] = 0;
 				$data['status'] = 1; //插入时状态设置为1
         $data['listorder'] = 0;
 				$this->insert($data);
-				$table->insert($data);
-                $is_add = 1;
+				//$table->insert($data);
+        $is_add = 1;
 			} else {
 				$data['id'] = $data['id'] ? $data['id'] : $id;
 				$data['url'] = getUrl($data); //更新URL
@@ -150,6 +151,7 @@ class ContentModel extends Model {
                 return lang('m-con-36');
             }
 			$data['url'] = getUrl($data); //更新URL
+      $data['hits'] = 0;
 			$data['status'] = 1; //插入时状态设置为1
       $data['listorder'] = 0;
 			$this->insert($data);

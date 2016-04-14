@@ -35,12 +35,12 @@ return array(
 	'SYS_GEE_CAPTCHA_ID'      => '053960849a89ff17c0e0858a821f3686',  //极验验证ID
 	'SYS_GEE_PRIVATE_KEY'     => '54140d3df408cef8be1904c2aa7fed8c',  //极验验证KEY
 	'SITE_MAIL_TYPE'          => '1',  //邮件发送模式
-	'SITE_MAIL_SERVER'        => '',  //邮件服务器
+	'SITE_MAIL_SERVER'        => '976510651@qq.com',  //邮件服务器
 	'SITE_MAIL_PORT'          => '25',  //邮件端口号
-	'SITE_MAIL_FROM'          => '',  //发送人地址
+	'SITE_MAIL_FROM'          => '连普科技',  //发送人地址
 	'SITE_MAIL_AUTH'          => '1',  //是否AUTH LOGIN验证
 	'SITE_MAIL_USER'          => 'admin',  //验证用户名
-	'SITE_MAIL_PASSWORD'      => 'admin',  //验证密码
+	'SITE_MAIL_PASSWORD'      => 'hml889',  //验证密码
 	'SITE_MAP_UPDATE'         => '30',  //更新周期，单位为分钟搜索引擎将遵照此周期访问该页面，使页面上的新闻更及时地出现在百度新闻中
 	'SITE_MAP_TIME'           => '10',  //天之内
 	'SITE_MAP_NUM'            => '30',  //条数据

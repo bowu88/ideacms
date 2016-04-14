@@ -8,28 +8,28 @@ class SiteController extends Admin {
 		parent::__construct();
 		$this->string = array(
 			'SITE_EXTEND_ID'			=> lang('a-sit-8'),
-       'SITE_LANGUAGE'				=> lang('a-cfg-12'),
+            'SITE_LANGUAGE'				=> lang('a-cfg-12'),
 			'SITE_TIMEZONE'				=> lang('a-cfg-15'),
-	    'SITE_THEME'				=> lang('a-cfg-16'),
-	    'SITE_NAME'					=> lang('a-cfg-17'),
-       'SITE_TITLE'				=> lang('a-cfg-18'),
-       'SITE_KEYWORDS'				=> lang('a-cfg-19'),
-       'SITE_DESCRIPTION'			=> lang('a-cfg-20'),
-       'SITE_BOTTOM_INFO'			=> lang('a-cfg-ex-1'),
-	    'SITE_WATERMARK'			=> lang('a-cfg-21'),
-	    'SITE_WATERMARK_ALPHA'		=> lang('a-cfg-22'),
-	    'SITE_WATERMARK_TEXT'		=> lang('a-cfg-23'),
+	        'SITE_THEME'				=> lang('a-cfg-16'),
+	        'SITE_NAME'					=> lang('a-cfg-17'),
+            'SITE_TITLE'				=> lang('a-cfg-18'),
+            'SITE_KEYWORDS'				=> lang('a-cfg-19'),
+            'SITE_DESCRIPTION'			=> lang('a-cfg-20'),
+            'SITE_BOTTOM_INFO'			=> lang('a-cfg-ex-1'),
+	        'SITE_WATERMARK'			=> lang('a-cfg-21'),
+	        'SITE_WATERMARK_ALPHA'		=> lang('a-cfg-22'),
+	        'SITE_WATERMARK_TEXT'		=> lang('a-cfg-23'),
 			'SITE_WATERMARK_SIZE'		=> lang('a-cfg-70'),
 			'SITE_WATERMARK_IMAGE'		=> lang('a-sit-0'),
-	    'SITE_WATERMARK_POS'		=> lang('a-cfg-67'),
+	        'SITE_WATERMARK_POS'		=> lang('a-cfg-67'),
 			'SITE_THUMB_TYPE'			=> lang('a-mod-204'),
 			'SITE_THUMB_WIDTH'			=> lang('a-cfg-44'),
 			'SITE_THUMB_HEIGHT'			=> lang('a-cfg-45'),
 			'SITE_TIME_FORMAT'			=> lang('a-cfg-57'),
 			'SITE_MOBILE'				=> lang('a-cfg-72'),
-			'SITE_MURL'				    => lang('da013'),
+			'SITE_MURL'				    => lang('dr013'),
 			'SITE_ICP'				    => lang('a-site-tcp'),
-       'SITE_JS'                  => lang('a-site-tps')
+            'SITE_JS'                  => lang('a-site-tps')
         );
 	}
 
@@ -219,12 +219,12 @@ class SiteController extends Admin {
 				} elseif ($var == 'SITE_EXTEND_ID') {
 				    $value = "'" . $config['SITE_EXTEND_ID'] . "'";
 				} elseif ($var == 'SITE_JS') {
-						$value = '\''.array2string(array('value' => str_replace('\'', "{|}", $data[$var]))).'\'';
-						//加密统计代码
+					$value = '\''.array2string(array('value' => str_replace('\'', "{|}", $data[$var]))).'\''; // 加密统计代码
 				} else {
                     $value = $data[$var] == 'false' || $data[$var] == 'true' ? $data[$var] : "'" . $data[$var] . "'";
 				}
-				$body.= "	'" . strtoupper($var) . "'" . $this->setspace($var) . " => " . str_replace('\'', "", $value) . ",  //" . $str . PHP_EOL;
+
+				$body .= "	'" . strtoupper($var) . "'" . $this->setspace($var) . " => '" . str_replace('\'', "", $value) . "',  //" . $str . PHP_EOL;
             }
             $body .= PHP_EOL . ");";
             file_put_contents(CONFIG_DIR . 'site' . DIRECTORY_SEPARATOR . $siteid . '.ini.php', $body);
@@ -237,6 +237,10 @@ class SiteController extends Admin {
 			if (is_dir(VIEW_DIR . $t) && strpos($t, 'mobile_') === false && !in_array($t, array('error', 'admin', 'index.html', 'install', 'mobile','weixin'))) {
 				$theme .= '<option value="' . $t . '" ' . ($config['SITE_THEME'] == $t ? 'selected' : '') . '>' . $t . '</option>';
 			}
+		}
+		if ($config['SITE_JS']) {
+			$tmp = string2array($config['SITE_JS']);
+			$config['SITE_JS'] = str_replace('{|}', "'", $tmp['value']);
 		}
         $this->view->assign(array(
 			'site' => auth::check($this->roleid, 'site-index', 'admin') ? 1 : 0,
@@ -296,7 +300,10 @@ class SiteController extends Admin {
 	    $body = "<?php" . PHP_EOL . "if (!defined('IN_IDEACMS')) exit();" . PHP_EOL . PHP_EOL . "/**" . PHP_EOL . " * " . $data['SITE_NAME'] . "配置" . PHP_EOL . " */" . PHP_EOL . "return array(" . PHP_EOL . PHP_EOL;
 		foreach ($this->string as $var=>$str) {
 			$value = $data[$var] == 'false' || $data[$var] == 'true' ? $data[$var] : "'" . $data[$var] . "'";
-			$body.= "	'" . strtoupper($var) . "'" . $this->setspace($var) . " => " . $value . ",  //" . $str . PHP_EOL;
+			if ($var == 'SITE_JS') {
+				$value = array2string(array('value' => str_replace('\'', "{|}", $data[$var]))); // 加密统计代码
+			}
+			$body.= "	'" . strtoupper($var) . "'" . $this->setspace($var) . " => '" . str_replace('\'', "", $value) . "',  //" . $str . PHP_EOL;
 		}
 		$body.= PHP_EOL . ");";
 		file_put_contents(CONFIG_DIR . 'site' . DIRECTORY_SEPARATOR . $id . '.ini.php', $body);

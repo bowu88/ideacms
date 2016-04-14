@@ -3,7 +3,7 @@
 class InfoController extends Member {
 
     private $memberdata;
-    
+
     public function __construct() {
 		parent::__construct();
 		$this->isLogin(); //登录验证
@@ -16,7 +16,7 @@ class InfoController extends Member {
 		    'favorite' => array('name'=> lang('m-inf-4'), 'url'=> url('member/info/favorite')),
 		));
 	}
-	
+
 	/**
 	 * 资料修改
 	 */
@@ -34,7 +34,7 @@ class InfoController extends Member {
                 } else {
 					$data[$i] = safe_replace($t);
 				}
-				
+
 			}
 			if ($memberdata) {
 			    //修改附表内容
@@ -46,7 +46,15 @@ class InfoController extends Member {
 			//增加会员统计表
 			$count = $this->model('member_count');
 			$data  = $count->find($this->memberinfo['id']);
-			if (!$data) $count->insert(array('id'=>$this->memberinfo['id']));
+			if (!$data) {
+				$count->insert(array(
+				'id' => $this->memberinfo['id'],
+				'post' =>0,
+				'pms' =>0,
+				'updatetime' =>0
+					)
+				);
+			}
 			$this->memberMsg(lang('success'), url('member/info/edit'), 1);
 	    }
 	    //自定义字段
@@ -57,7 +65,7 @@ class InfoController extends Member {
 	    ));
 	    $this->view->display('member/edit');
 	}
-	
+
 	/**
 	 * 头像修改
 	 */
@@ -74,7 +82,7 @@ class InfoController extends Member {
 	    ));
 	    $this->view->display('member/avatar');
 	}
-	
+
 	/**
 	 *  上传头像处理
 	 *  传入头像压缩包，解压到指定文件夹后删除非图片文件
@@ -122,7 +130,7 @@ class InfoController extends Member {
 					}
 				}
 		    }
-		    closedir($handle);    
+		    closedir($handle);
 		} else {
 			exit('0');
 		}
@@ -132,7 +140,7 @@ class InfoController extends Member {
 		$this->member->update(array('avatar'=> 'uploadfiles/member/' . $this->memberinfo['id'] . '/' . '90x90.jpg'), 'id=' . $this->memberinfo['id']);
 		exit('1');
 	}
-	
+
 	/**
 	 * 密码修改
 	 */
@@ -163,7 +171,7 @@ class InfoController extends Member {
 	    ));
 	    $this->view->display('member/password');
 	}
-	
+
 	/**
 	 * 一键登录
 	 */
@@ -172,12 +180,12 @@ class InfoController extends Member {
 		$data  = $oauth->where('username=?', $this->memberinfo['username'])->select();
 		$this->view->assign(array(
 			'list'		 => $data,
-			'listdata'   => $data, 
+			'listdata'   => $data,
 			'meta_title' => lang('m-inf-3') . '-' . lang('member') . '-' . $this->site['SITE_NAME']
 	    ));
 	    $this->view->display('member/oauth');
 	}
-	
+
 	/**
 	 * 解除一键登录绑定
 	 */
@@ -187,7 +195,7 @@ class InfoController extends Member {
 		$oauth->delete('id=' . $id . ' and username=?', $this->memberinfo['username']);
 		$this->memberMsg(lang('success'), url('member/info/oauth'), 1);
 	}
-	
+
 	/**
 	 * 收藏夹
 	 */
@@ -222,5 +230,5 @@ class InfoController extends Member {
 		));
 	    $this->view->display('member/favorite');
 	}
-	
+
 }

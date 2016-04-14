@@ -6,10 +6,10 @@
     <script type="text/javascript" src="{LANG_PATH}lang.js"></script>
 	<script type="text/javascript" src="{ADMIN_THEME}js/core.js"></script>
     <div class="navigation">
-    您当前位置：<a  href="{SITE_PATH}">首页</a> >> 
+    您当前位置：<a  href="{SITE_PATH}">首页</a> >>
 	{if $joindata && $joindata['typeid'] == 1}<!--表示关联的内容模型-->
 	  {catpos($cdata['catid'], ' &gt;&gt;&nbsp;&nbsp;')} &gt;&gt;&nbsp;&nbsp;<a href="{$cdata['url']}">{$cdata['title']}</a> &gt;&gt;&nbsp;&nbsp;
-	{/if}{$form_name} 
+	{/if}{$form_name}
     </div>
     <div class="blank10 clear"></div>
     <!--begin-->

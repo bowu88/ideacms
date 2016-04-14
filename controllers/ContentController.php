@@ -1,11 +1,11 @@
 <?php
 
 class ContentController extends Common {
-    
+
     public function __construct() {
 		parent::__construct();
 	}
-	
+
 	/**
 	 * 栏目列表页
 	 */
@@ -22,11 +22,11 @@ class ContentController extends Common {
 			$this->msg(lang('con-0', array('1' => ($catdir && empty($catid) ? $catdir : $catid))));
 		}
 
-		if ($page <= 1 && strpos(ia_now_url(), $cat['url']) === false) {
-			// 301 定向地址
-			redirect(SITE_URL.$cat['url'], 'location', '301');
-			exit;
-		}
+		// if ($page <= 1 && strpos(ia_now_url(), $cat['url']) === false) {
+		// 	// 301 定向地址
+		// 	redirect(SITE_URL.$cat['url'], 'location', '301');
+		// 	exit;
+		// }
 
 	    if ($cat['typeid'] == 1) {
 	        //内部栏目
@@ -83,7 +83,7 @@ class ContentController extends Common {
 	        header('Location: ' . $cat['url']);
 	    }
 	}
-	
+
 	/**
 	 * 内容详细页
 	 */
@@ -234,7 +234,7 @@ class ContentController extends Common {
 	    ));
 	    $this->view->display('search');
 	}
-	
+
 	/**
 	 * 游客投稿
 	 */

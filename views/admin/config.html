@@ -79,7 +79,7 @@
 				</tr>
 				<tr>
 					<th>{$string['SYS_ILLEGAL_CHAR']}： </th>
-					<td><input name="data[SYS_ILLEGAL_CHAR]" type="radio" value="true" {if $data['SYS_ILLEGAL_CHAR']}checked{/if}> {lang('a-open')} 
+					<td><input name="data[SYS_ILLEGAL_CHAR]" type="radio" value="true" {if $data['SYS_ILLEGAL_CHAR']}checked{/if}> {lang('a-open')}
 					&nbsp;&nbsp;&nbsp;<input name="data[SYS_ILLEGAL_CHAR]" type="radio" value="false" {if $data['SYS_ILLEGAL_CHAR']==false}checked{/if}> {lang('a-close')}
 					&nbsp;&nbsp;&nbsp;<div class="onShow">{lang('a-ind-105')}</div></td>
 				</tr>
@@ -91,19 +91,19 @@
                 </tr>
 				<tr>
 					<th>{$string['SYS_ATTACK_LOG']}： </th>
-					<td><input name="data[SYS_ATTACK_LOG]" type="radio" value="true" {if $data['SYS_ATTACK_LOG']}checked{/if} onclick="$('#atmaill').show();"> {lang('a-open')} 
+					<td><input name="data[SYS_ATTACK_LOG]" type="radio" value="true" {if $data['SYS_ATTACK_LOG']}checked{/if} onclick="$('#atmaill').show();"> {lang('a-open')}
 					&nbsp;&nbsp;&nbsp;<input name="data[SYS_ATTACK_LOG]" type="radio" value="false" {if $data['SYS_ATTACK_LOG']==false}checked{/if} onclick="$('#atmaill').hide();"> {lang('a-close')}
 					&nbsp;&nbsp;&nbsp;<div class="onShow">{lang('a-ind-106')}</div></td>
 				</tr>
 				<tr id="atmaill" {if empty($data['SYS_ATTACK_LOG'])}style="display:none"{/if}>
 					<th>{$string['SYS_ATTACK_MAIL']}： </th>
-					<td><input name="data[SYS_ATTACK_MAIL]" type="radio" value="true" {if $data['SYS_ATTACK_MAIL']}checked{/if}> {lang('a-yes')} 
+					<td><input name="data[SYS_ATTACK_MAIL]" type="radio" value="true" {if $data['SYS_ATTACK_MAIL']}checked{/if}> {lang('a-yes')}
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input name="data[SYS_ATTACK_MAIL]" type="radio" value="false" {if $data['SYS_ATTACK_MAIL']==false}checked{/if}> {lang('a-no')}
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="onShow">{lang('a-ind-107')}</div></td>
 				</tr>
 				<tr>
 					<th>{$string['SITE_ADMIN_CODE']}： </th>
-					<td><input name="data[SITE_ADMIN_CODE]" type="radio" value="true" {if $data['SITE_ADMIN_CODE']}checked{/if}> {lang('a-open')} 
+					<td><input name="data[SITE_ADMIN_CODE]" type="radio" value="true" {if $data['SITE_ADMIN_CODE']}checked{/if}> {lang('a-open')}
 					&nbsp;&nbsp;&nbsp;<input name="data[SITE_ADMIN_CODE]" type="radio" value="false" {if $data['SITE_ADMIN_CODE']==false}checked{/if}> {lang('a-close')}
 					&nbsp;&nbsp;&nbsp;<div class="onShow">{lang('a-ind-108')}</div></td>
 				</tr>
@@ -127,7 +127,7 @@
 					<td><input class="input-text" type="text" name="data[SYS_GEE_PRIVATE_KEY]" value="{$data['SYS_GEE_PRIVATE_KEY']}" size="50"/>
 					</td>
 				</tr>
-			</tbody>   
+			</tbody>
 			</table>
 			</div>
 
@@ -137,8 +137,8 @@
 				<tr>
 					<th width="200">{lang('a-ind-57')}：</th>
 					<td class="y-bg">
-					 <input type="radio" {if $data['SITE_MAIL_TYPE']==1} checked=""{/if} onClick="showsmtp(this)" value="1" checkbox="mail_type" name="data[SITE_MAIL_TYPE]"> {lang('a-ind-58')}   
-					 <input type="radio" {if $data['SITE_MAIL_TYPE']==0} checked=""{/if} onClick="showsmtp(this)" value="0" checkbox="mail_type" name="data[SITE_MAIL_TYPE]" {php if(substr(strtolower(PHP_OS), 0, 3) == 'win') echo 'disabled';}> {lang('a-ind-59')} 
+					 <input type="radio" {if $data['SITE_MAIL_TYPE']==1} checked=""{/if} onClick="showsmtp(this)" value="1" checkbox="mail_type" name="data[SITE_MAIL_TYPE]"> {lang('a-ind-58')}
+					 <input type="radio" {if $data['SITE_MAIL_TYPE']==0} checked=""{/if} onClick="showsmtp(this)" value="0" checkbox="mail_type" name="data[SITE_MAIL_TYPE]" {php if(substr(strtolower(PHP_OS), 0, 3) == 'win') echo 'disabled';}> {lang('a-ind-59')}
 					</td>
 				</tr>
 				</tbody>
@@ -146,25 +146,25 @@
 				<tr>
 					<th>{lang('a-ind-60')}：</th>
 					<td class="y-bg"><input type="text" value="{$data['SITE_MAIL_SERVER']}" size="30" id="mail_server" name="data[SITE_MAIL_SERVER]" class="input-text"></td>
-				</tr>  
+				</tr>
 				<tr>
 					<th>{lang('a-ind-61')}：</th>
 					<td class="y-bg"><input type="text" value="{$data['SITE_MAIL_PORT']}" size="30" id="mail_port" name="data[SITE_MAIL_PORT]" class="input-text"></td>
-				</tr> 
+				</tr>
 				<tr>
 					<th>{lang('a-ind-62')}：</th>
 					<td class="y-bg"><input type="text" value="{$data['SITE_MAIL_FROM']}" size="30" id="mail_from" name="data[SITE_MAIL_FROM]" class="input-text"></td>
-				</tr>   
+				</tr>
 				<tr>
 					<th>{lang('a-ind-63')}：</th>
 					<td class="y-bg">
-					<input type="radio" {if $data['SITE_MAIL_AUTH']==1}checked=""{/if} value="1" id="mail_auth" name="data[SITE_MAIL_AUTH]"> {lang('a-open')}	
+					<input type="radio" {if $data['SITE_MAIL_AUTH']==1}checked=""{/if} value="1" id="mail_auth" name="data[SITE_MAIL_AUTH]"> {lang('a-open')}
 					<input type="radio" {if $data['SITE_MAIL_AUTH']==0}checked=""{/if} value="0" id="mail_auth" name="data[SITE_MAIL_AUTH]"> {lang('a-close')}</td>
-				</tr> 
+				</tr>
 				<tr>
 					<th>{lang('a-ind-64')}：</th>
 					<td class="y-bg"><input type="text" value="{$data['SITE_MAIL_USER']}" size="30" id="mail_user" name="data[SITE_MAIL_USER]" class="input-text"></td>
-				</tr> 
+				</tr>
 				<tr>
 					<th>{lang('a-ind-65')}：</th>
 					<td class="y-bg"><input type="password" value="{$data['SITE_MAIL_PASSWORD']}" size="30" id="mail_password" name="data[SITE_MAIL_PASSWORD]" class="input-text"></td>
@@ -173,9 +173,9 @@
 				<tbody>
 				<tr>
 					<th>{lang('a-ind-66')}：</th>
-					<td class="y-bg"><input type="text" value="" size="30" id="mail_to" name="mail_to" class="input-text"> 
+					<td class="y-bg"><input type="text" value="" size="30" id="mail_to" name="mail_to" class="input-text">
 					<input type="button" value="{lang('a-ind-67')}" onClick="javascript:test_mail();" class="button"></td>
-				</tr>           
+				</tr>
 				</tbody>
 			</table>
 			</div>
@@ -195,20 +195,20 @@
 					<th>{lang('a-ind-69')}：</th>
 					<td class="y-bg"><input type="text" value="{$data['SITE_MAP_TIME']}" size="10" name="data[SITE_MAP_TIME]" class="input-text">
 					<div class="onShow">{$string['SITE_MAP_TIME']}</div></td>
-				</tr>  
+				</tr>
 				<tr>
 					<th>{lang('a-ind-70')}：</th>
 					<td class="y-bg"><input type="text" value="{$data['SITE_MAP_NUM']}" size="10" name="data[SITE_MAP_NUM]" class="input-text">
 					<div class="onShow">{$string['SITE_MAP_NUM']}</div></td>
-				</tr> 
+				</tr>
 				<tr>
 					<th>{lang('a-ind-71')}：</th>
 					<td class="y-bg">
-					<input type="radio" {if $data['SITE_MAP_AUTO']==true} checked=""{/if} value="true" checkbox="auto" name="data[SITE_MAP_AUTO]"> {lang('a-open')}    
+					<input type="radio" {if $data['SITE_MAP_AUTO']==true} checked=""{/if} value="true" checkbox="auto" name="data[SITE_MAP_AUTO]"> {lang('a-open')}
 					&nbsp;&nbsp;
-					<input type="radio" {if $data['SITE_MAP_AUTO']==false} checked=""{/if} value="false" checkbox="auto" name="data[SITE_MAP_AUTO]"> {lang('a-close')} 
+					<input type="radio" {if $data['SITE_MAP_AUTO']==false} checked=""{/if} value="false" checkbox="auto" name="data[SITE_MAP_AUTO]"> {lang('a-close')}
 					<div class="onShow">{$string['SITE_MAP_AUTO']}</div></td>
-				</tr>   
+				</tr>
 			</table>
 			</div>
 
@@ -231,9 +231,9 @@
 				<tr>
 					<th>{lang('a-ind-78')}： </th>
 					<td class="y-bg">
-					<input type="radio" {if $data['SITE_SEARCH_TYPE']==1} checked=""{/if} value="1" checkbox="auto" name="data[SITE_SEARCH_TYPE]" onclick="setSearchType(1)"> {lang('a-ind-79')}   
+					<input type="radio" {if $data['SITE_SEARCH_TYPE']==1} checked=""{/if} value="1" checkbox="auto" name="data[SITE_SEARCH_TYPE]" onclick="setSearchType(1)"> {lang('a-ind-79')}
 					&nbsp;&nbsp;
-					<input type="radio" {if $data['SITE_SEARCH_TYPE']==2} checked=""{/if} value="2" checkbox="auto" name="data[SITE_SEARCH_TYPE]" onclick="setSearchType(2)"> Sphinx 
+					<input type="radio" {if $data['SITE_SEARCH_TYPE']==2} checked=""{/if} value="2" checkbox="auto" name="data[SITE_SEARCH_TYPE]" onclick="setSearchType(2)"> Sphinx
 					</td>
 				</tr>
 				<tbody id="search_1">
@@ -249,9 +249,9 @@
 				</tr>
 				<tr>
 					<th>{lang('a-ind-84')}：</th>
-					<td class="y-bg"><input type="radio" {if $data['SITE_SEARCH_KW_OR']==true} checked=""{/if} value="true" checkbox="auto" name="data[SITE_SEARCH_KW_OR]"> OR    
+					<td class="y-bg"><input type="radio" {if $data['SITE_SEARCH_KW_OR']==true} checked=""{/if} value="true" checkbox="auto" name="data[SITE_SEARCH_KW_OR]"> OR
 					&nbsp;&nbsp;
-					<input type="radio" {if $data['SITE_SEARCH_KW_OR']==false} checked=""{/if} value="false" checkbox="auto" name="data[SITE_SEARCH_KW_OR]"> AND 
+					<input type="radio" {if $data['SITE_SEARCH_KW_OR']==false} checked=""{/if} value="false" checkbox="auto" name="data[SITE_SEARCH_KW_OR]"> AND
 					<div class="onShow">{lang('a-ind-85')}</div></td>
 				</tr>
 				</tbody>
@@ -355,5 +355,5 @@ function test_mail() {
 	$.post('{url('admin/index/ajaxmail')}&submit=1&mail_to='+$('#mail_to').val(),{mail_type:mail_type,mail_server:$('#mail_server').val(),mail_port:$('#mail_port').val(),mail_user:$('#mail_user').val(),mail_password:$('#mail_password').val(),mail_auth:$('#mail_auth').val(),mail_auth:$('#mail_auth').val(),mail_from:$('#mail_from').val()}, function(data){
 	    alert(data);
 	});
-} 
+}
 </script>

@@ -110,8 +110,8 @@ class ThemeController extends Admin {
 			$this->adminMsg('正在安装模板,请稍后....', url('admin/theme/install', array('todo'=>1, 'name'=>$dir)), 1, 1, 1);
 		}
 
-		$file = ICPATH.'views/'.$dir.'/install.sql';
-		if (!is_dir(ICPATH.'views/'.$dir)) {
+		$file = FCPATH.'views/'.$dir.'/install.sql';
+		if (!is_dir(FCPATH.'views/'.$dir)) {
 			$this->adminMsg('模板目录不存在');
 		}
 
@@ -161,12 +161,12 @@ class ThemeController extends Admin {
 
 	//执行sql语句
 	private function installsql($sql) {
-		$sql = str_replace(array(PHP_EOL, chr(13), chr(10)), 'SQL_IDEACMS_EOL', $sql);
+		$sql = str_replace(array(PHP_EOL, chr(13), chr(10)), 'SQL_FINECMS_EOL', $sql);
 		$ret = array();
 		$num = 0;
-		$data = explode(';SQL_IDEACMS_EOL', trim($sql));
+		$data = explode(';SQL_FINECMS_EOL', trim($sql));
 		foreach($data as $query){
-			$queries = explode('SQL_IDEACMS_EOL', trim($query));
+			$queries = explode('SQL_FINECMS_EOL', trim($query));
 			foreach($queries as $query) {
 				$ret[$num] .= $query[0] == '#' || $query[0].$query[1] == '--' ? '' : $query;
 			} $num++;

@@ -2,7 +2,7 @@
 if (!defined('IN_IDEACMS')) exit();
 
 /**
- * ideacms配置
+ * 连普创想2配置
  */
 return array(
 
@@ -10,7 +10,7 @@ return array(
 	'SITE_LANGUAGE'           => 'zh-cn',  //系统语言设置，默认zh-cn
 	'SITE_TIMEZONE'           => '8',  //时区常量，默认时区为东8区时区
 	'SITE_THEME'              => 'default',  //模板风格,默认default
-	'SITE_NAME'               => 'ideacms',  //网站名称，将显示在浏览器窗口标题等位置
+	'SITE_NAME'               => '连普创想2',  //网站名称，将显示在浏览器窗口标题等位置
 	'SITE_TITLE'              => 'ideacms',  //网站首页SEO标题
 	'SITE_KEYWORDS'           => 'ideacms',  //网站SEO关键字
 	'SITE_DESCRIPTION'        => 'ideacms',  //网站SEO描述信息
@@ -22,12 +22,12 @@ return array(
 	'SITE_WATERMARK_IMAGE'    => '',  //Png格式图片，水印图片目录：/extensions/watermark/
 	'SITE_WATERMARK_POS'      => '',  //水印位置
 	'SITE_THUMB_TYPE'         => '0',  //图片显示模式
-	'SITE_THUMB_WIDTH'        => '',  //内容缩略图默认宽度
-	'SITE_THUMB_HEIGHT'       => '',  //内容缩略图默认高度
+	'SITE_THUMB_WIDTH'        => '0',  //内容缩略图默认宽度
+	'SITE_THUMB_HEIGHT'       => '0',  //内容缩略图默认高度
 	'SITE_TIME_FORMAT'        => 'Y-m-d',  //网站时间显示格式，参数与PHP的date函数一致，默认Y-m-d H:i:s
-	'SITE_MOBILE'             => true,  //移动设备访问网站开关，打开之后需要设计移动端模板（默认mobile或者mobile_站点id）
-	'SITE_MURL'               => '',  //域名格式为：m.lygphp.com，不要加http://
+	'SITE_MOBILE'             => 'false',  //移动设备访问网站开关，打开之后需要设计移动端模板（默认mobile或者mobile_站点id）
+	'SITE_MURL'               => '',  //dr013
 	'SITE_ICP'                => 'ICP备案序号',  //ICP备案序号
-	'SITE_JS'                 => '',  //第三方统计代码
+	'SITE_JS'                 => 'a:1:{s:5:"value";s:2:"12";}',  //第三方统计代码
 
 );

@@ -1,0 +1,70 @@
+{template header}
+	<link href="{ADMIN_THEME}images/table_form.css" rel="stylesheet" type="text/css" />
+	<link href="{ADMIN_THEME}images/dialog.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="{ADMIN_THEME}js/dialog.js"></script>
+	<script type="text/javascript">var sitepath = "{SITE_PATH}{ENTRY_SCRIPT_NAME}";</script>
+    <script type="text/javascript" src="{LANG_PATH}lang.js"></script>
+	<script type="text/javascript" src="{ADMIN_THEME}js/core.js"></script>
+    <div class="navigation">
+    您当前位置：<a  href="{SITE_PATH}">首页</a> >>
+	{if $joindata && $joindata['typeid'] == 1}<!--表示关联的内容模型-->
+	  {catpos($cdata['catid'], ' &gt;&gt;&nbsp;&nbsp;')} &gt;&gt;&nbsp;&nbsp;<a href="{$cdata['url']}">{$cdata['title']}</a> &gt;&gt;&nbsp;&nbsp;
+	{/if}{$form_name}
+    </div>
+    <div class="blank10 clear"></div>
+    <!--begin-->
+    <div class="piclist">
+        <div class="title"><span>{$form_name}</span></div>
+        <div class="item-list">
+        <form action="/index.php?c=form&a=post&modelid=7&cid=" method="post">
+      <table width="100%" class="table_form ">
+      <tr>
+        <th width="100"></th>
+        <td></td>
+      </tr>
+      <tr id="fine_xingming"><th><font color="red">*</font> 姓名：</th><td><input type="text" value="" class="input-text" name="data[xingming]" id="xingming"  style='width:200px;'  required /><span id="ck_xingming"></span></td></tr>
+      <tr id="fine_dianhua"><th><font color="red">*</font> 电话：</th><td><input type="text" value="" class="input-text" name="data[dianhua]" id="dianhua"  style='width:200px;'  required /><span id="ck_dianhua"></span></td></tr>
+      <tr id="fine_neirong"><th><font color="red">*</font> 内容：</th><td><textarea style="width:400px;height:99px;" name="data[neirong]" id="neirong"  required></textarea><span id="ck_neirong"></span></td></tr>
+      <tr>
+      {if $code}
+      <tr>
+        <th>验证码：</th>
+        <td><input name="code" type="text" id="code" class="input-text" size=10 /><img src="{url('api/captcha', array('width'=>80,'height'=>25))}" align="absmiddle"></td>
+      </tr>
+      {/if}
+        <th style="border:none">&nbsp;</th>
+        <td style="border:none"><a class="button" id="submit">提 交</a></td>
+      </tr>
+      </table>
+      </form>
+      <script type="text/javascript" charset="utf-8">
+          $("#submit").click(function(){
+          var xingming = $('#xingming').val();
+          var dianhua = $('#dianhua').val();
+          var neirong = $('#neirong').val();
+          $.ajax({
+            url: "{url('form/ajaxpost',array('modelid'=>$modelid, 'cid'=>$cid))}",
+            type: 'post',
+            dataType: 'json',
+            data: {xingming: xingming,dianhua:dianhua,neirong:neirong},
+            success:function(data){
+              if (data.msg == 'true') {
+                alert('留言成功');
+                window.location.reload();
+              } else {
+                alert(data.msg);
+              }
+
+            },
+            error:function(){
+              alert('异常');
+            }
+          });
+        });
+
+      </script>
+        </div>
+    </div>
+    <!--end-->
+    <div class="clear blank10"></div>
+{template footer}
