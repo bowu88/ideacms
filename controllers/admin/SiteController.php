@@ -27,7 +27,7 @@ class SiteController extends Admin {
 			'SITE_THUMB_HEIGHT'			=> lang('a-cfg-45'),
 			'SITE_TIME_FORMAT'			=> lang('a-cfg-57'),
 			'SITE_MOBILE'				=> lang('a-cfg-72'),
-			'SITE_MURL'				    => lang('dr013'),
+			'SITE_MURL'				    => lang('da013'),
 			'SITE_ICP'				    => lang('a-site-tcp'),
             'SITE_JS'                  => lang('a-site-tps')
         );

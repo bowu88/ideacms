@@ -30,8 +30,8 @@
             <li><a href="{url('member/info/edit/')}"><span>资料信息</span></a></li>
             <li><a href="{url('member/content/')}"><span>内容管理</span></a></li>
             <li><a href="{url('member/pms/inbox')}"><span>短消息</span></a></li>
-            {if plugin('pay')}<li><a href="{url('pay/member')}"><span>资金管理</span></a></li>{/if}
-            {if plugin('shop')}<li><a href="{url('shop/member')}"><span>购物管理</span></a></li>{/if}
+            <li><a href="{url('order/pay')}"><span>资金管理</span></a></li>
+            <li><a href="{url('order/member')}"><span>购物管理</span></a></li>
             <li><a href="{url('member/login/out')}"><span>安全退出</span></a></li>
             {else}
             {if $memberinfo}

@@ -17,3 +17,26 @@
 <!--wrap end-->
 </body>
 </html>
+<!-- {php var_dump($cats[$catid]['child'])} -->
+<!-- {php $data=linkagelist(19, 菜单id);} -->
+
+<div>
+{php $data=linkagelist(19);}
+{loop $data $t}
+<p>名称：{$t['name']}={$t['id']}</p>
+    {if $t['arrchilds']}
+    {php $data1=linkagelist(19,$t['id']);}
+    {loop $data1 $tt}
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;名称：{$tt['name']}={$tt['id']}</p>
+        {if $t['arrchilds']}
+        {php $data2=linkagelist(19,$tt['id']);}
+        {loop $data2 $ttt}
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名称：{$ttt['name']}={$ttt['id']}</p>
+        {/loop}
+        {/if}
+    {/loop}
+    {/if}
+{/loop}
+</div>
+
+ <!-- {php var_dump(linkagelist(19)[20])} -->

@@ -26,7 +26,7 @@ return array(
 	'SITE_THUMB_HEIGHT'       => '0',  //内容缩略图默认高度
 	'SITE_TIME_FORMAT'        => 'Y-m-d',  //网站时间显示格式，参数与PHP的date函数一致，默认Y-m-d H:i:s
 	'SITE_MOBILE'             => 'false',  //移动设备访问网站开关，打开之后需要设计移动端模板（默认mobile或者mobile_站点id）
-	'SITE_MURL'               => '',  //dr013
+	'SITE_MURL'               => '',  //da013
 	'SITE_ICP'                => 'ICP备案序号',  //ICP备案序号
 	'SITE_JS'                 => 'a:1:{s:5:"value";s:2:"12";}',  //第三方统计代码
 

@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * @CmsName: ideacms v1.4
+ * @Author: 连普科技
+ * @QQ: 976510651
+ * @WebSite: http://www.lygphp.com
+ * @Date:   2016-04-04 14:36:57
+ * @Last Modified by:   frank
+ * @Last Modified time: 2016-04-22 17:51:42
+ */
 /**
  * index.php 入口文件
  */

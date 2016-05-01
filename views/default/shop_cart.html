@@ -32,7 +32,7 @@
               </td>
               <td align="left">￥{php echo $t['item_price']*$t['num']}元</td>
               <td align="left">
-              <a href="javascript:if (confirm('您确实要把该商品移出购物车吗？')) location.href='{url('shop/cart/del', array('cartid'=>$cartid))}'; ">删除</a>
+              <a href="javascript:if (confirm('您确实要把该商品移出购物车吗？')) location.href='{url('order/cart/del', array('cartid'=>$cartid))}'; ">{$cartid}删除</a>
               </td>
             </tr>
             {/loop}
@@ -40,8 +40,8 @@
               <td colspan="2" align="left">购物金额小计 ￥{$total_price}元</td>
               <td colspan="4" align="right">
               <input type="submit" value="更新购物车" name="submit" class="button">
-              <input type="button" onclick="location.href='{url('shop/cart/clear')}'" value="清空购物车" class="button">
-              <input type="button" onclick="location.href='{url('shop/member/buy', array('from'=>'cart'))}'" value="结算账目" class="button">
+              <input type="button" onclick="location.href='{url('order/cart/clear')}'" value="清空购物车" class="button">
+              <input type="button" onclick="location.href='{url('order/member/buy', array('from'=>'cart'))}'" value="结算账目" class="button">
               </td>
             </tr>
             </tbody>

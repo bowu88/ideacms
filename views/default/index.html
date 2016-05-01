@@ -1,5 +1,6 @@
 {template header}
     <div class="mainbox">
+
         <div class="left">
 
             <!--left01 begin-->
@@ -19,15 +20,15 @@
                     })
                     </script>
                     <div id="KinSlideshow" style="visibility:hidden;overflow:hidden;width:290px;height:270px;">
-                        {list action=position id=3}
-                        <a href="{$t['url']}" title="{$t['title']}"><img src="{thumb($t['thumb'],290,270)}" alt="{$t['title']}" /></a>
+                        {list action=position id=3 num=1 order=inputtime more=1}
+                        <a href="{$t['url']}" title="{$t['title']}"><img src="{thumb($t['thumb'],290,270)}" alt="{$t['title']}" />{date('Y-m-d H:m:s',$t['inputtime'])}</a>
                         {/list}
                     </div>
                 </div>
                 <div class="floatr">
                     <div class="news">
                     <!--首页头条-->
-                    {list action=position id=1}
+                    {list action=position id=1 order=id_asc more=1}
                         <h1><a href="{$t['url']}">{$t['title']}</a></h1>
                         <div class="newsintro">{$t['description']}<span><a href="{$t['url']}">[查看详细]</a></span></div>
                     {/list}
@@ -137,9 +138,10 @@
                     <div class="bor01 cont">
                         <div class="display">
                         <ul class="syfresh">
-                        {list action=position id=2}
-                        <li><span class="N{$key+1}"><!--这里的$key是list循环控制变量，list教程有详细介绍--></span><a href="{$t['url']}">{$t['title']}</a></li>
+                        {list action=position id=2 order=id more=1}
+                        <li><span class="N{$key+1}"><!--这里的$key是list循环控制变量，list教程有详细介绍--></span><a href="{$t['url']}">[{$t['username']}]{date('Y-m-d H:m:s',$t['inputtime'])}</a></li>
                         {/list}
+                        {$sql}
                         </ul>
                         </div>
                     </div>
@@ -152,7 +154,7 @@
                <div class="title"><span>最近更新</span></div>
                <div class="right03box">
                <ul>
-               {list order=updatetime num=15 cache=36000}
+               {list order=updatetime_asc num=15}
                    <li><span id="date">({date("m-d", $t['updatetime'])})</span><a href="{$t['url']}">{$t['title']}</a></li>
                {/list}
                </ul>

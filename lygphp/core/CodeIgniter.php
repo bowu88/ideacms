@@ -252,7 +252,7 @@
             show_error('控制器'.ucfirst($RTR->fetch_class()).'或者'.ucfirst($RTR->fetch_class()).'Controller不存在');
         }
 	} else {
-        if ($RTR->fetch_directory() == 'member/' || $RTR->fetch_directory() == 'admin/') {
+        if ($RTR->fetch_directory() == 'member/' || $RTR->fetch_directory() == 'admin/' || $RTR->fetch_directory() == 'order/' || $RTR->fetch_directory() == 'weixin/') {
             require ICPATH.'controllers/'.$RTR->fetch_directory().'Common.php';
         }
         $file = is_file($file2) ? $file2 : $file1;

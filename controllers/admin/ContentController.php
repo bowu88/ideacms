@@ -1,11 +1,11 @@
 <?php
 
 class ContentController extends Admin {
-    
+
     private $tree;
     private $table;
 	private $verify;
-    
+
     public function __construct() {
 		parent::__construct();
 		$this->tree = $this->instance('tree');
@@ -21,7 +21,7 @@ class ContentController extends Admin {
 
         }
 	}
-	
+
 	/**
 	 * 管理
 	 */
@@ -207,7 +207,7 @@ class ContentController extends Admin {
 	    ));
 	    $this->view->display('admin/content_list');
 	}
-	
+
 	/**
 	 * 待审管理
 	 */
@@ -321,7 +321,8 @@ class ContentController extends Admin {
 			$count[1] = $total;
 			$count[2] = (int)$this->verify->count('content_' . $this->siteid . '_verify', null, 'catid='.$catid.' and modelid=' . $modelid . ' AND status=2');	//拒绝
 		}
-		$total = (int)$this->content->_count(null, 'catid='.$catid.' and modelid=' . $modelid . ' AND status=1');	//全部
+
+    $total = (int)$this->content->_count(null, ($catid ? 'catid='.$catid.' and ' : '').'modelid=' . $modelid . 'AND status=1');
 
 
         $table=$model[$modelid]['tablename'];
@@ -343,7 +344,7 @@ class ContentController extends Admin {
 	    ));
 	    $this->view->display('admin/content_list');
 	}
-	
+
 	/**
 	 * 修改待审
 	 */
@@ -410,7 +411,7 @@ class ContentController extends Admin {
 	    ));
 	    $this->view->display('admin/content_add');
 	}
-	
+
 	/**
 	 * 删除待审文档
 	 */
@@ -425,7 +426,7 @@ class ContentController extends Admin {
 		$this->verify->delete('id=' . $id);
 		$all or $this->adminMsg(lang('success'), '', 3, 1, 1);
 	}
-	
+
 	/**
 	 * 发布
 	 */
@@ -636,7 +637,7 @@ class ContentController extends Admin {
 	    ));
 	    $this->view->display('admin/content_add');
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -656,7 +657,7 @@ class ContentController extends Admin {
 	    $this->content->del($id, $catid);
 	    $all or $this->adminMsg(lang('success'), $back, 3, 1, 1);
 	}
-	
+
 	/**
 	 * 获取关键字
 	 */
@@ -667,7 +668,7 @@ class ContentController extends Admin {
         }
 	    echo getKw($data);
 	}
-	
+
     /**
 	 * 标题是否重复检查
 	 */
@@ -684,7 +685,7 @@ class ContentController extends Admin {
         }
 	    exit('0');
 	}
-	
+
 	/**
 	 * 加载内容表中的信息
 	 */
@@ -714,7 +715,7 @@ class ContentController extends Admin {
 		));
 	    $this->view->display('admin/content_data_load');
 	}
-	
+
 	/**
 	 * 更新url地址
 	 */
@@ -821,7 +822,7 @@ class ContentController extends Admin {
 			$this->view->display('admin/content_url');
 		}
 	}
-	
+
 	/**
 	 * 生成/删除内容页HTML文件
 	 */
@@ -832,7 +833,7 @@ class ContentController extends Admin {
 			$this->createShow($data);
 		}
 	}
-	
+
 	/**
 	 * 增加/删除推荐位
 	 */

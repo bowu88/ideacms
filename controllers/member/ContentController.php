@@ -747,7 +747,7 @@ class ContentController extends Member {
 	 * 标题是否重复检查
 	 */
 	public function ajaxtitleAction() {
-	    $id    = $this->post('id');
+	    $id    = (int)$this->post('id');
 	    $title = safe_replace($this->post('title'));
 	    if (empty($title)) {
             exit(lang('m-con-31'));

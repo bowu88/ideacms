@@ -14,15 +14,16 @@ return array (
 	 */
     'top' => array (
         0 => array('name' => 'a-men-0', 'ico' => 'fa fa-home', 'url' => url('admin/index/main'), 'select' => '1',   'option' => ''),
-				1 => array('name' => 'a-men-1', 'ico' => 'fa fa-cog', 'url' => url('admin/index/config'), 'select' => '101', 'option' => array('index-config', 'user-index', 'user-syn','auth-index','index-log','index-attack', 'ip-index')),
+		1 => array('name' => 'a-men-1', 'ico' => 'fa fa-cog', 'url' => url('admin/index/config'), 'select' => '101', 'option' => array('index-config', 'user-index', 'user-syn','auth-index','index-log','index-attack', 'ip-index')),
         2 => array('name' => 'a-men-90', 'ico' => 'fa fa-globe', 'url' => url('admin/site/config'), 'select' => '121', 'option' => array('site-config', 'site-index','category-index', 'model-index', 'attachment-index', 'position-index', 'relatedlink-index', 'block-index', 'linkage-index', 'form-index')),
         4 => array('name' => 'a-men-96', 'ico' => 'fa fa-list-ul', 'url' => url('admin/category/index'), 'select' => '201', 'option' =>'category-index'),
         9 => array('name' => 'a-men-2', 'ico' => 'fa fa-table', 'url' => '', 'select' => '0', 'option' => array('content-index')),
-				6 => array('name' => 'a-men-4', 'ico' => 'fa fa-html5', 'url' => url('admin/html/index'), 'select' => '601', 'option' => array('html-index', 'html-cache')),
-				3 => array('name' => 'a-men-5', 'ico' => 'fa fa-user', 'url' => url('admin/member/index'), 'select' => '301', 'option' => array('member-index', 'member-config', 'member-group', 'member-pms','member-extend')),
-				5 => array('name' => 'a-men-7', 'ico' => 'fa fa-cubes', 'url' => url('admin/plugin/index'), 'select' => '501', 'option' => array('plugin-index')),
-				8 => array('name' => 'a-men-10', 'ico'=>'fa fa-weixin', 'url' => url('admin/wx/config'), 'select' => '270', 'option' => array('weixin-config')),
-            ),
+		6 => array('name' => 'a-men-4', 'ico' => 'fa fa-html5', 'url' => url('admin/html/index'), 'select' => '601', 'option' => array('html-index', 'html-cache')),
+		3 => array('name' => 'a-men-5', 'ico' => 'fa fa-user', 'url' => url('admin/member/index'), 'select' => '301', 'option' => array('member-index', 'member-config', 'member-group', 'member-pms','member-extend')),
+		5 => array('name' => 'a-men-7', 'ico' => 'fa fa-cubes', 'url' => url('admin/plugin/index'), 'select' => '501', 'option' => array('plugin-index')),
+		8 => array('name' => 'a-men-10', 'ico'=>'fa fa-weixin', 'url' => url('admin/wx/config'), 'select' => '270', 'option' => array('weixin-config')),
+    	7 => array('name' => 'a-men-97', 'ico'=>'fa fa-shopping-cart', 'url' => url('admin/order/index'), 'select' => '610', 'option' => array('order-config')),
+    		),
 
 	/**
 	 * 顶部菜单对应的左侧菜单列表
@@ -131,6 +132,21 @@ return array (
 				5 => array(
 				    'a-men-61' => array(
 						501 => array('name' => 'a-men-61', 'url' => url('admin/plugin/index'), 'option' => 'plugin-index'),
+					),
+				),
+				7 => array(
+				    'a-men-98' => array(
+						610 => array('name' => 'a-men-100', 'url' => url('admin/order/index'), 'option' => 'order-index'),
+						611 => array('name' => 'a-men-101', 'url' => url('admin/order/shipping'), 'option' => 'order-shipping'),
+						612 => array('name' => 'a-men-102', 'url' => url('admin/order/config'), 'option' => 'order-config'),
+					),
+					'a-men-99' => array(
+						613 => array('name' => 'a-men-103', 'url' => url('admin/pay/index'), 'option' => 'pay-index'),
+						614 => array('name' => 'a-men-104', 'url' => url('admin/pay/spend'), 'option' => 'pay-spend'),
+						615 => array('name' => 'a-men-105', 'url' => url('admin/pay/setting'), 'option' => 'pay-setting'),
+						616 => array('name' => 'a-men-106', 'url' => url('admin/pay/add'), 'option' => 'pay-add'),
+						617 => array('name' => 'a-men-107', 'url' => url('admin/pay/card'), 'option' => 'pay-card'),
+						618 => array('name' => 'a-men-108', 'url' => url('admin/pay/addcard'), 'option' => 'pay-addcard'),
 					),
 				),
 				8 => array(

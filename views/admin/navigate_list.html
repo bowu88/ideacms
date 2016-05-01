@@ -18,6 +18,16 @@
 <a href='{url("admin/navigate")}' class="on"><em>导航链接列表</em></a><span>|</span>
 <a href='{url("admin/navigate/add")}'><em>添加导航链接</em></a>
 </div>
+<div class="explain-col">
+        <form action="" method="post">
+        <input name="form" type="hidden" value="search">
+        <select name="stype">
+            <option selected="" value="0">{lang('a-con-26')}</option>
+            <option value="1">{lang('a-con-27')}</option>
+            <option value="2">{lang('a-con-28')}</option>
+        </select>
+    </form>
+</div>
 <div class="table-list">
 <form action="" method="post">
 <input name="form" id="list_form" type="hidden" value="order">

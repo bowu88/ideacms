@@ -42,7 +42,7 @@
                 {else}
                 <tr>
                     <th style="border:none">&nbsp;</th>
-                    <td style="border:none">余额不足，<a href="{url('pay/member/add', array('price'=>$data['price']-$pay_data['available']))}">请充值。</a></td>
+                    <td style="border:none">余额不足，<a href="{url('order/pay/add', array('price'=>$data['price']-$pay_data['available']))}">请充值。</a></td>
                 </tr>
                 {/if}
                 </tbody>

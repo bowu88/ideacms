@@ -500,3 +500,18 @@ class Admin extends Common {
     }
 
 }
+
+class Anti extends Common {
+	public function __construct() {
+		parent::__construct();
+	}
+
+
+	public function inital(){
+		echo "你好";
+	}
+
+
+
+
+}

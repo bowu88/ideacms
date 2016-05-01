@@ -25,7 +25,7 @@
                 </tr>
                 {if $pay}
                 <tr>
-                  <th style="text-align:left; border-bottom:none">请您在<a href="{purl('member/pay', array('id'=>$order_id))}">这里付款</a>，付款之后我们会第一时间为您配货。</th>
+                  <th style="text-align:left; border-bottom:none">请您在<a href="{url('order/member/pay', array('id'=>$order_id))}">这里付款</a>，付款之后我们会第一时间为您配货。</th>
                 </tr>
                 {else}
                 <tr>

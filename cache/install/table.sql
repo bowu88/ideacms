@@ -585,6 +585,121 @@ CREATE TABLE `{pre}content_1_news` (
   KEY `catid` (`catid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+  DROP TABLE IF EXISTS `{pre}shop_address`;
+  CREATE TABLE IF NOT EXISTS `{pre}shop_address` (
+  `id` mediumint(8) NOT NULL AUTO_INCREMENT,
+  `userid` mediumint(8) NOT NULL,
+  `username` char(20) NOT NULL,
+  `name` char(20) NOT NULL,
+  `address` varchar(200) NOT NULL,
+  `zip` char(6) NOT NULL,
+  `tel` char(20) NOT NULL,
+  `default_value` tinyint(1) NOT NULL COMMENT '默认地址',
+  PRIMARY KEY (`id`),
+  KEY `userid` (`userid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+  
+
+  DROP TABLE IF EXISTS `{pre}shop_order`;
+  CREATE TABLE IF NOT EXISTS `{pre}shop_order` (
+  `id` mediumint(8) NOT NULL AUTO_INCREMENT,
+  `order_sn` bigint(20) NOT NULL COMMENT '订单编号',
+  `userid` mediumint(8) NOT NULL,
+  `username` char(20) NOT NULL,
+  `items` text NOT NULL COMMENT '商品信息array格式',
+  `addtime` int(10) NOT NULL COMMENT '订购时间',
+  `paytime` int(10) NOT NULL COMMENT '支付时间',
+  `sendtime` int(10) NOT NULL COMMENT '发货时间',
+  `confirmtime` int(10) NOT NULL COMMENT '确认时间',
+  `price` decimal(10,2) NOT NULL COMMENT '价格',
+  `shipping_id` char(20) NOT NULL COMMENT '运单编号',
+  `shipping_name` varchar(20) NOT NULL COMMENT '物流名称',
+  `shipping_price` decimal(5,2) NOT NULL COMMENT '物流价格',
+  `name` varchar(20) NOT NULL COMMENT '收货人',
+  `address` varchar(200) NOT NULL COMMENT '收货地址',
+  `zip` char(6) NOT NULL COMMENT '邮政编码',
+  `tel` char(20) NOT NULL COMMENT '联系电话',
+  `status` tinyint(1) NOT NULL,
+  `adminlog` text NOT NULL COMMENT '操作日志',
+  `note` varchar(200) NOT NULL COMMENT '备注信息',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `order_sn` (`order_sn`),
+  KEY `userid` (`userid`),
+  KEY `addtime` (`addtime`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+  
+
+  DROP TABLE IF EXISTS `{pre}shop_shipping`;
+  CREATE TABLE IF NOT EXISTS `{pre}shop_shipping` (
+  `id` smallint(5) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL COMMENT '物流名称',
+  `price` decimal(5,2) NOT NULL COMMENT '运送价格',
+  `description` text NOT NULL COMMENT '描述',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+
+  DROP TABLE IF EXISTS `{pre}pay_account`;
+  CREATE TABLE IF NOT EXISTS `{pre}pay_account` (
+    `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+    `order_sn` bigint(20) NOT NULL,
+    `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+    `username` char(20) NOT NULL,
+    `money` decimal(10,2) NOT NULL,
+    `addtime` bigint(10) NOT NULL DEFAULT '0',
+    `paytime` bigint(10) NOT NULL DEFAULT '0',
+    `paytype` char(10) NOT NULL,
+    `ip` char(15) NOT NULL DEFAULT '0.0.0.0',
+    `adminnote` char(20) NOT NULL,
+    `status` tinyint(3) NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `order_sn` (`order_sn`),
+    KEY `userid` (`userid`),
+    KEY `status` (`status`)
+  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+  DROP TABLE IF EXISTS `{pre}pay_data`;
+  CREATE TABLE IF NOT EXISTS `{pre}pay_data` (
+    `userid` mediumint(8) NOT NULL,
+    `username` char(20) CHARACTER SET utf8 NOT NULL,
+    `freeze` decimal(10,2) NOT NULL,
+    `available` decimal(10,2) NOT NULL,
+    UNIQUE KEY `userid` (`userid`)
+  ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+  DROP TABLE IF EXISTS `{pre}pay_spend`;
+  CREATE TABLE IF NOT EXISTS `{pre}pay_spend` (
+    `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+    `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+    `username` varchar(20) NOT NULL,
+    `money` decimal(10,2) NOT NULL,
+    `addtime` bigint(10) NOT NULL,
+    `note` varchar(100) NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `userid` (`userid`),
+    KEY `addtime` (`addtime`)
+  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+  DROP TABLE IF EXISTS `{pre}pay_card`;
+  CREATE TABLE IF NOT EXISTS `{pre}pay_card` (
+    `id` int(10) NOT NULL AUTO_INCREMENT,
+    `card_sn` char(20) NOT NULL,
+    `password` char(6) NOT NULL,
+    `money` decimal(10,2) NOT NULL,
+    `status` tinyint(1) NOT NULL,
+    `adduser` char(20) NOT NULL,
+    `addtime` bigint(10) NOT NULL,
+    `endtime` bigint(10) NOT NULL,
+    `usertime` bigint(10) NOT NULL,
+    `userid` mediumint(8) NOT NULL,
+    `username` char(20) NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `card_sn` (`card_sn`),
+    KEY `status` (`status`),
+    KEY `username` (`username`)
+  ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+
 INSERT INTO `{pre}model` (`modelid`,`site`, `typeid`, `modelname`, `tablename`, `categorytpl`, `listtpl`, `showtpl`) VALUES
 (1, 1, 1, '文章', 'content_1_news', 'category_news.html', 'list_news.html', 'show_news.html'),
 (2, 1, 1, '图片', 'content_1_image', 'category_image.html', 'list_image.html', 'show_image.html'),

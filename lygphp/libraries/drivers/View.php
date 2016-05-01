@@ -269,6 +269,7 @@ class View {
 		if (isset($system['action']) && $system['action'] == 'position') {
 		    //推荐位
 			$data = position($system['site'], $fields['id'], (isset($fields['catid']) ? $fields['catid'] : 0), (isset($system['num']) ? $system['num'] : 0));
+
 			if ($data) {
                 $db = Controller::model('content');
                 if (isset($system['more']) && $system['more']) {
